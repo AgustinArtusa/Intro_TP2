@@ -39,13 +39,21 @@ router.post('/', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-    const usuario = usuarios.find((element) => element.id == req.params.id)
-    if (usuario === undefined) {
+    const usuario = await prisma.usuario.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+    if (usuario === null) {
         res.sendStatus(404)
         return
     }
 
-    usuarios = usuarios.filter((element) => element.id != req.params.id)
+    await prisma.usuario.delete({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
     res.send(usuario)
 })
 
