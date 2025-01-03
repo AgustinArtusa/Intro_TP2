@@ -10,9 +10,13 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) =>{
-    const usuario = usuarios.find((element) => element.id == req.params.id)
+    const usuario = await prisma.usuario.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
 
-    if (usuario === undefined){
+    if (usuario === null){
         res.sendStatus(404)
         return
     }
