@@ -7,14 +7,14 @@ let usuarios = [{
     dinero: 100,
     telefono: 1148403365,
     contraseña: 49957,
-    usuario: "Mike12"
+    username: "Mike12"
 }, {
     id: 2,
-    name: "Michael",
-    money: 200,
+    nombre: "Michael",
+    dinero: 200,
     telefono: 1195730685,
     contraseña: 563474,
-    usuario: "Michael34"
+    username: "Michael34"
 }]
 
 router.get('/', async (req, res) => {
@@ -33,4 +33,17 @@ router.get('/:id', async (req, res) =>{
     res.json(usuario)
 })
 
+router.post('/', (req, res) => {
+    const usuario = {
+        id: usuarios.length + 1,
+        nombre: req.body.nombre,
+        dinero: (req.body.money !== null && req.body.money !== undefined) ? req.body.money : 0,
+        telefono: req.body.telefono,
+        contraseña: req.body.contraseña,
+        username: req.body.username
+    }
+
+    usuarios.push(usuario)
+    res.status(201).send(usuario)
+})
 module.exports = router

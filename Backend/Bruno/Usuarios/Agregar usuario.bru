@@ -1,0 +1,21 @@
+meta {
+  name: Agregar usuario
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/v1/usuarios
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nombre": "elg",
+    "dinero": 12,
+    "telfeno": 1245453,
+    "contraseña": 125432,
+    "username": "eleg43"
+  }
+}
