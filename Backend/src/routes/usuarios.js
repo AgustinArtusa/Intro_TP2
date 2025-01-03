@@ -46,4 +46,16 @@ router.post('/', (req, res) => {
     usuarios.push(usuario)
     res.status(201).send(usuario)
 })
+
+router.delete('/:id', async (req, res) => {
+    const usuario = usuarios.find((element) => element.id == req.params.id)
+    if (usuario === undefined) {
+        res.sendStatus(404)
+        return
+    }
+
+    usuarios = usuarios.filter((element) => element.id != req.params.id)
+    res.send(usuario)
+})
+
 module.exports = router
