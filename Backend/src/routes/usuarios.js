@@ -59,23 +59,28 @@ router.delete('/:id', async (req, res) => {
 
 
 router.put('/:id', async (req, res) => {
-    let usuario_index = usuarios.findIndex((element) => element.id == req.params.id)
-    if (usuario_index === -1){
+    let usuario = await prisma.usuario.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+    if (usuario === null){
         res.sendStatus(404)
         return
     }
-
-    usuarios[usuario_index].nombre = (req.body.nombre !== null && req.body.nombre !== undefined) ? req.body.nombre : usuarios[usuario_index].nombre
-    usuarios[usuario_index].dinero = (req.body.dinero !== null && req.body.dinero !== undefined) ? req.body.dinero : usuarios[usuario_index].dinero
-
-    usuarios[usuario_index].telefono = (req.body.telefono !== null && req.body.telefono !== undefined) ? req.body.telefono : usuarios[usuario_index].telefono
-    usuarios[usuario_index].contraseña = (req.body.contraseña !== null && req.body.contraseña !== undefined) ? req.body.contraseña : usuarios[usuario_index].contraseña
-    usuarios[usuario_index].username = (req.body.username !== null && req.body.username !== undefined) ? req.body.username : usuarios[usuario_index].username
-
-    
-    res.send(usuarios[usuario_index])
-
-
+    usuario = await prisma.usuario.update({
+        where: {
+            id: usuario.id
+        },
+        data: {
+            nombre: req.body.nombre,
+            username: req.body.username,
+            contraseña: req.body.contraseña,
+            dinero: req.body.dinero,
+            telefono: req.body.telefono
+        }
+    })
+    res.send(usuario)
 })
 
 module.exports = router
