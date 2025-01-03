@@ -1,25 +1,12 @@
+const { PrismaClient } = require('@prisma/client')
 const express = require('express')
 const router = express.Router()
 
-let usuarios = [{
-    id: 1,
-    nombre: "Max",
-    dinero: 100,
-    telefono: 1148403365,
-    contraseña: 49957,
-    username: "Mike12"
-}, {
-    id: 2,
-    nombre: "Michael",
-    dinero: 200,
-    telefono: 1195730685,
-    contraseña: 563474,
-    username: "Michael34"
-}]
+const prisma = new PrismaClient()
 
 router.get('/', async (req, res) => {
+    const usuarios = await prisma.usuario.findMany()
     res.json(usuarios)
-
 })
 
 router.get('/:id', async (req, res) =>{
@@ -33,17 +20,17 @@ router.get('/:id', async (req, res) =>{
     res.json(usuario)
 })
 
-router.post('/', (req, res) => {
-    const usuario = {
-        id: usuarios.length + 1,
-        nombre: req.body.nombre,
-        dinero: (req.body.dinero !== null && req.body.dinero !== undefined) ? req.body.dinero : 0,
-        telefono: req.body.telefono,
-        contraseña: req.body.contraseña,
-        username: req.body.username
-    }
+router.post('/', async (req, res) => {
+    const usuario = await prisma.usuario.create({
+        data: {
+            nombre: req.body.nombre,
+            username: req.body.username,
+            contraseña: req.body.contraseña,
+            dinero: req.body.dinero,
+            telefono: req.body.telefono
+        }
+    })
 
-    usuarios.push(usuario)
     res.status(201).send(usuario)
 })
 
