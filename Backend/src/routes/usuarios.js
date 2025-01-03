@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
     const usuario = {
         id: usuarios.length + 1,
         nombre: req.body.nombre,
-        dinero: (req.body.money !== null && req.body.money !== undefined) ? req.body.money : 0,
+        dinero: (req.body.dinero !== null && req.body.dinero !== undefined) ? req.body.dinero : 0,
         telefono: req.body.telefono,
         contraseña: req.body.contraseña,
         username: req.body.username
@@ -78,4 +78,5 @@ router.put('/:id', async (req, res) => {
 
 
 })
+
 module.exports = router
