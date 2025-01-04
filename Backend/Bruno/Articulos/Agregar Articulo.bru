@@ -1,0 +1,21 @@
+meta {
+  name: Agregar Articulo
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/v1/articulos
+  body: json
+  auth: none
+}
+
+body:json {
+  {  
+        nombre: "Pintura Antigua", 
+        precio: 800, 
+        descripcion: "Pintura antigua Original de Italia", 
+        origen: "Italia", 
+        antiguedad: "220 años" 
+  }
+}

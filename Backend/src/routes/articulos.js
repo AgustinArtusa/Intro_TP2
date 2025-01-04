@@ -41,4 +41,25 @@ router.get('/:id', async (req, res) => {
     res.json(articulo);
 });
 
+router.post('/', (req, res) => {
+    const { nombre, precio, descripcion, origen, antiguedad,} = req.body;
+
+    if (!nombre || !precio || !descripcion || !origen || !antiguedad) {
+        return res.status(400).json({ mensaje: 'Faltan datos necesarios para crear el artículo' });
+    }
+
+    const nuevoArticulo = {
+        id: articulos.length + 1,
+        nombre,
+        precio,
+        descripcion,
+        origen,
+        antiguedad,
+    };
+
+    articulos.push(nuevoArticulo);
+
+    res.status(201).json(nuevoArticulo);
+});
+
 module.exports = router;
