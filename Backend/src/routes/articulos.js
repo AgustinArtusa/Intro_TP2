@@ -10,12 +10,18 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    const articulo = articulos.find((element) => element.id == req.params.id);
-    if (articulo === undefined) {
-        res.sendStatus(404);
-        return;
+    const articulo = await prisma.articulo.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+
+    if (articulo === null){
+        res.sendStatus(404)
+        return
     }
-    res.json(articulo);
+
+    res.json(articulo)
 });
 
 router.post('/', async (req, res) => {
