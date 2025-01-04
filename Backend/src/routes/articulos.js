@@ -62,4 +62,17 @@ router.post('/', (req, res) => {
     res.status(201).json(nuevoArticulo);
 });
 
+router.delete('/:id', async (req, res) => {
+    const articulo = articulos.find((element) => element.id == req.params.id);
+
+    if (!articulo) {
+        res.sendStatus(404);
+        return;
+    }
+
+    articulos = articulos.filter((element) => element.id != req.params.id);
+
+    res.send(articulo);
+});
+
 module.exports = router;
