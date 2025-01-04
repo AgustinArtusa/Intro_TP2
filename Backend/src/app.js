@@ -1,6 +1,7 @@
 const express = require('express')
 //var cors = require('cors')
 const usuarios = require('./routes/usuarios')
+const articulos = require('./routes/articulos')
 const app = express()
 const port = 3000
 
@@ -12,6 +13,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/usuarios', usuarios)
+app.use('/api/v1/articulos', articulos)
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

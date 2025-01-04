@@ -1,0 +1,22 @@
+meta {
+  name: Agregar Articulo
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/v1/articulos
+  body: json
+  auth: none
+}
+
+body:json {
+  { 
+        id: 2, 
+        nombre: "Espada Samurai", 
+        precio: 2500, 
+        descripcion: "Espada japonesa original de la era Edo", 
+        origen: "Japón", 
+        antiguedad: "400 años" 
+      }
+}
