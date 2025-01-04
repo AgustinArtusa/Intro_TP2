@@ -57,20 +57,28 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) =>{
-    let articulo_index = articulos.findIndex((element) => element.id == req.params.id);
-    
-    if (articulo_index === -1) {
-        res.sendStatus(404);
-        return;
+    let articulo = await prisma.articulo.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+    if (articulo === null){
+        res.sendStatus(404)
+        return
     }
-
-    articulos[articulo_index].nombre = req.body.nombre ?? articulos[articulo_index].nombre
-    articulos[articulo_index].precio = req.body.precio ?? articulos[articulo_index].precio
-    articulos[articulo_index].descripcion = req.body.descripcion ?? articulos[articulo_index].descripcion
-    articulos[articulo_index].origen = req.body.origen ?? articulos[articulo_index].origen
-    articulos[articulo_index].antiguedad = req.body.antiguedad ?? articulos[articulo_index].antiguedad
-
-    res.send(articulos[articulo_index])
+    articulo = await prisma.articulo.update({
+        where: {
+            id: articulo.id
+        },
+        data: {
+            nombre: req.body.nombre,
+            precio: req.body.precio,
+            descripcion: req.body.descripcion,
+            origen: req.body.origen,
+            antiguedad: req.body.antiguedad
+        }
+    })
+    res.send(articulo)
 
 });
 
