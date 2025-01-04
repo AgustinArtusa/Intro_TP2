@@ -15,3 +15,12 @@ model Usuario {
   dinero      Decimal @default(0)
   telefono    Int
 }
+
+model Articulos {
+  id          Int     @id @default(autoincrement())
+  nombre      String
+  precio      Decimal
+  descripcion String
+  origen      String
+  antiguedad  String
+}
