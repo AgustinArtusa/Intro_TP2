@@ -75,4 +75,22 @@ router.delete('/:id', async (req, res) => {
     res.send(articulo);
 });
 
+router.put('/:id', async (req, res) =>{
+    let articulo_index = articulos.findIndex((element) => element.id == req.params.id);
+    
+    if (articulo_index === -1) {
+        res.sendStatus(404);
+        return;
+    }
+
+    articulos[articulo_index].nombre = req.body.nombre ?? articulos[articulo_index].nombre
+    articulos[articulo_index].precio = req.body.precio ?? articulos[articulo_index].precio
+    articulos[articulo_index].descripcion = req.body.descripcion ?? articulos[articulo_index].descripcion
+    articulos[articulo_index].origen = req.body.origen ?? articulos[articulo_index].origen
+    articulos[articulo_index].antiguedad = req.body.antiguedad ?? articulos[articulo_index].antiguedad
+
+    res.send(articulos[articulo_index])
+
+});
+
 module.exports = router;
