@@ -38,16 +38,22 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    const articulo = articulos.find((element) => element.id == req.params.id);
-
-    if (!articulo) {
-        res.sendStatus(404);
-        return;
+    const articulo = await prisma.articulo.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+    if (articulo === null) {
+        res.sendStatus(404)
+        return
     }
 
-    articulos = articulos.filter((element) => element.id != req.params.id);
-
-    res.send(articulo);
+    await prisma.articulo.delete({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+    res.send(articulo)
 });
 
 router.put('/:id', async (req, res) =>{
