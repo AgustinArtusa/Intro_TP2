@@ -16,7 +16,7 @@ model Usuario {
   telefono    Int
 }
 
-model Articulos {
+model Articulo {
   id          Int     @id @default(autoincrement())
   nombre      String
   precio      Decimal

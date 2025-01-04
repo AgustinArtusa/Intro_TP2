@@ -1,34 +1,11 @@
+const { PrismaClient } = require('@prisma/client')
 const express = require('express');
 const router = express.Router();
 
-var articulos = [
-    { 
-      id: 1, 
-      nombre: "Jarrón Antiguo", 
-      precio: 1200, 
-      descripcion: "Jarrón de porcelana del siglo XVIII", 
-      origen: "China", 
-      antiguedad: "300 años" 
-    },
-    { 
-      id: 2, 
-      nombre: "Espada Samurai", 
-      precio: 2500, 
-      descripcion: "Espada japonesa original de la era Edo", 
-      origen: "Japón", 
-      antiguedad: "400 años" 
-    },
-    { 
-      id: 3, 
-      nombre: "Reloj de Bolsillo", 
-      precio: 800, 
-      descripcion: "Reloj de bolsillo dorado del siglo XIX", 
-      origen: "Suiza", 
-      antiguedad: "150 años" 
-    }
-];
+const prisma = new PrismaClient()
 
 router.get('/', async (req, res) => {
+    const articulos = await prisma.articulo.findMany()
     res.json(articulos);
 });
 
@@ -41,25 +18,17 @@ router.get('/:id', async (req, res) => {
     res.json(articulo);
 });
 
-router.post('/', (req, res) => {
-    const { nombre, precio, descripcion, origen, antiguedad,} = req.body;
-
-    if (!nombre || !precio || !descripcion || !origen || !antiguedad) {
-        return res.status(400).json({ mensaje: 'Faltan datos necesarios para crear el artículo' });
-    }
-
-    const nuevoArticulo = {
-        id: articulos.length + 1,
-        nombre,
-        precio,
-        descripcion,
-        origen,
-        antiguedad,
-    };
-
-    articulos.push(nuevoArticulo);
-
-    res.status(201).json(nuevoArticulo);
+router.post('/', async (req, res) => {
+    const articulo = await prisma.articulo.create({
+        data: {
+            nombre: req.body.nombre,
+            precio: req.body.precio,
+            descripcion: req.body.descripcion,
+            origen: req.body.origen,
+            antiguedad: req.body.antiguedad
+        }
+    })
+    res.status(201).send(articulo)
 });
 
 router.delete('/:id', async (req, res) => {
