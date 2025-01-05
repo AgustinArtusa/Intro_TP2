@@ -12,7 +12,7 @@
                 <nav class="level">
                   <div class="level-left">
                     <p class="level-item">
-                      <a href="usuarios.html" class="button is-link is-info">Volver a Usuarios</a>
+                      <a href="usuarios.html" class="button is-link is-info" onclick="volverAUsuarios()">Volver a Usuarios</a>
                     </p>
                   </div>
                 </nav>
@@ -52,8 +52,12 @@
                         </div>
                     </form>
                 </div>
-                    
         </section>
+        <script>
+            function volverAUsuarios() {
+                window.history.back();
+            }
+        </script>
     </body>
 </html>
 
