@@ -59,8 +59,11 @@
                 </div>
         </section>
         <script>
+            let userId;
             window.onload = () => {
-                const userId = new URLSearchParams(window.location.search).get('id');
+                const urlParams = new URLSearchParams(window.location.search);
+                userId = urlParams.get('id');
+
                 if (!userId){
                     alert('Id de usuario no valido');
                     return;
@@ -86,7 +89,7 @@
                 const username = document.getElementById('username').value;
                 const contraseña = document.getElementById('contraseña').value;
                 const dinero = document.getElementById('dinero').value;
-                const telefono = document.getElementById('telefono').value;
+                const telefono = parseInt(document.getElementById('telefono').value);
 
                 const datos = {
                     nombre,
