@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lista de usuarios</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="My firts HTML">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    </head>
+
+    <body>
+
+      <div class="container is-fluid">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="navbar-brand">
+                  <a class="navbar-item" href="index.html">
+                    Tienda
+                  </a>
+              
+                  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </a>
+              </div>
+              
+              <div id="navbarBasicExample" class="navbar-menu">
+                  <div class="navbar-start">
+                    <a class="navbar-item" href="usuarios.html">
+                      Usuarios
+                    </a>
+              
+
+              
+                  <div class="navbar-end">
+                    <div class="navbar-item">
+                      <div class="buttons">
+                        <a class="button is-primary" href="modificar.html">
+                          <strong>Actualizar Usuario</strong>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+          </nav>
+          <h1>USUARIOS</h1>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Username</th>
+                <th>Contraseña</th>
+                <th>Dinero</th>
+                <th>Telefono</th>
+              </tr>
+            </thead>
+
+            <tbody id="users-data">
+              <!-- <tr>
+                <th>1</th>
+                <td>Manu B</td>
+                <td>99999</td>
+                <td>99999</td>
+              </tr>
+
+              <tr>
+                <th>2</th>
+                <td>Manu C</td>
+                <td>6951</td>
+              </tr> -->
+
+            </tbody>
+            
+          </table>
+      </div>
+
+    </body>
+
+    <script>
+      fetch('http://localhost:3000/api/v1/usuarios')
+      .then(response => response.json())
+      .then(usuarios => {
+          console.log(usuarios);
+
+          let table = document.getElementById('users-data');
+          usuarios.forEach(usuario => {
+              let tr = document.createElement('tr');
+              let id = document.createElement('th');
+              const link = document.createElement('a')
+              link.href = `/modificar?id=${usuario.id}`;
+              link.textContent = usuario.id
+              id.appendChild(link);
+
+              let nombre = document.createElement('td');
+              nombre.textContent = usuario.nombre;
+              let user_name = document.createElement('td');
+              user_name.textContent = usuario.username;
+              let password = document.createElement('td');
+              password.textContent = usuario.contraseña;
+              let plata = document.createElement('td');
+              plata.textContent = usuario.dinero;
+              let telefono = document.createElement('td');
+              telefono.textContent = usuario.telefono;
+
+              let actualizar = document.createElement('td');
+              let button = document.createElement('button');
+              button.textContent = 'Actualizar';
+              button.className = 'button has-text-info is-small';
+              
+              button.addEventListener("click", function() {
+              //console.log(`/modificar.html?id=${usuario.id}`);
+              window.location.href = `modificar.html?id=${usuario.id}`; 
+              });
+              
+              tr.appendChild(id);
+              tr.appendChild(nombre);
+              tr.appendChild(user_name);
+              tr.appendChild(password);
+              tr.appendChild(plata);
+              tr.appendChild(telefono);
+              table.appendChild(tr);
+              
+              actualizar.appendChild(button);
+              tr.appendChild(actualizar);
+          });
+      });
+  </script>
+
+</html>
