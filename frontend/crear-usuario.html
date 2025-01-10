@@ -34,33 +34,66 @@
                     </a>
           </nav>
           <h1>REGISTRO</h1>
-          
+          <div class="container is-max-desktop">
+            <form>
+              <div class="field">
+                  <label class="label">Nombre</label>
+                  <div class="control">
+                    <input id="nombre" class="input" type="text" placeholder="Nombre">
+                  </div>
+              </div>
+  
+              <div class="field">
+                  <label class="label">Username</label>
+                  <div class="control">
+                    <input id="username" class="input" type="text" placeholder="Username">
+                  </div>
+              </div>
+  
+              <div class="field">
+                  <label class="label">Password</label>
+                  <div class="control">
+                    <input id="password" class="input" type="text" placeholder="Contraseña">
+                  </div>
+              </div>
+
+              <div class="field">
+                    <label class="label">Dinero</label>
+                    <div class="control">
+                        <input id="dinero" class="input" type="text" placeholder="Dinero">
+                    </div>
+              </div>
+
+
+                <div class="field">
+                    <label class="label">Telefono</label>
+                    <div class="control">
+                        <input id="telefono" class="input" type="text" placeholder="Telefono">
+                    </div>
+                </div>
+  
+              <div class="field is-grouped is-grouped-centered">
+                  <p class="control">
+                    <button class="button is-primary" onclick="createUser()">
+                      Guardar
+                    </button>
+                  </p>
+                  <p class="control">
+                    <a class="button is-light" onclick="clearForm()">
+                      Limpiar
+                    </a>
+                  </p>
+              </div>
+  
+            </form>
+          </div>          
       </div>
 
     </body>
 
     <script>
-        const usersData = document.getElementById('users-data');
-    
-        const getUsers = async () => {
-            const response = await fetch('http://localhost:3000/users');
-            const data = await response.json();
-            console.log(data);
-            data.forEach(user => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <th>${user.id}</th>
-                <td>${user.nombre}</td>
-                <td>${user.username}</td>
-                <td>${user.contraseña}</td>
-                <td>${user.dinero}</td>
-                <td>${user.telefono}</td>
-            `;
-            usersData.appendChild(tr);
-            });
-        }
-    
-        getUsers();
+
+
   </script>
 
 </html>
