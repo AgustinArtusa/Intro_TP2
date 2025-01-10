@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Crear usuarios</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="My firts HTML">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    </head>
+
+    <body>
+
+      <div class="container is-fluid">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="navbar-brand">
+                  <a class="navbar-item" href="index.html">
+                    Tienda
+                  </a>
+              
+                  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </a>
+              </div>
+              
+              <div id="navbarBasicExample" class="navbar-menu">
+                  <div class="navbar-start">
+                    <a class="navbar-item" href="usuarios.html">
+                      Usuarios
+                    </a>
+          </nav>
+          <h1>REGISTRO</h1>
+          
+      </div>
+
+    </body>
+
+    <script>
+        const usersData = document.getElementById('users-data');
+    
+        const getUsers = async () => {
+            const response = await fetch('http://localhost:3000/users');
+            const data = await response.json();
+            console.log(data);
+            data.forEach(user => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <th>${user.id}</th>
+                <td>${user.nombre}</td>
+                <td>${user.username}</td>
+                <td>${user.contraseña}</td>
+                <td>${user.dinero}</td>
+                <td>${user.telefono}</td>
+            `;
+            usersData.appendChild(tr);
+            });
+        }
+    
+        getUsers();
+  </script>
+
+</html>
