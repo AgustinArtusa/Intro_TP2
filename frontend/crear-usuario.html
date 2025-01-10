@@ -92,8 +92,46 @@
     </body>
 
     <script>
+        function createUser(){
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const dinero = document.getElementById('dinero').value;
+            const telefono = document.getElementById('telefono').value;
+            let body = {
+                nombre: nombre,
+                username: username,
+                contraseña: password,
+                dinero: dinero,
+                telefono: parseInt(telefono),
+            };
 
+            fetch("http://localhost:3000/api/v1/usuarios", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(response => {
+                if (response.status === 201) {
+                    alert('Usuario creado con exito');
+                    clearForm();
+                }
+                else
+                {
+                    alert('Error al crear un Usuario');
+                }
+            });
+        }
 
+        function clearForm() {
+            const nombre = document.getElementById('nombre').value = '';
+            const username = document.getElementById('username').value = '';
+            const password = document.getElementById('password').value = '';
+            const dinero = document.getElementById('dinero').value = '';
+            const telefono = document.getElementById('telefono').value = '';
+        }
   </script>
 
 </html>
