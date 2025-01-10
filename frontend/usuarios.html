@@ -91,6 +91,7 @@
           let table = document.getElementById('users-data');
           usuarios.forEach(usuario => {
               let tr = document.createElement('tr');
+              tr.id = 'usuario-' + usuario.id;
               let id = document.createElement('th');
               const link = document.createElement('a')
               link.href = `/modificar?id=${usuario.id}`;
@@ -118,6 +119,13 @@
               window.location.href = `modificar.html?id=${usuario.id}`; 
               });
               
+              let borrar = document.createElement('td');
+              let boton = document.createElement('button');
+              boton.textContent = 'Borrar';
+              boton.className = 'button is-danger is-small';
+              boton.onclick = function() { deleteCharacter(usuario.id);};
+              borrar.appendChild(boton);
+              
               tr.appendChild(id);
               tr.appendChild(nombre);
               tr.appendChild(user_name);
@@ -127,9 +135,23 @@
               table.appendChild(tr);
               
               actualizar.appendChild(button);
+              tr.appendChild(borrar);
               tr.appendChild(actualizar);
           });
       });
+
+      deleteCharacter = function(id){
+        alert('Borrando Usuario' + id);
+        fetch('http://localhost:3000/api/v1/usuarios/' + id, {
+          method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response);
+          let tr = document.getElementById('usuario-' + response.id);   
+          tr.remove();
+        })
+      }
   </script>
 
 </html>
