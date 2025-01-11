@@ -1,0 +1,25 @@
+meta {
+  name: Eliminar Tienda
+  type: http
+  seq: 4
+}
+
+delete {
+  url: http://localhost:3000/api/v1/tiendas/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: 2
+}
+
+body:json {
+  {
+    "ubicacion": "Av. San Martin",
+    "horario": "L-V 10:00 a 19:00",
+    "estado": "Abierto",
+    "telefono": 128462684,
+    "email_contacto": "hole@gmail.com"
+  }
+}
