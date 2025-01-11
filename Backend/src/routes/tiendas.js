@@ -56,4 +56,30 @@ router.delete('/:id', async (req, res) => {
     res.send(tiendas)
 });
 
+router.put('/:id', async (req, res) =>{
+    let tiendas = await prisma.tienda.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+    if (tiendas === null){
+        res.sendStatus(404)
+        return
+    }
+    tiendas = await prisma.tienda.update({
+        where: {
+            id: tiendas.id
+        },
+        data: {
+            ubicacion: req.body.ubicacion,
+            horario: req.body.horario,
+            estado: req.body.estado,
+            telefono: req.body.telefono,
+            email_contacto: req.body.email_contacto
+        }
+    })
+    res.send(tiendas)
+
+});
+
 module.exports = router;
