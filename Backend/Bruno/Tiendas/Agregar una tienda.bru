@@ -1,0 +1,21 @@
+meta {
+  name: Agregar una tienda
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/v1/tiendas
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "ubicacion": "Av. San Martin",
+    "horario": "L-V 10:00 a 19:00",
+    "estado": "Abierto",
+    "telefono": 128462684,
+    "email_contacto": "hole@gmail.com"
+  }
+}
