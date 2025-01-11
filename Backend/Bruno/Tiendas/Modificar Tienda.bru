@@ -1,0 +1,21 @@
+meta {
+  name: Modificar Tienda
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3000/api/v1/tiendas/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: 3
+}
+
+body:json {
+  {
+    "estado": "Cerrado temporalmente"
+  }
+}
