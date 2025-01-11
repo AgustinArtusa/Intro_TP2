@@ -24,3 +24,12 @@ model Articulo {
   origen      String
   antiguedad  String
 }
+
+model Tienda {
+  id          Int     @id @default(autoincrement())
+  ubicacion      String
+  horario   String
+  estado    String
+  telefono    Int
+  email_contacto     String
+}
