@@ -33,7 +33,7 @@
         <h1 class="title has-text-centered" style="padding-top: 5%;">Iniciar Sesión</h1>
 
         <div class="container" style="max-width: 35%;">
-            <form>
+            <form id="loginForm">
                 <div class="field">
                     <label class="label">Username</label>
                     <div class="control">
@@ -50,7 +50,7 @@
 
                 <div class="field is-grouped is-grouped-centered">
                     <p class="control">
-                        <button class="button is-primary" type="submit">
+                        <button class="button is-primary">
                             Iniciar Sesión
                         </button>
                     </p>
@@ -64,4 +64,32 @@
         </div>
     </div>
 </body>
+
+<script>
+
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://localhost:3000/api/v1/usuarios/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = 'tienda.html';
+            } else {
+                alert("Usuario o Contraseña incorrectos")
+            }
+        })
+    });
+
+</script>
 </html>
