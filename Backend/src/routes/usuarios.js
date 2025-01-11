@@ -83,4 +83,20 @@ router.put('/:id', async (req, res) => {
     res.send(usuario)
 })
 
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    const usuario = await prisma.usuario.findFirst({
+        where: {
+            username: username,
+        }
+    });
+
+    if (!usuario || usuario.contraseña !== password) {
+        res.status(401).json({ message: 'Credenciales incorrectas' });
+    } else {
+        res.status(200).json({ message: 'Login exitoso' });
+    }
+});
+
 module.exports = router

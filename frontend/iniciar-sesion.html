@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+</head>
+<body>
+    <div class="container is-fluid">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="index.html">
+                  Tienda
+                </a>
+            
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+            </div>
+            
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                  <a class="navbar-item" href="usuarios.html">
+                    Usuarios
+                  </a>
+        </nav>
+
+        <h1 class="title has-text-centered" style="padding-top: 5%;">Iniciar Sesión</h1>
+
+        <div class="container" style="max-width: 35%;">
+            <form id="loginForm">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input id="username" class="input" type="text" placeholder="Ingresa tu username">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input id="password" class="input" type="password" placeholder="Ingresa tu contraseña">
+                    </div>
+                </div>
+
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <button class="button is-primary">
+                            Iniciar Sesión
+                        </button>
+                    </p>
+                    <p class="control">
+                        <a href="crear-usuario.html" class="button is-light">
+                            Registrarse
+                        </a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://localhost:3000/api/v1/usuarios/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = 'tienda.html';
+            } else {
+                alert("Usuario o Contraseña incorrectos")
+            }
+        })
+    });
+
+</script>
+</html>
