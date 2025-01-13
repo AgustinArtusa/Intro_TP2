@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Crear Articulos</title>
+        <title>Crear Producto</title>
         <meta charset="UTF-8">
         <meta name="description" content="My firts HTML">
         <meta name="keywords" content="HTML, CSS, JavaScript">
@@ -12,68 +12,51 @@
 
     <body>
 
-        <div class="container is-fluid">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                    <a class="navbar-item" href="tiendas.html">Tienda</a>
-                    <a class="navbar-item" href="articulos.html">Productos</a>
-                </div>
-            </nav>
-
-          <div class="container is-max-desktop">
-            <form>
-              <div class="field">
-                  <label class="label">Nombre</label>
-                  <div class="control">
-                    <input id="nombre" class="input" type="text" placeholder="Nombre">
-                  </div>
-              </div>
-  
-              <div class="field">
-                  <label class="label">Precio</label>
-                  <div class="control">
-                    <input id="precio" class="input" type="text" placeholder="Precio">
-                  </div>
-              </div>
-  
-              <div class="field">
-                  <label class="label">Descripcion</label>
-                  <div class="control">
-                    <input id="descripcion" class="input" type="text" placeholder="Descripcion">
-                  </div>
-              </div>
-
-              <div class="field">
-                    <label class="label">Origen</label>
-                    <div class="control">
-                        <input id="origen" class="input" type="text" placeholder="Origen">
-                    </div>
-              </div>
-
-
+        <div class="container">
+            <h1 class="title">Crear Producto</h1>
+    
                 <div class="field">
-                    <label class="label">Antiguedad</label>
+                    <label class="label" for="nombre">Nombre del Artículo:</label>
                     <div class="control">
-                        <input id="antiguedad" class="input" type="text" placeholder="Antiguedad">
+                        <input class="input" type="text" id="nombre" required>
                     </div>
                 </div>
-  
-              <div class="field is-grouped is-grouped-centered">
-                  <p class="control">
-                    <button class="button is-primary" onclick="createArticulo()">
-                      Crear
-                    </button>
-                  </p>
-                  <p class="control">
-                    <a class="button is-light" onclick="clearForm()">
-                      Limpiar
-                    </a>
-                  </p>
-              </div>
-  
-            </form>
-          </div>          
-      </div>
+    
+                <div class="field">
+                    <label class="label" for="precio">Precio:</label>
+                    <div class="control">
+                        <input class="input" type="number" id="precio" step="0.01" required>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <label class="label" for="descripcion">Descripción:</label>
+                    <div class="control">
+                        <textarea class="textarea" id="descripcion" required></textarea>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <label class="label" for="origen">Origen:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="origen" required>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <label class="label" for="antiguedad">Antigüedad (en años):</label>
+                    <div class="control">
+                        <input class="input" type="number" id="antiguedad" required>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit" onclick="createArticulo()">Crear Artículo</button>
+                        <a class="button is-light" href="articulos.html">Cancelar</a>
+                    </div>
+                </div>
+        </div>
 
     </body>
     <script>
@@ -109,14 +92,6 @@
                     alert('Error al crear el artículo.');
                 }
             })
-        }
-    
-        function clearForm() {
-            document.getElementById('nombre').value = '';
-            document.getElementById('precio').value = '';
-            document.getElementById('descripcion').value = '';
-            document.getElementById('origen').value = '';
-            document.getElementById('antiguedad').value = '';
         }
     </script>
 

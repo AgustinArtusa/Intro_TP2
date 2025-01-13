@@ -55,7 +55,7 @@
                 <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
                 <p><strong>Origen:</strong> ${articulo.origen}</p>
                 <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                <button class="button is-success is-small" onclick="window.location.href='modificar-producto.html?id=${articulo.id}'">Actualizar</button>
+                <button class="button is-success is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
                 <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
             `;
             grid.appendChild(card);
