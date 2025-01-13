@@ -40,5 +40,38 @@
         </div>
     </div>
 </body>
+<script>
+    fetch('http://localhost:3000/api/v1/articulos')
+        .then(response => response.json())
+        .then(articulos => {
+            const grid = document.getElementById('products-grid');
+            articulos.forEach(articulo => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <h2 class="title is-4">${articulo.nombre}</h2>
+                <p><strong>Precio:</strong> $${articulo.precio}</p>
+                <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
+                <p><strong>Origen:</strong> ${articulo.origen}</p>
+                <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                <button class="button is-success is-small" onclick="window.location.href='modificar-producto.html?id=${articulo.id}'">Actualizar</button>
+                <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+            `;
+            grid.appendChild(card);
+            });
+        });
 
+    function deleteProduct(id) {
+        if (confirm('¿Estás seguro de que quieres borrar este producto?')) {
+            fetch(`http://localhost:3000/api/v1/articulos/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(response => {
+                alert('Producto eliminado');
+                location.reload();
+            });
+        }
+    }
+</script>
 </html>
