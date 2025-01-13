@@ -59,7 +59,66 @@
                 </div>
         </section>
         <script>
+            let tiendaId;
+            window.onload = () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                tiendaId = urlParams.get('id');
 
+                if (!tiendaId){
+                    alert('Id de la tienda no es valido');
+                    return;
+                }
+
+                fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId}`)
+                    .then(response => response.json())
+                    .then(tienda => {
+                        document.getElementById('ubicacion').value = tienda.ubicacion;
+                        document.getElementById('horario').value = tienda.horario;
+                        document.getElementById('estado').value = tienda.estado;
+                        document.getElementById('telefono').value = tienda.telefono;
+                        document.getElementById('email_contacto').value = tienda.email_contacto;
+                    })
+                    .catch(() => {
+                        alert('No se pudo cargar una tienda');
+                    });
+                }
+            document.getElementById('formulario').onsubmit = (event) => {
+                event.preventDefault(); 
+
+                const ubicacion = document.getElementById('ubicacion').value;
+                const horario = document.getElementById('horario').value;
+                const estado = document.getElementById('estado').value;
+                const telefono = parseInt(document.getElementById('telefono').value);
+                const email_contacto = document.getElementById('email_contacto').value;
+
+                const datos = {
+                    ubicacion,
+                    horario,
+                    estado,
+                    telefono,
+                    email_contacto
+                };
+
+                fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datos)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Datos actualizados correctamente');
+                    } 
+                    else {
+                        alert('Error al actualizar los datos');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+            function volverATiendas() {
+                window.history.back();
+            }
         </script>
     </body>
 </html>
