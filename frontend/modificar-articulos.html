@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modificar Producto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Modificar Productos</h1>
+
+        <form id="form-modificar" onsubmit="updateArticulo(event)">
+            <div class="field">
+                <label class="label" for="nombre">Nombre del Artículo:</label>
+                <div class="control">
+                    <input class="input" type="text" id="nombre" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="precio">Precio:</label>
+                <div class="control">
+                    <input class="input" type="number" id="precio" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="descripcion">Descripción:</label>
+                <div class="control">
+                    <textarea class="textarea" id="descripcion" required></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="origen">Origen:</label>
+                <div class="control">
+                    <input class="input" type="text" id="origen" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="antiguedad">Antigüedad (en años):</label>
+                <div class="control">
+                    <input class="input" type="number" id="antiguedad" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Actualizar Artículo</button>
+                    <a class="button is-light" href="articulos.html">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
