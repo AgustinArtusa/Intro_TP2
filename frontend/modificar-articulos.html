@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modificar Producto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Modificar Productos</h1>
+
+        <form id="form-modificar" onsubmit="updateArticulo(event)">
+            <div class="field">
+                <label class="label" for="nombre">Nombre del Artículo:</label>
+                <div class="control">
+                    <input class="input" type="text" id="nombre" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="precio">Precio:</label>
+                <div class="control">
+                    <input class="input" type="number" id="precio" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="descripcion">Descripción:</label>
+                <div class="control">
+                    <textarea class="textarea" id="descripcion" required></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="origen">Origen:</label>
+                <div class="control">
+                    <input class="input" type="text" id="origen" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="antiguedad">Antigüedad (en años):</label>
+                <div class="control">
+                    <input class="input" type="number" id="antiguedad" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Actualizar Artículo</button>
+                    <a class="button is-light" href="articulos.html">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const articuloId = params.get('id');
+
+        function loadArticulo() {
+            fetch(`http://localhost:3000/api/v1/articulos/${articuloId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar los datos del artículo');
+                    }
+                    return response.json();
+                })
+                .then(articulo => {
+                    document.getElementById('nombre').value = articulo.nombre;
+                    document.getElementById('precio').value = articulo.precio;
+                    document.getElementById('descripcion').value = articulo.descripcion;
+                    document.getElementById('origen').value = articulo.origen;
+                    document.getElementById('antiguedad').value = articulo.antiguedad;
+                })
+        }
+
+        function updateArticulo(event) {
+            event.preventDefault();
+
+            const nombre = document.getElementById('nombre').value;
+            const precio = document.getElementById('precio').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const origen = document.getElementById('origen').value;
+            const antiguedad = document.getElementById('antiguedad').value;
+
+            const body = {
+                nombre,
+                precio,
+                descripcion,
+                origen,
+                antiguedad,
+            };
+
+            fetch(`http://localhost:3000/api/v1/articulos/${articuloId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Artículo actualizado con éxito.');
+                        window.location.href = 'articulos.html';
+                    } else {
+                        alert('Error al actualizar el artículo.');
+                    }
+                })
+        }
+
+        document.addEventListener('DOMContentLoaded', loadArticulo);
+    </script>
+</body>
+</html>
