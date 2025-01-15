@@ -18,26 +18,34 @@ model Usuario {
 }
 
 model Articulo {
-  id          Int     @id @default(autoincrement())
-  nombre      String
-  precio      Decimal
-  descripcion String
-  origen      String
-  antiguedad  String
-  disponible  Boolean @default(true)
-  tiendaId    Int
-  tienda      Tienda   @relation(fields: [tiendaId], references: [id])
-  compras     Compra[]
+  id             Int     @id @default(autoincrement())
+  nombre         String
+  precio         Decimal
+  descripcion    String
+  origen         String
+  antiguedad     String
+  compras        Compra[]
+  disponibilidad Disponibilidad[]
 }
 
 model Tienda {
-  id                 Int     @id @default(autoincrement())
-  ubicacion          String
-  horario            String
-  estado             String
-  telefono           Int
-  email_contacto     String
-  articulos          Articulo[]
+  id                    Int     @id @default(autoincrement())
+  ubicacion             String
+  horario               String
+  estado                String
+  telefono              Int
+  email_contacto        String
+  articulosDisponibles  Disponibilidad[]
+}
+
+model Disponibilidad {
+  id          Int      @id @default(autoincrement())
+  articuloId  Int
+  tiendaId    Int
+  disponible  Boolean  @default(true) 
+  articulo    Articulo @relation(fields: [articuloId], references: [id])
+  tienda      Tienda   @relation(fields: [tiendaId], references: [id])
+  @@unique([articuloId, tiendaId])  
 }
 
 model Compra {
@@ -45,9 +53,7 @@ model Compra {
   usuarioId   Int
   articuloId  Int
   fecha       DateTime @default(now())
-
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
   articulo    Articulo @relation(fields: [articuloId], references: [id])
-
   @@unique([usuarioId, articuloId])
 }
