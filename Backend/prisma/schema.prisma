@@ -11,9 +11,10 @@ model Usuario {
   id          Int     @id @default(autoincrement())
   nombre      String
   username    String
-  contraseña String
+  contraseña  String
   dinero      Decimal @default(0)
   telefono    Int
+  compras     Compra[]
 }
 
 model Articulo {
@@ -23,13 +24,27 @@ model Articulo {
   descripcion String
   origen      String
   antiguedad  String
+  disponible  Boolean @default(true)
+  compras     Compra[]
 }
 
 model Tienda {
-  id          Int     @id @default(autoincrement())
-  ubicacion      String
-  horario   String
-  estado    String
-  telefono    Int
+  id                 Int     @id @default(autoincrement())
+  ubicacion          String
+  horario            String
+  estado             String
+  telefono           Int
   email_contacto     String
+}
+
+model Compra {
+  id          Int @id @default(autoincrement())
+  usuarioId   Int
+  articuloId  Int
+  fecha       DateTime @default(now())
+
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  articulo    Articulo @relation(fields: [articuloId], references: [id])
+
+  @@unique([usuarioId, articuloId])
 }
