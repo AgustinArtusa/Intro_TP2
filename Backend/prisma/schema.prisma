@@ -25,6 +25,8 @@ model Articulo {
   origen      String
   antiguedad  String
   disponible  Boolean @default(true)
+  tiendaId    Int
+  tienda      Tienda   @relation(fields: [tiendaId], references: [id])
   compras     Compra[]
 }
 
@@ -35,6 +37,7 @@ model Tienda {
   estado             String
   telefono           Int
   email_contacto     String
+  articulos          Articulo[]
 }
 
 model Compra {
