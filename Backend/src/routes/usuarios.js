@@ -166,4 +166,9 @@ router.post('/:id/articulos', async (req,res) => {
     res.status(201).json(compra);
 })
 
+await prisma.disponibilidad.update({
+    where: { id: disponibilidad.id },
+    data: { disponible: false },
+});
+
 module.exports = router
