@@ -43,6 +43,40 @@
     </body>
 
     <script>
+        const urlParams = new URLSearchParams (window.location.search);
+        const tiendaId = urlParams.get('id');
+        document.getElementById('title').textContent += tiendaId;
+
+        fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId}/articulos`)
+            .then((response) => response.json())
+            .then((data) => {
+                const mainContent = document.getElementById("main-content");
+
+                data.forEach(articulo => {
+                    const card = document.createElement("div");
+                    card.classList = ("card");
+                    const cardContent = document.createElement("div");
+                    cardContent.classList = ("card-content");
+                    const content = document.createElement("div");
+                    content.classList = ("content");
+                    content.innerHTML = `
+                    Nombre: ${articulo.nombre} 
+                    <br>
+                    Precio: $${articulo.precio}
+                    <br>
+                    Descrpcion: ${articulo.descripcion}
+                    <br>
+                    Origen: ${articulo.origen}
+                    <br>
+                    Antiguedad: ${articulo.antiguedad}
+                    <br>
+                    `;
+                    cardContent.appendChild(content);
+                    card.appendChild(cardContent);
+                    mainContent.appendChild(card);
+                    
+                });
+            });
   </script>
 
 </html>
