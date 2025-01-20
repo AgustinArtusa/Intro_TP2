@@ -42,18 +42,15 @@ model Disponibilidad {
   id          Int      @id @default(autoincrement())
   articuloId  Int
   tiendaId    Int
-  disponible  Boolean  @default(true) 
+  disponible  Boolean @default(true)
   articulo    Articulo @relation(fields: [articuloId], references: [id])
   tienda      Tienda   @relation(fields: [tiendaId], references: [id])
-  @@unique([articuloId, tiendaId])  
 }
 
 model Compra {
   id          Int @id @default(autoincrement())
   usuarioId   Int
   articuloId  Int
-  fecha       DateTime @default(now())
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
   articulo    Articulo @relation(fields: [articuloId], references: [id])
-  @@unique([usuarioId, articuloId])
 }
