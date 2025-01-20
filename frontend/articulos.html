@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Productos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
+        body {
+            background-color: #000000;
+            height: 100vh;
+        }
+        .container {
+            margin-top: 20px;
+        }
         .product-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 16px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            padding: 20px;
             margin: 16px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
             transition: transform 0.2s;
         }
         .product-card:hover {
@@ -23,22 +29,34 @@
             flex-wrap: wrap;
             justify-content: center;
         }
+        .title {
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+        }
+        .button {
+            border-radius: 8px;
+            margin: 5px;
+            color: white;
+        }
+        .button.is-primary {
+            background-color: #a200ff;
+            border: none;
+        }
+        .button.is-primary:hover {
+            background-color: #7a00c4;
+        }
     </style>
 </head>
 <body>
     <div class="container is-fluid">
         <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="tiendas.html">Tienda</a>
-            </div>
-            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Crear Articulo</button>
+            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Crear Producto</button>
         </nav>
 
-        <h1 class="title is-2 has-text-centered">PRODUCTOS</h1>
+        <h1 class="title is-2">Productos</h1>
 
-        <div id="products-grid" class="product-grid">
-
-        </div>
+        <div id="products-grid" class="product-grid"></div>
     </div>
 </body>
 <script>
@@ -47,19 +65,19 @@
         .then(articulos => {
             const grid = document.getElementById('products-grid');
             articulos.forEach(articulo => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <h2 class="title is-4">${articulo.nombre}</h2>
-                <p><strong>Precio:</strong> $${articulo.precio}</p>
-                <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
-                <p><strong>Origen:</strong> ${articulo.origen}</p>
-                <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                <button class="button is-success is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
-                <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
-                <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
-            `;
-            grid.appendChild(card);
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <h2 class="title is-4">${articulo.nombre}</h2>
+                    <p><strong>Precio:</strong> $${articulo.precio}</p>
+                    <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
+                    <p><strong>Origen:</strong> ${articulo.origen}</p>
+                    <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                    <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
+                    <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
+                    <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+                `;
+                grid.appendChild(card);
             });
         });
 
