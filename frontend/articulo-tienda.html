@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Disponibilidad</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="My firts HTML">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    </head>
+
+    <body>
+
+        <div class="container">
+            <h1 class="title">Disponibilidad</h1>
+                <form>
+                    <div class="field">
+                        <label class="label">Id de la Tienda:</label>
+                        <div class="control">
+                            <input class="input" type="number" id="tiendaId" placeholder="Tienda">
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <label class="label">Id del Producto :</label>
+                        <div class="control">
+                            <input class="input" type="number" id="articuloId" placeholder="Articulo">
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary" onclick="TiendaDisponible()">
+                                Indicar Disponibilidad
+                            </button>
+                            <a class="button is-light" href="articulos.html">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+        </div>
+
+        <script>
+            function TiendaDisponible() {
+                event.preventDefault();
+                const tiendaId = document.getElementById("tiendaId");
+                const articuloId = document.getElementById("articuloId");
+    
+                fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId.value}/articulos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        articuloId: articuloId.value
+                    })
+                })
+            }
+        </script>
+    </body>
+    
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lista de usuarios</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="My firts HTML">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    </head>
+
+    <body>
+
+      <div class="container is-fluid">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="navbar-brand">
+                  <a class="navbar-item" href="index.html">
+                    Tienda
+                  </a>
+              
+                  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </a>
+              </div>
+              
+              <div id="navbarBasicExample" class="navbar-menu">
+                  <div class="navbar-start">
+                    <a class="navbar-item" href="usuarios.html">
+                      Usuarios
+                    </a>
+              </div>
+          </nav>
+          <main id="main-content">
+            <h1 id="title">USUARIOS</h1>
+            <!-- <h2 id="user-name"></h2> -->
+          </main>
+      </div>
+
+    </body>
+
+    <script>
+        const urlParams = new URLSearchParams (window.location.search);
+        const usuarioId = urlParams.get('id');
+        document.getElementById('title').textContent += usuarioId;
+
+        fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}`)
+            .then((response) => response.json())
+            .then((data) =>{
+                const mainContent = document.getElementById("main-content");
+
+                const nombreElement = document.createElement("h2");
+                nombreElement.textContent = data.nombre;
+
+                const usernameElement = document.createElement("h3");
+                usernameElement.textContent = data.username;
+
+                const dineroElement = document.createElement("h4");
+                dineroElement.textContent = `$${data.dinero}`;
+
+                const telefonoElement = document.createElement("h5");
+                telefonoElement.textContent = data.telefono;
+
+                mainContent.appendChild(nombreElement);
+                mainContent.appendChild(usernameElement);
+                mainContent.appendChild(dineroElement);
+                mainContent.appendChild(telefonoElement);
+        });
+
+        fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}/articulos`)
+            .then((response) => response.json())
+            .then((data) => {
+                const mainContent = document.getElementById("main-content");
+
+                data.forEach(articulo => {
+                    const card = document.createElement("div");
+                    card.classList = ("card");
+                    const cardContent = document.createElement("div");
+                    cardContent.classList = ("card-content");
+                    const content = document.createElement("div");
+                    content.classList = ("content");
+                    content.innerHTML = `
+                    Nombre: ${articulo.nombre} 
+                    <br>
+                    Precio: $${articulo.precio}
+                    <br>
+                    Descrpcion: ${articulo.descripcion}
+                    <br>
+                    Origen: ${articulo.origen}
+                    <br>
+                    Antiguedad: ${articulo.antiguedad}
+                    <br>
+                    `;
+                    cardContent.appendChild(content);
+                    card.appendChild(cardContent);
+                    mainContent.appendChild(card);
+                    
+                });
+        });
+  </script>
+
+</html>
