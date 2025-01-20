@@ -1,92 +1,141 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Comprar Producto</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="My firts HTML">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="John Doe">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    </head>
+<head>
+    <title>Comprar Producto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 
-    <body>
+    <style>
+        body {
+            background-color: #000000;
+            height: 100vh;
+        }
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+        }
+        .title {
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .label {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .input, .button {
+            border-radius: 8px;
+        }
+        .input {
+            background-color: #2e2e2e;
+            color: white;
+            border: 1px solid #a200ff;
+        }
+        .input::placeholder {
+            color: #888;
+        }
+        .button {
+            background-color: #a200ff;
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #7a00c4;
+        }
+        .cancel-button {
+            background-color: #ffffff;
+            color: #000;
+        }
+        .cancel-button:hover {
+            background-color: #cccccc;
+        }
+    </style>
+</head>
 
-        <div class="container">
-            <h1 class="title">Comprar Producto</h1>
-                <form>
-                    <div class="field">
-                        <label class="label">Id del Usuario:</label>
-                        <div class="control">
-                            <input class="input" type="number" id="usuarioId" placeholder="Usuario">
-                        </div>
-                    </div>
-        
-                    <div class="field">
-                        <label class="label">Id del Producto:</label>
-                        <div class="control">
-                            <input class="input" type="number" id="articuloId" placeholder="Articulo">
-                        </div>
-                    </div>
-        
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" onclick="CompraUsuario()">
-                                Comprar Producto
-                            </button>
-                            <a class="button is-light" href="articulos.html">Cancelar</a>
-                        </div>
-                    </div>
-                </form>
-        </div>
+<body>
 
-        <script>
-            function CompraUsuario() {
-                event.preventDefault();
-                const usuarioId = document.getElementById("usuarioId");
-                const articuloId = document.getElementById("articuloId");
+    <div class="container">
+        <h1 class="title">Comprar Producto</h1>
+            <form>
+                <div class="field">
+                    <label class="label">ID del Usuario:</label>
+                    <div class="control">
+                        <input class="input" type="number" id="usuarioId" placeholder="Ingrese el ID del usuario" required>
+                    </div>
+                </div>
     
-                fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId.value}/articulos`, {
+                <div class="field">
+                    <label class="label">ID del Producto:</label>
+                    <div class="control">
+                        <input class="input" type="number" id="articuloId" placeholder="Ingrese el ID del producto" required>
+                    </div>
+                </div>
+    
+                <div class="field is-grouped">
+                    <div class="control">
+                        <a class="button is-medium cancel-button" href="articulos.html">Cancelar</a>
+                        <button class="button is-medium" onclick="CompraUsuario()">
+                            Comprar Producto
+                        </button>
+                    </div>
+                </div>
+            </form>
+    </div>
+
+    <script>
+        function CompraUsuario() {
+            event.preventDefault();
+            const usuarioId = document.getElementById("usuarioId");
+            const articuloId = document.getElementById("articuloId");
+
+            fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId.value}/articulos`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    articuloId: articuloId.value
+                })
+            })
+        }
+
+        /*
+        const form = document.getElementById('compraForm');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const usuarioId = document.getElementById('usuarioId').value;
+            const articuloId = document.getElementById('articuloId').value;
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}/articulos`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ 
-                        articuloId: articuloId.value
-                    })
-                })
-            }
+                    body: JSON.stringify({ articuloId: parseInt(articuloId) })
+                });
 
-            /*
-            const form = document.getElementById('compraForm');
-    
-            form.addEventListener('submit', async (event) => {
-                event.preventDefault();
-    
-                const usuarioId = document.getElementById('usuarioId').value;
-                const articuloId = document.getElementById('articuloId').value;
-    
-                try {
-                    const response = await fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}/articulos`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ articuloId: parseInt(articuloId) })
-                    });
-    
-                    if (response.ok) {
-                        alert('Compra realizada con éxito.');
-                        window.location.href = 'articulos.html';
-                    } else {
-                        const error = await response.json();
-                        alert(`Error: ${error.message}`);
-                    }
-                } catch (error) {
-                    alert('Error al realizar la compra.');
+                if (response.ok) {
+                    alert('Compra realizada con éxito.');
+                    window.location.href = 'articulos.html';
+                } else {
+                    const error = await response.json();
+                    alert(`Error: ${error.message}`);
                 }
-            });*/
-        </script>
-    </body>
+            } catch (error) {
+                alert('Error al realizar la compra.');
+            }
+        });*/
+    </script>
+</body>
     
 </html>
