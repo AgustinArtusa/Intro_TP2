@@ -100,7 +100,30 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/:id/articulos', async (req, res) => {
-    const compras = await prisma.compra.findMany({
+
+    const usuario = await prisma.usuario.findUnique({
+        where:{
+            id: parseInt(req.params.id)
+        },
+        include: {
+            compras: true
+        }
+    });
+
+    if (usuario === null){
+        res.sendStatus(404)
+        return;
+    }
+
+    const articulo = await prisma.articulo.findMany({
+        where:{
+            id: { in: usuario.compras.map(compra => compra.articuloId) }
+        }
+    });
+
+    res.json(articulo);
+
+    /*const compras = await prisma.compra.findMany({
         include: {
             usuario: true,
             articulo: true,
@@ -112,11 +135,63 @@ router.get('/:id/articulos', async (req, res) => {
     if (!compras){
         return res.status(404).json({message: 'No se encontraron compras'})
     }
-    res.json(compras)
+    res.json(compras)*/
 })
 
 router.post('/:id/articulos', async (req,res) => {
-    const usuarioId = parseInt(req.params.id);
+    const usuario = await prisma.usuario.findUnique({
+        where:{
+            id: parseInt(req.params.id)
+        }
+    });
+
+    if (usuario === null){
+        res.sendStatus(404).send("Usuario no encontrado")
+        return;
+    }
+
+    const articulo = await prisma.articulo.findUnique({
+        where:{
+            id: parseInt(req.body.articuloId)
+        }
+    });
+
+    if (articulo === null){
+        res.sendStatus(404).send("Articulo no encontrado")
+        return;
+    }
+
+    const disponibilidad = await prisma.disponibilidad.findFirst({
+        where:{
+            articuloId: articulo.id,
+            disponible: true
+        }
+    });    
+
+    if (!disponibilidad) {
+        return res.status(400).send("El artículo no está disponible en esta tienda");
+    }
+
+    await prisma.$transaction([
+        prisma.compra.create({
+            data: {
+                usuarioId: usuario.id,
+                articuloId: articulo.id
+            }
+        }),
+        prisma.disponibilidad.update({
+            where: {
+                id: disponibilidad.id
+            },
+            data: {
+                disponible: false // Cambiar a false
+            }
+        })
+    ]);
+
+    res.sendStatus(201)
+
+    /*const usuarioId = parseInt(req.params.id);
     const { articuloId } = req.body;
     
     if (!articuloId) {
@@ -163,12 +238,13 @@ router.post('/:id/articulos', async (req,res) => {
         data: { dinero: usuario.dinero - articulo.precio },
     });
 
-    res.status(201).json(compra);
-})
-
-await prisma.disponibilidad.update({
-    where: { id: disponibilidad.id },
-    data: { disponible: false },
+    await prisma.disponibilidad.update({
+        where: { id: disponibilidad.id },
+        data: { disponible: false },
+    });
+    
+    res.status(201).json(compra);*/
 });
+
 
 module.exports = router

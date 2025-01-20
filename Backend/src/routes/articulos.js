@@ -5,8 +5,21 @@ const router = express.Router();
 const prisma = new PrismaClient()
 
 router.get('/', async (req, res) => {
-    const articulos = await prisma.articulo.findMany()
+    const articulos = await prisma.articulo.findMany({
+        where: {
+            id: {
+                notIn: (await prisma.compra.findMany({
+                    select: {
+                        articuloId: true, 
+                    },
+                })).map((compra) => compra.articuloId),
+            },
+        },
+    });
     res.json(articulos);
+    /*
+    const articulos = await prisma.articulo.findMany()
+    res.json(articulos);*/
 });
 
 router.get('/:id', async (req, res) => {
@@ -47,6 +60,18 @@ router.delete('/:id', async (req, res) => {
         res.sendStatus(404)
         return
     }
+
+    await prisma.compra.deleteMany({
+        where: {
+            articuloId: articulo.id,
+        }
+    });
+
+    await prisma.disponibilidad.deleteMany({
+        where: {
+            articuloId: articulo.id,
+        }
+    });
 
     await prisma.articulo.delete({
         where: {

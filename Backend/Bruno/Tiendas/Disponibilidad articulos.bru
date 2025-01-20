@@ -1,0 +1,15 @@
+meta {
+  name: Disponibilidad articulos
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:3000/api/v1/tiendas/:id/articulos
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 4
+}
