@@ -14,24 +14,26 @@
 
         <div class="container">
             <h1 class="title">Comprar Producto</h1>
-                <form id="compraForm">
+                <form>
                     <div class="field">
-                        <label class="label" for="usuarioId">Id del Usuario:</label>
+                        <label class="label">Id del Usuario:</label>
                         <div class="control">
-                            <input class="input" type="number" id="usuarioId" required>
+                            <input class="input" type="number" id="usuarioId" placeholder="Usuario">
                         </div>
                     </div>
         
                     <div class="field">
-                        <label class="label" for="articuloId">Id del Producto:</label>
+                        <label class="label">Id del Producto:</label>
                         <div class="control">
-                            <input class="input" type="number" id="articuloId" required>
+                            <input class="input" type="number" id="articuloId" placeholder="Articulo">
                         </div>
                     </div>
         
                     <div class="field">
                         <div class="control">
-                            <button class="button is-primary" type="submit">Comprar Producto</button>
+                            <button class="button is-primary" onclick="CompraUsuario()">
+                                Comprar Producto
+                            </button>
                             <a class="button is-light" href="articulos.html">Cancelar</a>
                         </div>
                     </div>
@@ -39,6 +41,23 @@
         </div>
 
         <script>
+            function CompraUsuario() {
+                event.preventDefault();
+                const usuarioId = document.getElementById("usuarioId");
+                const articuloId = document.getElementById("articuloId");
+    
+                fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId.value}/articulos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        articuloId: articuloId.value
+                    })
+                })
+            }
+
+            /*
             const form = document.getElementById('compraForm');
     
             form.addEventListener('submit', async (event) => {
@@ -66,7 +85,7 @@
                 } catch (error) {
                     alert('Error al realizar la compra.');
                 }
-            });
+            });*/
         </script>
     </body>
     
