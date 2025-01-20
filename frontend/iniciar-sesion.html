@@ -6,62 +6,85 @@
     <title>Iniciar Sesion</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 
+    <style>
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+        }
+        .title {
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .label {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .input, .button {
+            border-radius: 8px;
+        }
+        .input {
+            background-color: #2e2e2e;
+            color: white;
+            border: 1px solid #a200ff;
+        }
+        .input::placeholder {
+            color: #888;
+        }
+        .button {
+            background-color: #a200ff;
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #7a00c4;
+        }
+        .register-button {
+            background-color: #ffffff;
+            color: #000;
+        }
+        .register-button:hover {
+            background-color: #cccccc;
+        }
+    </style>
 </head>
 <body>
-    <div class="container is-fluid">
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="index.html">
-                  Tienda
-                </a>
-            
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                </a>
+    <div class="container">
+        <h1 class="title">Iniciar Sesión</h1>
+        <form id="loginForm">
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                    <input id="username" class="input" type="text" placeholder="Ingresa tu usuario" required>
+                </div>
             </div>
-            
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                  <a class="navbar-item" href="usuarios.html">
-                    Usuarios
-                  </a>
-        </nav>
 
-        <h1 class="title has-text-centered" style="padding-top: 5%;">Iniciar Sesión</h1>
-
-        <div class="container" style="max-width: 35%;">
-            <form id="loginForm">
-                <div class="field">
-                    <label class="label">Username</label>
-                    <div class="control">
-                        <input id="username" class="input" type="text" placeholder="Ingresa tu username">
-                    </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input id="password" class="input" type="password" placeholder="Ingresa tu contraseña" required>
                 </div>
+            </div>
 
-                <div class="field">
-                    <label class="label">Password</label>
-                    <div class="control">
-                        <input id="password" class="input" type="password" placeholder="Ingresa tu contraseña">
-                    </div>
-                </div>
-
-                <div class="field is-grouped is-grouped-centered">
-                    <p class="control">
-                        <button class="button is-primary">
-                            Iniciar Sesión
-                        </button>
-                    </p>
-                    <p class="control">
-                        <a href="crear-usuario.html" class="button is-light">
-                            Registrarse
-                        </a>
-                    </p>
-                </div>
-            </form>
-        </div>
+            <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                    <a href="crear-usuario.html" class="button is-medium register-button">
+                        Registrarse
+                    </a>
+                </p>
+                <p class="control">
+                    <button class="button is-medium">
+                        Iniciar Sesión
+                    </button>
+                </p>
+            </div>
+        </form>
     </div>
 </body>
 
