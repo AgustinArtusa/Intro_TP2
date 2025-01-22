@@ -55,6 +55,13 @@
 </head>
 <body>
     <div class="container">
+        <nav class="level">
+            <div class="level-left">
+              <p class="level-item">
+                  <a class="button is-link is-info" onclick="volverAArticulos()">Volver a Artículos</a>
+              </p>
+            </div>
+          </nav>
         <h1 class="title">Modificar artículo</h1>
 
         <form id="form-modificar" onsubmit="updateArticulo(event)">
@@ -96,7 +103,6 @@
             <div class="field">
                 <div class="control">
                     <button class="button is-primary" type="submit">Actualizar</button>
-                    <a class="button is-light cancel-button" href="articulos.html">Cancelar</a>
                 </div>
             </div>
         </form>
@@ -158,6 +164,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadArticulo);
+
+        function volverAArticulos() {
+                window.history.back();
+            }
     </script>
 </body>
 </html>
