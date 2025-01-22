@@ -17,7 +17,9 @@
               height: 10%;
               top: 0%;
               left: 0%;
-              gap: 0.7%;
+          }
+          .navbar-brand button {
+              margin-right: 10px; /* Espacio de 10px entre los botones */
           }
           .container {
               margin-top: 80px;
@@ -75,6 +77,8 @@
           <nav class="navbar" role="navigation" aria-label="main navigation">
               <div class="navbar-brand">
                 <button class="button is-primary" onclick="window.location.href='tiendas.html'">Tiendas</button>
+                <button class="button is-primary" onclick="window.location.href='articulos.html'">Artículos</button>
+                <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
               
                   <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                     <span aria-hidden="true"></span>
@@ -83,14 +87,9 @@
                     <span aria-hidden="true"></span>
                   </a>
               </div>
-              
-              <div id="navbarBasicExample" class="navbar-menu">
-                  <div class="navbar-start">
-                    <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
-              </div>
           </nav>
           <main id="main-content">
-            <h1 id="title">USUARIOS</h1>
+            <h1 id="title">USUARIO</h1>
             <!-- <h2 id="user-name"></h2> -->
           </main>
       </div>
@@ -100,7 +99,7 @@
     <script>
         const urlParams = new URLSearchParams (window.location.search);
         const usuarioId = urlParams.get('id');
-        document.getElementById('title').textContent += usuarioId;
+        document.getElementById('title').textContent += " " + usuarioId;
 
         fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}`)
             .then((response) => response.json())
