@@ -105,6 +105,13 @@ router.post('/login', async (req, res) => {
 
 });
 
+router.get('/info', (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ message: 'No hay sesión activa' });
+    }
+    return res.status(200).json({ user: req.session.user });
+});
+
 router.post('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
