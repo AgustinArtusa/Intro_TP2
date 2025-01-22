@@ -1,137 +1,153 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Crear usuarios</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="My firts HTML">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="John Doe">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    </head>
+<head>
+  <title>Crear Usuario</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 
-    <body>
+  <style>
+    .container {
+        max-width: 450px;
+        margin: 50px auto;
+        padding: 40px;
+        background: #1c1c1c;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+    }
+    .title {
+        color: #ffffff;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    .label {
+        color: #ffffff;
+        font-weight: bold;
+    }
+    .input, .button {
+        border-radius: 8px;
+    }
+    .input, .textarea {
+        background-color: #2e2e2e;
+        color: white;
+        border: 1px solid #a200ff;
+    }
+    .input::placeholder {
+        color: #888;
+    }
+    .button {
+        background-color: #a200ff;
+        border: none;
+        color: white;
+        transition: 0.3s;
+    }
+    .button:hover {
+        background-color: #7a00c4;
+    }
+    .cancel-button {
+        background-color: #ffffff;
+        color: #000;
+    }
+    .cancel-button:hover {
+        background-color: #cccccc;
+    }
+</style>
+</head>
 
-      <div class="container is-fluid">
-          <nav class="navbar" role="navigation" aria-label="main navigation">
-              <div class="navbar-brand">
-                  <a class="navbar-item" href="index.html">
-                    Tienda
-                  </a>
-              
-                  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                  </a>
-              </div>
-              
-              <div id="navbarBasicExample" class="navbar-menu">
-                  <div class="navbar-start">
-                    <a class="navbar-item" href="usuarios.html">
-                      Usuarios
-                    </a>
-          </nav>
-          <h1>REGISTRO</h1>
-          <div class="container is-max-desktop">
-            <form>
-              <div class="field">
-                  <label class="label">Nombre</label>
-                  <div class="control">
-                    <input id="nombre" class="input" type="text" placeholder="Nombre">
-                  </div>
-              </div>
-  
-              <div class="field">
-                  <label class="label">Username</label>
-                  <div class="control">
-                    <input id="username" class="input" type="text" placeholder="Username">
-                  </div>
-              </div>
-  
-              <div class="field">
-                  <label class="label">Password</label>
-                  <div class="control">
-                    <input id="password" class="input" type="text" placeholder="Contraseña">
-                  </div>
-              </div>
+<body>
+  <div class="container">
+    <h1 class="title">Crear Usuario</h1>
 
-              <div class="field">
-                    <label class="label">Dinero</label>
-                    <div class="control">
-                        <input id="dinero" class="input" type="text" placeholder="Dinero">
-                    </div>
-              </div>
-
-
-                <div class="field">
-                    <label class="label">Telefono</label>
-                    <div class="control">
-                        <input id="telefono" class="input" type="text" placeholder="Telefono">
-                    </div>
-                </div>
-  
-              <div class="field is-grouped is-grouped-centered">
-                  <p class="control">
-                    <button class="button is-primary" onclick="createUser()">
-                      Guardar
-                    </button>
-                  </p>
-                  <p class="control">
-                    <a class="button is-light" onclick="clearForm()">
-                      Limpiar
-                    </a>
-                  </p>
-              </div>
-  
-            </form>
-          </div>          
+    <form>
+      <div class="field">
+          <label class="label">Nombre:</label>
+          <div class="control">
+            <input id="nombre" class="input" type="text" placeholder="Ingrese el nombre completo" required>
+          </div>
       </div>
 
-    </body>
+      <div class="field">
+          <label class="label">Username:</label>
+          <div class="control">
+            <input id="username" class="input" type="text" placeholder="Ingrese el nombre de usuario" required>
+          </div>
+      </div>
 
-    <script>
-        function createUser(){
-            event.preventDefault();
-            const nombre = document.getElementById('nombre').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const dinero = document.getElementById('dinero').value;
-            const telefono = document.getElementById('telefono').value;
-            let body = {
-                nombre: nombre,
-                username: username,
-                contraseña: password,
-                dinero: dinero,
-                telefono: parseInt(telefono),
-            };
+      <div class="field">
+          <label class="label">Password:</label>
+          <div class="control">
+            <input id="password" class="input" type="text" placeholder="Ingrese la contraseña" required>
+          </div>
+      </div>
 
-            fetch("http://localhost:3000/api/v1/usuarios", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            }).then(response => {
-                if (response.status === 201) {
-                    alert('Usuario creado con exito');
-                    clearForm();
-                }
-                else
-                {
-                    alert('Error al crear un Usuario');
-                }
-            });
-        }
+      <div class="field">
+            <label class="label">Dinero:</label>
+            <div class="control">
+                <input id="dinero" class="input" type="text" placeholder="Ingrese el dinero del usuario" required>
+            </div>
+      </div>
 
-        function clearForm() {
-            const nombre = document.getElementById('nombre').value = '';
-            const username = document.getElementById('username').value = '';
-            const password = document.getElementById('password').value = '';
-            const dinero = document.getElementById('dinero').value = '';
-            const telefono = document.getElementById('telefono').value = '';
-        }
-  </script>
 
+        <div class="field">
+            <label class="label">Telefono:</label>
+            <div class="control">
+                <input id="telefono" class="input" type="text" placeholder="Ingrese el número de teléfono del usuario" required>
+            </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+              <a class="button is-medium cancel-button" onclick="clearForm()">Borrar</a>
+              <button class="button is-medium" type="submit" onclick="createUser()">Crear</button>
+          </div>
+      </div>
+
+
+    </form>
+  </div>          
+
+<script>
+  function createUser(){
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const dinero = document.getElementById('dinero').value;
+      const telefono = document.getElementById('telefono').value;
+      let body = {
+          nombre: nombre,
+          username: username,
+          contraseña: password,
+          dinero: dinero,
+          telefono: parseInt(telefono),
+      };
+
+      fetch("http://localhost:3000/api/v1/usuarios", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+      }).then(response => {
+          if (response.status === 201) {
+              alert('Usuario creado con exito');
+              clearForm();
+          }
+          else
+          {
+              alert('Error al crear el Usuario');
+          }
+      });
+  }
+
+  function clearForm() {
+      const nombre = document.getElementById('nombre').value = '';
+      const username = document.getElementById('username').value = '';
+      const password = document.getElementById('password').value = '';
+      const dinero = document.getElementById('dinero').value = '';
+      const telefono = document.getElementById('telefono').value = '';
+  }
+</script>
+</body>
 </html>

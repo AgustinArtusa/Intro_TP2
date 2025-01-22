@@ -1,44 +1,88 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Disponibilidad</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="My firts HTML">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="John Doe">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    </head>
+<head>
+    <title>Disponibilidad</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    
+    <style>
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+        }
+        .title {
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .label {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .input, .button {
+            border-radius: 8px;
+        }
+        .input {
+            background-color: #2e2e2e;
+            color: white;
+            border: 1px solid #a200ff;
+        }
+        .input::placeholder {
+            color: #888;
+        }
+        .button {
+            background-color: #a200ff;
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #7a00c4;
+        }
+        .cancel-button {
+            background-color: #ffffff;
+            color: #000;
+        }
+        .cancel-button:hover {
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body>
 
-    <body>
+    <div class="container">
+        <h1 class="title">Disponibilidad</h1>
+        <form>
+            <div class="field">
+                <label class="label">ID de la Tienda:</label>
+                <div class="control">
+                    <input class="input" type="number" id="tiendaId" placeholder="Ingrese el ID de la tienda" required>
+                </div>
+            </div>
 
-        <div class="container">
-            <h1 class="title">Disponibilidad</h1>
-                <form>
-                    <div class="field">
-                        <label class="label">Id de la Tienda:</label>
-                        <div class="control">
-                            <input class="input" type="number" id="tiendaId" placeholder="Tienda">
-                        </div>
-                    </div>
-        
-                    <div class="field">
-                        <label class="label">Id del Producto :</label>
-                        <div class="control">
-                            <input class="input" type="number" id="articuloId" placeholder="Articulo">
-                        </div>
-                    </div>
-        
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" onclick="TiendaDisponible()">
-                                Indicar Disponibilidad
-                            </button>
-                            <a class="button is-light" href="articulos.html">Cancelar</a>
-                        </div>
-                    </div>
-                </form>
-        </div>
+            <div class="field">
+                <label class="label">ID del Artículo:</label>
+                <div class="control">
+                    <input class="input" type="number" id="articuloId" placeholder="Ingrese el ID del artículo" required>
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <a class="button is-medium cancel-button" href="articulos.html">Cancelar</a>
+                </div>
+                <div class="control">
+                    <button class="button is-medium" onclick="TiendaDisponible()">Indicar Disponibilidad</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
         <script>
             function TiendaDisponible() {

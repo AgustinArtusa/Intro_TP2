@@ -4,7 +4,54 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Actualizar datos de la tienda</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+        <style>
+            .container {
+                max-width: 450px;
+                margin: 50px auto;
+                padding: 40px;
+                background: #1c1c1c;
+                border-radius: 12px;
+                box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+            }
+            .title {
+                color: #ffffff;
+                text-align: center;
+                font-weight: bold;
+                font-size: 2rem;
+            }
+            .label {
+                color: #ffffff;
+                font-weight: bold;
+            }
+            .input, .button {
+                border-radius: 8px;
+            }
+            .input, .textarea {
+                background-color: #2e2e2e;
+                color: white;
+                border: 1px solid #a200ff;
+            }
+            .input::placeholder {
+                color: #888;
+            }
+            .button {
+                background-color: #a200ff;
+                border: none;
+                color: white;
+                transition: 0.3s;
+            }
+            .button:hover {
+                background-color: #7a00c4;
+            }
+            .cancel-button {
+                background-color: #ffffff;
+                color: #000;
+            }
+            .cancel-button:hover {
+                background-color: #cccccc;
+            }
+        </style>
     </head>
     <body>
         <section class="section" id="actualizar-datos">
@@ -16,36 +63,36 @@
                     </p>
                   </div>
                 </nav>
-                <h1 class="title">Actualizar Datos de las Tiendas</h1>
+                <h1 class="title">Modificar tienda</h1>
             
                 <div class="box">
                     <form id="formulario">
                         <div class="field">
-                            <label class="label">Ubicacion</label>
+                            <label class="label">Ubicacion:</label>
                             <div class="control">
                             <input class="input" id="ubicacion" type="text" placeholder="Ingrese una nueva ubicacion">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Horario</label>
+                            <label class="label">Horario:</label>
                             <div class="control">
                             <input class="input" id="horario" type="text" placeholder="Ingrese un nuevo horario">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Estado</label>
+                            <label class="label">Estado:</label>
                             <div class="control">
                             <input class="input" id="estado" type="text" placeholder="Ingrese el nuevo estado">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Teléfono</label>
+                            <label class="label">Teléfono:</label>
                             <div class="control">
                             <input class="input" id="telefono"type="text" placeholder="Ingrese un nuevo numero">
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">Email de contacto</label>
+                            <label class="label">Email de contacto:</label>
                             <div class="control">
                             <input class="input" id="email_contacto" type="text" placeholder="Ingrese el nuevo email de contacto">
                             </div>
