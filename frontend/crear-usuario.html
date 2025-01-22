@@ -61,45 +61,45 @@
 
     <form>
       <div class="field">
-          <label class="label">Nombre</label>
+          <label class="label">Nombre:</label>
           <div class="control">
-            <input id="nombre" class="input" type="text" placeholder="Ingrese su nombre" required>
+            <input id="nombre" class="input" type="text" placeholder="Ingrese el nombre completo" required>
           </div>
       </div>
 
       <div class="field">
-          <label class="label">Username</label>
+          <label class="label">Username:</label>
           <div class="control">
-            <input id="username" class="input" type="text" placeholder="Ingrese su usuario" required>
+            <input id="username" class="input" type="text" placeholder="Ingrese el nombre de usuario" required>
           </div>
       </div>
 
       <div class="field">
-          <label class="label">Password</label>
+          <label class="label">Password:</label>
           <div class="control">
-            <input id="password" class="input" type="text" placeholder="Ingrese su contraseña" required>
+            <input id="password" class="input" type="text" placeholder="Ingrese la contraseña" required>
           </div>
       </div>
 
       <div class="field">
-            <label class="label">Dinero</label>
+            <label class="label">Dinero:</label>
             <div class="control">
-                <input id="dinero" class="input" type="text" placeholder="Ingrese el dinero de su cuenta" required>
+                <input id="dinero" class="input" type="text" placeholder="Ingrese el dinero del usuario" required>
             </div>
       </div>
 
 
         <div class="field">
-            <label class="label">Telefono</label>
+            <label class="label">Telefono:</label>
             <div class="control">
-                <input id="telefono" class="input" type="text" placeholder="Ingrese su numero de telefono" required>
+                <input id="telefono" class="input" type="text" placeholder="Ingrese el número de teléfono del usuario" required>
             </div>
         </div>
 
         <div class="field">
           <div class="control">
               <a class="button is-medium cancel-button" onclick="clearForm()">Borrar</a>
-              <button class="button is-medium" type="submit" onclick="createUser()">Crear Usuario</button>
+              <button class="button is-medium" type="submit" onclick="createUser()">Crear</button>
           </div>
       </div>
 
@@ -136,7 +136,7 @@
           }
           else
           {
-              alert('Error al crear un Usuario');
+              alert('Error al crear el Usuario');
           }
       });
   }

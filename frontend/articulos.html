@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+    <title>Lista de Artículos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
         .container {
@@ -47,10 +47,10 @@
 <body>
     <div class="container is-fluid">
         <nav class="navbar" role="navigation" aria-label="main navigation">
-            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Crear Producto</button>
+            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Crear Artículo</button>
         </nav>
 
-        <h1 class="title is-2">Productos</h1>
+        <h1 class="title is-2">Artículos</h1>
 
         <div id="products-grid" class="product-grid"></div>
     </div>
@@ -78,13 +78,13 @@
         });
 
     function deleteProduct(id) {
-        if (confirm('¿Estás seguro de que quieres borrar este producto?')) {
+        if (confirm('¿Estás seguro de que quieres borrar este artículo?')) {
             fetch(`http://localhost:3000/api/v1/articulos/${id}`, {
                 method: 'DELETE'
             })
             .then(response => response.json())
             .then(response => {
-                alert('Producto eliminado');
+                alert('Artículo eliminado');
                 location.reload();
             });
         }
