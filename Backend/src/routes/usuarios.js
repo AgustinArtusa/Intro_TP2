@@ -93,10 +93,16 @@ router.post('/login', async (req, res) => {
     });
 
     if (!usuario || usuario.contraseña !== password) {
-        res.status(401).json({ message: 'Credenciales incorrectas' });
-    } else {
-        res.status(200).json({ message: 'Login exitoso' });
+        return res.status(401).json({ message: 'Credenciales incorrectas' });
     }
+
+    req.session.user = {
+        id: usuario.id,
+        username: usuario.username,
+    };
+
+    res.status(200).json({ message: 'Login exitoso', user: req.session.user });
+
 });
 
 router.get('/:id/articulos', async (req, res) => {
