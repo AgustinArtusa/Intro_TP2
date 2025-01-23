@@ -8,13 +8,20 @@ const app = express()
 const port = 3000
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5500',
+  credentials: true
+}));
 
 app.use(session({
-  secret: 'contraseña123',
+  secret: 'Contraseña123',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false }
+  cookie: { 
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+   }
 }));
 
 app.get('/', (req, res) => {

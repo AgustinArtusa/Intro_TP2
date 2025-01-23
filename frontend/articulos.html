@@ -42,6 +42,24 @@
         .button.is-primary:hover {
             background-color: #7a00c4;
         }
+        .navbar-end {
+        margin-left: auto;
+        }
+
+        .navbar-link {
+        color: #ffffff;
+        font-weight: bold;
+        }
+
+        .navbar-dropdown {
+        background-color: #1c1c1c;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+        }
+
+        .navbar-item:hover {
+        color: white;
+        }
     </style>
 </head>
 <body>
@@ -50,6 +68,18 @@
             <button class="button is-primary" onclick="window.location.href='tiendas.html'">Tiendas</button>
             <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
             <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Crear Artículo</button>
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
+                    <a class="navbar-link" id="username-display"></a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" onclick="logout()">Cerrar sesión</a>
+                    </div>
+                </div>
+        
+                <div class="navbar-item" id="login-btn">
+                    <a class="button is-primary" href="iniciar-sesion.html">Iniciar sesión</a>
+                </div>
+            </div>
         </nav>
 
         <h1 class="title is-2">Artículos</h1>
@@ -91,5 +121,38 @@
             });
         }
     }
+
+    async function obtenerUsuario() {
+    const response = await fetch('http://localhost:3000/api/v1/usuarios/info', {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        if (data && data.user) {
+            document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
+            document.getElementById('user-info').style.display = 'block';
+            document.getElementById('login-btn').style.display = 'none';
+        } else {
+            document.getElementById('user-info').style.display = 'none';
+        document.getElementById('login-btn').style.display = 'block';
+        }
+    }
+    }
+
+    function logout() {
+    fetch('http://localhost:3000/api/v1/usuarios/logout', {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = 'iniciar-sesion.html';
+        }
+    });
+}
+
+obtenerUsuario()
 </script>
 </html>

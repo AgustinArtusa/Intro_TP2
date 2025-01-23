@@ -103,11 +103,12 @@
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({ username, password })
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = 'tienda.html';
+                window.location.href = 'articulos.html';
             } else {
                 alert("Usuario o Contraseña incorrectos")
             }
