@@ -78,6 +78,7 @@
                 <th>Contraseña</th>
                 <th>Dinero</th>
                 <th>Teléfono</th>
+                <th>Rol</th>
               </tr>
             </thead>
 
@@ -127,6 +128,8 @@
               plata.textContent = usuario.dinero;
               let telefono = document.createElement('td');
               telefono.textContent = usuario.telefono;
+              let rol = document.createElement('td');
+              rol.textContent = usuario.rol;
 
               let actualizar = document.createElement('td');
               let button = document.createElement('button');
@@ -151,6 +154,7 @@
               tr.appendChild(password);
               tr.appendChild(plata);
               tr.appendChild(telefono);
+              tr.appendChild(rol);
               table.appendChild(tr);
               
               actualizar.appendChild(button);

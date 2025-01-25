@@ -100,6 +100,18 @@
                     articuloId: articuloId.value
                 })
             })
+            .then(response => {
+                if (response.ok) {
+                    alert('Compra realizada con éxito.');
+                    //window.location.href = 'articulos.html';
+                } else {
+                    alert('Error al realizar la compra.');
+                    /*
+                    response.json().then(error => {
+                        alert(`Error: ${error.message}`);
+                    });*/
+                }
+            })
         }
 
         /*
