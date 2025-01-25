@@ -58,6 +58,13 @@
 <body>
 
     <div class="container">
+        <nav class="level">
+            <div class="level-left">
+              <p class="level-item">
+                  <a class="button is-link is-info" onclick="volver()">Volver</a>
+              </p>
+            </div>
+          </nav>
         <h1 class="title">Comprar Artículo</h1>
             <form>
                 <div class="field">
@@ -143,6 +150,9 @@
                 alert('Error al realizar la compra.');
             }
         });*/
+        function volver() {
+                window.history.back();
+            }
     </script>
 </body>
     
