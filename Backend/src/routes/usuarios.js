@@ -9,20 +9,7 @@ router.get('/', async (req, res) => {
     res.json(usuarios)
 })
 
-router.get('/:id', async (req, res) =>{
-    const usuario = await prisma.usuario.findUnique({
-        where: {
-            id: parseInt(req.params.id)
-        }
-    })
 
-    if (usuario === null){
-        res.sendStatus(404)
-        return
-    }
-
-    res.json(usuario)
-})
 
 router.post('/', async (req, res) => {
     const usuario = await prisma.usuario.create({
@@ -77,7 +64,8 @@ router.put('/:id', async (req, res) => {
             username: req.body.username,
             contraseña: req.body.contraseña,
             dinero: req.body.dinero,
-            telefono: req.body.telefono
+            telefono: req.body.telefono,
+            rol: req.body.rol
         }
     })
     res.send(usuario)
@@ -99,6 +87,7 @@ router.post('/login', async (req, res) => {
     req.session.user = {
         id: usuario.id,
         username: usuario.username,
+        rol: usuario.rol,
     };
 
     res.status(200).json({ message: 'Login exitoso', user: req.session.user });
@@ -160,6 +149,20 @@ router.get('/:id/articulos', async (req, res) => {
     res.json(compras)*/
 })
 
+router.get('/:id', async (req, res) =>{
+    const usuario = await prisma.usuario.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+
+    if (usuario === null){
+        res.sendStatus(404)
+        return
+    }
+
+    res.json(usuario)
+})
 router.post('/:id/articulos', async (req,res) => {
     const usuario = await prisma.usuario.findUnique({
         where:{
@@ -183,15 +186,30 @@ router.post('/:id/articulos', async (req,res) => {
         return;
     }
 
+    const compraExistente = await prisma.compra.findFirst({
+        where:{
+            articuloId: articulo.id,
+        }
+    })
+
+    if (compraExistente) {
+        return res.status(400).send("El articuolo ya fue comprado");
+    }
+    
+    
     const disponibilidad = await prisma.disponibilidad.findFirst({
         where:{
             articuloId: articulo.id,
             disponible: true
         }
     });    
-
+    /*
     if (!disponibilidad) {
         return res.status(400).send("El artículo no está disponible en esta tienda");
+    }*/
+
+    if (usuario.dinero < articulo.precio) {
+        return res.status(400).send("No hay suficiente dinero para comprar el artículo");
     }
 
     await prisma.$transaction([
@@ -201,6 +219,15 @@ router.post('/:id/articulos', async (req,res) => {
                 articuloId: articulo.id
             }
         }),
+        prisma.usuario.update({
+            where: {
+                id: usuario.id
+            },
+            data: {
+                dinero: usuario.dinero - articulo.precio
+            }
+        }),
+        /*
         prisma.disponibilidad.update({
             where: {
                 id: disponibilidad.id
@@ -209,7 +236,19 @@ router.post('/:id/articulos', async (req,res) => {
                 disponible: false // Cambiar a false
             }
         })
+        */
     ]);
+    
+    if (disponibilidad) {
+        await prisma.disponibilidad.update({
+            where: {
+                id: disponibilidad.id
+            },
+            data: {
+                disponible: false
+            }
+        });
+    }
 
     res.sendStatus(201)
 
