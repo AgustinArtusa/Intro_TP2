@@ -58,6 +58,13 @@
 <body>
 
   <div class="container">
+    <nav class="level">
+        <div class="level-left">
+          <p class="level-item">
+              <a class="button is-link is-info" onclick="volver()">Volver</a>
+          </p>
+        </div>
+      </nav>
     <h1 class="title">Crear Tienda</h1>
 
     <form>
@@ -133,6 +140,7 @@
             if (response.status === 201) {
                 alert('La tienda se ha creado con exito');
                 clearForm();
+                window.history.back();
             }
             else
             {
@@ -147,6 +155,10 @@
         const estado = document.getElementById('estado').value = '';
         const telefono = document.getElementById('telefono').value = '';
         const email_contacto = document.getElementById('email_contacto').value = '';
+    }
+    
+    function volver() {
+        window.history.back();
     }
 </script>
 </body>

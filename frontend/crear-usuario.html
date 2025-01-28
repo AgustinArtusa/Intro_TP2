@@ -57,6 +57,13 @@
 
 <body>
   <div class="container">
+    <nav class="level">
+        <div class="level-left">
+          <p class="level-item">
+              <a class="button is-link is-info" onclick="volver()">Volver</a>
+          </p>
+        </div>
+      </nav>
     <h1 class="title">Crear Usuario</h1>
 
     <form>
@@ -97,6 +104,19 @@
         </div>
 
         <div class="field">
+            <label class="label">Rol:</label>
+            <div class="control">
+              <div class="select">
+                <select id="rol" required>
+                  <option value="" disabled selected>Seleccione un rol</option>
+                  <option value="comprador">Comprador</option>
+                  <option value="vendedor">Vendedor</option>
+                </select>
+              </div>
+            </div>
+        </div>
+
+        <div class="field">
           <div class="control">
               <a class="button is-medium cancel-button" onclick="clearForm()">Borrar</a>
               <button class="button is-medium" type="submit" onclick="createUser()">Crear</button>
@@ -115,13 +135,24 @@
       const password = document.getElementById('password').value;
       const dinero = document.getElementById('dinero').value;
       const telefono = document.getElementById('telefono').value;
+      const rol = document.getElementById('rol').value;
+
+      console.log('Rol seleccionado:', rol);
+
+      if(!rol){
+        alert('Seleccione un rol');
+            return;
+      }
+
       let body = {
           nombre: nombre,
           username: username,
           contraseña: password,
           dinero: dinero,
           telefono: parseInt(telefono),
+          rol: rol
       };
+
 
       fetch("http://localhost:3000/api/v1/usuarios", {
           method: 'POST',
@@ -131,23 +162,29 @@
           body: JSON.stringify(body)
       }).then(response => {
           if (response.status === 201) {
-              alert('Usuario creado con exito');
-              clearForm();
+            alert('Usuario creado con exito');
+            clearForm();
+            window.history.back();
           }
           else
           {
-              alert('Error al crear el Usuario');
+            alert('Error al crear el Usuario');
           }
       });
   }
 
-  function clearForm() {
-      const nombre = document.getElementById('nombre').value = '';
-      const username = document.getElementById('username').value = '';
-      const password = document.getElementById('password').value = '';
-      const dinero = document.getElementById('dinero').value = '';
-      const telefono = document.getElementById('telefono').value = '';
-  }
+    function clearForm() {
+        const nombre = document.getElementById('nombre').value = '';
+        const username = document.getElementById('username').value = '';
+        const password = document.getElementById('password').value = '';
+        const dinero = document.getElementById('dinero').value = '';
+        const telefono = document.getElementById('telefono').value = '';
+        const rol = document.getElementById('rol').value = '';
+    }
+
+    function volver() {
+        window.history.back();
+    }
 </script>
 </body>
 </html>

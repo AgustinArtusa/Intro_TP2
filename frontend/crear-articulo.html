@@ -58,6 +58,13 @@
 <body>
 
     <div class="container">
+        <nav class="level">
+            <div class="level-left">
+              <p class="level-item">
+                  <a class="button is-link is-info" onclick="volver()">Volver</a>
+              </p>
+            </div>
+          </nav>
         <h1 class="title">Crear Artículo</h1>
 
             <div class="field">
@@ -96,8 +103,15 @@
             </div>
 
             <div class="field">
+                <label class="label" for="nuemero_vendedor">Numero de Vendedor</label>
+                <div  class="control">
+                    <input class="input" type="text" id="numero_vendedor" placeholder="Ingrese el numero de vendedor" required>
+                </div>
+            </div>
+
+            <div class="field">
                 <div class="control">
-                    <a class="button is-medium cancel-button" href="articulos.html">Cancelar</a>
+                    <a class="button is-medium cancel-button" onclick="clearForm()">Cancelar</a>
                     <button class="button is-medium" type="submit" onclick="createArticulo()">Crear</button>
                 </div>
             </div>
@@ -111,13 +125,15 @@
             const descripcion = document.getElementById('descripcion').value;
             const origen = document.getElementById('origen').value;
             const antiguedad = document.getElementById('antiguedad').value;
+            const numero_vendedor = document.getElementById('numero_vendedor').value;
     
-            const body = {
-                nombre,
-                precio,
-                descripcion,
-                origen,
-                antiguedad,
+            let body = {
+                nombre: nombre,
+                precio: precio,
+                descripcion: descripcion,
+                origen: origen,
+                antiguedad: antiguedad,
+                numero_vendedor: parseInt(numero_vendedor),
             };
     
             fetch("http://localhost:3000/api/v1/articulos", {
@@ -131,10 +147,24 @@
                 if (response.status === 201) {
                     alert('Artículo creado con éxito.');
                     clearForm();
+                    window.history.back();
                 } else {
                     alert('Error al crear el artículo.');
                 }
             })
+        }
+
+        function clearForm() {
+            document.getElementById('nombre').value = '';
+            document.getElementById('precio').value = '';
+            document.getElementById('descripcion').value = '';
+            document.getElementById('origen').value = '';
+            document.getElementById('antiguedad').value = '';
+            document.getElementById('numero_vendedor').value = '';
+        }
+
+        function volver() {
+            window.history.back();
         }
     </script>
 </body>
