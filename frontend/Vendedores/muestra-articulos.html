@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Artículos</title>
+    <title>Mi Lista de Artículos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
         .container {
@@ -65,9 +65,10 @@
 <body>
     <div class="container is-fluid">
         <nav class="navbar" role="navigation" aria-label="main navigation">
-            <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
+            <button class="button is-primary" onclick="window.location.href='listado-tiendas.html'">Tiendas</button>
             <button class="button is-primary" id="perfil-button">Mi Perfil</button>
             <button class="button is-primary" id="vendedor-button">Vender</button>
+            <button class="button is-primary" onclick="window.location.href='../articulo-tienda.html'">Agregar un articulo una tienda</button>
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
                     <a class="navbar-link" id="username-display"></a>
@@ -82,29 +83,12 @@
             </div>
         </nav>
 
-        <h1 class="title is-2">Artículos</h1>
+        <h1 class="title is-2">Mis Artículos</h1>
 
         <div id="products-grid" class="product-grid"></div>
     </div>
 </body>
 <script>
-    fetch('http://localhost:3000/api/v1/articulos')
-        .then(response => response.json())
-        .then(articulos => {
-            const grid = document.getElementById('products-grid');
-            articulos.forEach(articulo => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <h2 class="title is-4">${articulo.nombre}</h2>
-                    <p><strong>Precio:</strong> $${articulo.precio}</p>
-                    <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
-                    <p><strong>Origen:</strong> ${articulo.origen}</p>
-                    <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                `;
-                grid.appendChild(card);
-            });
-        });
 
     async function obtenerUsuario() {
     const response = await fetch('http://localhost:3000/api/v1/usuarios/info', {
@@ -116,12 +100,17 @@
         const data = await response.json();
         if (data && data.user) {
             document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
+            const separador = document.createElement('br')
+            const numero_compradorText = document.createTextNode(`Número de comprador: ${data.user.id}`);
+            const usernameDisplay = document.getElementById('username-display');
+            usernameDisplay.appendChild(separador);
+            usernameDisplay.appendChild(numero_compradorText);
             document.getElementById('user-info').style.display = 'block';
             document.getElementById('login-btn').style.display = 'none';
 
             const perfilButton = document.getElementById('perfil-button');
             perfilButton.onclick = () => {
-                window.location.href = `perfil.html?id=${data.user.id}`;
+                window.location.href = `perfil-vendedor.html?id=${data.user.id}`;
             }
 
             const vendedorButton = document.getElementById('vendedor-button');
@@ -133,7 +122,44 @@
             document.getElementById('user-info').style.display = 'none';
         document.getElementById('login-btn').style.display = 'block';
         }
+
+        fetch('http://localhost:3000/api/v1/articulos')
+        .then(response => response.json())
+        .then(articulos => {
+            const grid = document.getElementById('products-grid');
+            const MisArticulos = articulos.filter(articulo => articulo.numero_vendedor == data.user.id);
+            MisArticulos.forEach(articulo => {
+                if (articulo.EnVenta == true){
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <h2 class="title is-4">${articulo.nombre}</h2>
+                        <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
+                        <p><strong>Precio:</strong> $${articulo.precio}</p>
+                        <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
+                        <p><strong>Origen:</strong> ${articulo.origen}</p>
+                        <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                        <button class="button is-primary is-small" onclick="window.location.href='../modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
+                        <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+        });
     }
+    }
+
+    function deleteProduct(id) {
+        if (confirm('¿Estás seguro de que quieres borrar este artículo?')) {
+            fetch(`http://localhost:3000/api/v1/articulos/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(response => {
+                alert('Artículo eliminado');
+                location.reload();
+            });
+        }
     }
 
     function logout() {

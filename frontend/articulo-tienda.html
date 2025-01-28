@@ -57,6 +57,13 @@
 <body>
 
     <div class="container">
+        <nav class="level">
+            <div class="level-left">
+              <p class="level-item">
+                  <a class="button is-link is-info" onclick="volver()">Volver</a>
+              </p>
+            </div>
+          </nav>
         <h1 class="title">Disponibilidad</h1>
         <form>
             <div class="field">
@@ -99,6 +106,24 @@
                         articuloId: articuloId.value
                     })
                 })
+                .then(response => {
+                    if(response.status === 201) {
+                        alert('Disponibilidad indicada correctamente');
+                        clearForm();
+                        window.history.back();
+                    } else {
+                        alert('Error al indicar disponibilidad');
+                    }
+                });
+            }
+
+            function clearForm() {
+                document.getElementById("tiendaId").value = '';
+                document.getElementById("articuloId").value = '';
+            }
+
+            function volver() {
+                window.history.back();
             }
         </script>
     </body>

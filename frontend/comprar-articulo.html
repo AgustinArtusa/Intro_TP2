@@ -110,49 +110,21 @@
             .then(response => {
                 if (response.ok) {
                     alert('Compra realizada con éxito.');
-                    //window.location.href = 'articulos.html';
+                    clearForm();
+                    window.history.back();
                 } else {
                     alert('Error al realizar la compra.');
-                    /*
-                    response.json().then(error => {
-                        alert(`Error: ${error.message}`);
-                    });*/
                 }
             })
         }
+        function clearForm() {
+            document.getElementById("usuarioId").value = '';
+            document.getElementById("articuloId").value = '';
+        }
 
-        /*
-        const form = document.getElementById('compraForm');
-
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const usuarioId = document.getElementById('usuarioId').value;
-            const articuloId = document.getElementById('articuloId').value;
-
-            try {
-                const response = await fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}/articulos`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ articuloId: parseInt(articuloId) })
-                });
-
-                if (response.ok) {
-                    alert('Compra realizada con éxito.');
-                    window.location.href = 'articulos.html';
-                } else {
-                    const error = await response.json();
-                    alert(`Error: ${error.message}`);
-                }
-            } catch (error) {
-                alert('Error al realizar la compra.');
-            }
-        });*/
         function volver() {
-                window.history.back();
-            }
+            window.history.back();
+        }
     </script>
 </body>
     
