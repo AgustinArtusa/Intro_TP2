@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lista de tiendas</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+        <style>
+          body {
+              background-color: #121212;
+              color: #ffffff;
+          }
+          .navbar {
+              background-color: #121212;
+              position: fixed;
+              display: flex;
+              flex-wrap: wrap;
+              width: 100%;
+              height: 10%;
+              top: 0%;
+              left: 0%;
+          }
+          .navbar-brand button{
+            margin-right: 10px;
+          }
+          .container {
+              margin-top: 100px;
+          }
+          .table {
+            margin-top: 30px;
+          }
+          #title {
+              color: #ffffff;
+              text-align: center;
+              font-weight: bold;
+              font-size: 2rem;
+          }
+          .button {
+              left: 50px;
+              border-radius: 8px;
+              margin: auto;
+              color: white;
+          }
+          .button.is-primary {
+              background-color: #a200ff;
+              border: none;
+          }
+          .button.is-primary:hover {
+              background-color: #7a00c4;
+          }
+      </style>
+    </head>
+
+    <body>
+
+      <div class="container is-fluid">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="navbar-brand">
+                  <button class="button is-primary" onclick="window.location.href='muestra-articulos.html'">Artículos</button>
+                  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </a>
+              </div>
+          </nav>
+          <h1 id="title">TIENDAS</h1>
+          <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Ubicacion</th>
+                <th>Horario</th>
+                <th>Estado</th>
+                <th>Telefono</th>
+                <th>Email contacto</th>
+              </tr>
+            </thead>
+
+            <tbody id="users-data">
+  
+
+            </tbody>
+            
+          </table>
+      </div>
+
+    </body>
+
+    <script>
+        fetch('http://localhost:3000/api/v1/tiendas')
+        .then(response => response.json())
+        .then(tiendas => {
+          console.log(tiendas);
+
+          let table = document.getElementById('users-data');
+          tiendas.forEach(tienda => {
+          let tr = document.createElement('tr');
+          tr.id = 'tienda-' + tienda.id;
+          let id = document.createElement('th');
+          const link = document.createElement('a')
+          link.href = `../tienda.html?id=${tienda.id}`;
+          link.textContent = tienda.id
+          id.appendChild(link);
+
+          let ubicacion = document.createElement('td');
+          ubicacion.textContent = tienda.ubicacion;
+          let horario = document.createElement('td');
+          horario.textContent = tienda.horario;
+          let estado = document.createElement('td');
+          estado.textContent = tienda.estado;
+          let telefono = document.createElement('td');
+          telefono.textContent = tienda.telefono;
+          let email_contacto = document.createElement('td');
+          email_contacto.textContent = tienda.email_contacto;
+
+              
+          tr.appendChild(id);
+          tr.appendChild(ubicacion);
+          tr.appendChild(horario);
+          tr.appendChild(estado);
+          tr.appendChild(telefono);
+          tr.appendChild(email_contacto);
+          table.appendChild(tr);
+
+          });
+        });
+
+
+  </script>
+
+</html>
