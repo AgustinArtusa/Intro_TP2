@@ -6,20 +6,12 @@ const prisma = new PrismaClient()
 
 router.get('/', async (req, res) => {
     const articulos = await prisma.articulo.findMany({
-        where: {
-            id: {
-                notIn: (await prisma.compra.findMany({
-                    select: {
-                        articuloId: true, 
-                    },
-                })).map((compra) => compra.articuloId),
-            },
+        orderBy: {
+            id: 'asc',
         },
-    });
+    })
+
     res.json(articulos);
-    /*
-    const articulos = await prisma.articulo.findMany()
-    res.json(articulos);*/
 });
 
 router.get('/:id', async (req, res) => {
@@ -44,7 +36,8 @@ router.post('/', async (req, res) => {
             precio: req.body.precio,
             descripcion: req.body.descripcion,
             origen: req.body.origen,
-            antiguedad: req.body.antiguedad
+            antiguedad: req.body.antiguedad,
+            numero_vendedor: req.body.numero_vendedor
         }
     })
     res.status(201).send(articulo)
@@ -100,7 +93,9 @@ router.put('/:id', async (req, res) =>{
             precio: req.body.precio,
             descripcion: req.body.descripcion,
             origen: req.body.origen,
-            antiguedad: req.body.antiguedad
+            antiguedad: req.body.antiguedad,
+            numero_vendedor: req.body.numero_vendedor,
+            EnVenta: req.body.EnVenta
         }
     })
     res.send(articulo)
