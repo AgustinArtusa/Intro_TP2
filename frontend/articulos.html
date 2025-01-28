@@ -97,10 +97,12 @@
                 card.className = 'product-card';
                 card.innerHTML = `
                     <h2 class="title is-4">${articulo.nombre}</h2>
+                    <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
                     <p><strong>Precio:</strong> $${articulo.precio}</p>
                     <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
                     <p><strong>Origen:</strong> ${articulo.origen}</p>
                     <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                    <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta} años</p>
                     <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
                     <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
                     <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
@@ -132,6 +134,11 @@
         const data = await response.json();
         if (data && data.user) {
             document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
+            const separador = document.createElement('br')
+            const numero_vendedorText = document.createTextNode(`Número de comprador/vendedor: ${data.user.id}`);
+            const usernameDisplay = document.getElementById('username-display');
+            usernameDisplay.appendChild(separador);
+            usernameDisplay.appendChild(numero_vendedorText);
             document.getElementById('user-info').style.display = 'block';
             document.getElementById('login-btn').style.display = 'none';
         } else {

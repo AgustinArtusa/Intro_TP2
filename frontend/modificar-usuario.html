@@ -59,7 +59,7 @@
                 <nav class="level">
                   <div class="level-left">
                     <p class="level-item">
-                        <a class="button is-link is-info" onclick="volverAUsuarios()">Volver a Usuarios</a>
+                        <a class="button is-link is-info" onclick="volverAUsuarios()">Volver</a>
                     </p>
                   </div>
                 </nav>
@@ -156,6 +156,7 @@
                 .then(response => {
                     if (response.ok) {
                         alert('Datos actualizados correctamente');
+                        window.history.back();
                     } 
                     else {
                         alert('Error al actualizar los datos');
