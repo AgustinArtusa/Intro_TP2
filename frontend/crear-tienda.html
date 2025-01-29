@@ -1,62 +1,58 @@
 <!DOCTYPE html>
-<html>
 <head>
-  <title>Crear Tienda</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-
-  <style>
-    .container {
-        max-width: 450px;
-        margin: 50px auto;
-        padding: 40px;
-        background: #1c1c1c;
-        border-radius: 12px;
-        box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
-    }
-    .title {
-        color: #ffffff;
-        text-align: center;
-        font-weight: bold;
-        font-size: 2rem;
-    }
-    .label {
-        color: #ffffff;
-        font-weight: bold;
-    }
-    .input, .button {
-        border-radius: 8px;
-    }
-    .input, .textarea {
-        background-color: #2e2e2e;
-        color: white;
-        border: 1px solid #a200ff;
-    }
-    .input::placeholder {
-        color: #888;
-    }
-    .button {
-        background-color: #a200ff;
-        border: none;
-        color: white;
-        transition: 0.3s;
-    }
-    .button:hover {
-        background-color: #7a00c4;
-    }
-    .cancel-button {
-        background-color: #ffffff;
-        color: #000;
-    }
-    .cancel-button:hover {
-        background-color: #cccccc;
-    }
-</style>
+    <title>Crear Tienda</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+        }
+        .title {
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .label {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .input, .button {
+            border-radius: 8px;
+        }
+        .input, .textarea {
+            background-color: #2e2e2e;
+            color: white;
+            border: 1px solid #a200ff;
+        }
+        .input::placeholder {
+            color: #888;
+        }
+        .button {
+            background-color: #a200ff;
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #7a00c4;
+        }
+        .cancel-button {
+            background-color: #ffffff;
+            color: #000;
+        }
+        .cancel-button:hover {
+            background-color: #cccccc;
+        }
+    </style>
 </head>
-
 <body>
-
   <div class="container">
     <nav class="level">
         <div class="level-left">
@@ -115,51 +111,50 @@
   </div>          
 
   <script>
-    function createTienda(){
-        event.preventDefault();
-        const ubicacion = document.getElementById('ubicacion').value;
-        const horario = document.getElementById('horario').value;
-        const estado = document.getElementById('estado').value;
-        const telefono = document.getElementById('telefono').value;
-        const email_contacto = document.getElementById('email_contacto').value;
-        let body = {
-            ubicacion: ubicacion,
-            horario: horario,
-            estado: estado,
-            telefono: parseInt(telefono),
-            email_contacto: email_contacto,
-        };
+        function createTienda(){
+            event.preventDefault();
+            const ubicacion = document.getElementById('ubicacion').value;
+            const horario = document.getElementById('horario').value;
+            const estado = document.getElementById('estado').value;
+            const telefono = document.getElementById('telefono').value;
+            const email_contacto = document.getElementById('email_contacto').value;
+            let body = {
+                ubicacion: ubicacion,
+                horario: horario,
+                estado: estado,
+                telefono: parseInt(telefono),
+                email_contacto: email_contacto,
+            };
 
-        fetch("http://localhost:3000/api/v1/tiendas", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        }).then(response => {
-            if (response.status === 201) {
-                alert('La tienda se ha creado con exito');
-                clearForm();
-                window.history.back();
-            }
-            else
-            {
-                alert('Error al crear una Tienda');
-            }
-        });
-    }
+            fetch("http://localhost:3000/api/v1/tiendas", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(response => {
+                if (response.status === 201) {
+                    alert('La tienda se ha creado con exito');
+                    clearForm();
+                    window.history.back();
+                }
+                else
+                {
+                    alert('Error al crear una Tienda');
+                }
+            });
+        }
 
-    function clearForm() {
-        const ubicacion = document.getElementById('ubicacion').value = '';
-        const horario = document.getElementById('horario').value = '';
-        const estado = document.getElementById('estado').value = '';
-        const telefono = document.getElementById('telefono').value = '';
-        const email_contacto = document.getElementById('email_contacto').value = '';
-    }
+        function clearForm() {
+            const ubicacion = document.getElementById('ubicacion').value = '';
+            const horario = document.getElementById('horario').value = '';
+            const estado = document.getElementById('estado').value = '';
+            const telefono = document.getElementById('telefono').value = '';
+            const email_contacto = document.getElementById('email_contacto').value = '';
+        }
 
-    function volver() {
-        window.history.back();
-    }
-</script>
+        function volver() {
+            window.history.back();
+        }
+    </script>
 </body>
-</html>

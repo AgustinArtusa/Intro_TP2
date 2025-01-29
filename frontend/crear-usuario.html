@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html>
 <head>
   <title>Crear Usuario</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-
   <style>
     .container {
         max-width: 450px;
@@ -52,9 +50,8 @@
     .cancel-button:hover {
         background-color: #cccccc;
     }
-</style>
+  </style>
 </head>
-
 <body>
   <div class="container">
     <nav class="level">
@@ -127,59 +124,58 @@
     </form>
   </div>          
 
-<script>
-    function createUser(){
-        event.preventDefault();
-        const nombre = document.getElementById('nombre').value;
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const dinero = document.getElementById('dinero').value;
-        const telefono = document.getElementById('telefono').value;
-        const rol = document.getElementById('rol').value;
-        
-        let body = {
-            nombre: nombre,
-            username: username,
-            contraseña: password,
-            telefono: parseInt(telefono),
-            rol: rol
-        };
+  <script>
+      function createUser(){
+          event.preventDefault();
+          const nombre = document.getElementById('nombre').value;
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          const dinero = document.getElementById('dinero').value;
+          const telefono = document.getElementById('telefono').value;
+          const rol = document.getElementById('rol').value;
+          
+          let body = {
+              nombre: nombre,
+              username: username,
+              contraseña: password,
+              telefono: parseInt(telefono),
+              rol: rol
+          };
 
-        if (dinero !== "") {
-            body.dinero = parseFloat(dinero);
-        }
-
-      fetch("http://localhost:3000/api/v1/usuarios", {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(body)
-      }).then(response => {
-          if (response.status === 201) {
-            alert('Usuario creado con exito');
-            clearForm();
-            window.history.back();
+          if (dinero !== "") {
+              body.dinero = parseFloat(dinero);
           }
-          else
-          {
-            alert('Error al crear el Usuario');
-          }
-      });
-  }
 
-    function clearForm() {
-        const nombre = document.getElementById('nombre').value = '';
-        const username = document.getElementById('username').value = '';
-        const password = document.getElementById('password').value = '';
-        const dinero = document.getElementById('dinero').value = '';
-        const telefono = document.getElementById('telefono').value = '';
-        const rol = document.getElementById('rol').value = '';
+        fetch("http://localhost:3000/api/v1/usuarios", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }).then(response => {
+            if (response.status === 201) {
+              alert('Usuario creado con exito');
+              clearForm();
+              window.history.back();
+            }
+            else
+            {
+              alert('Error al crear el Usuario');
+            }
+        });
     }
 
-    function volver() {
-        window.history.back();
-    }
-</script>
+      function clearForm() {
+          const nombre = document.getElementById('nombre').value = '';
+          const username = document.getElementById('username').value = '';
+          const password = document.getElementById('password').value = '';
+          const dinero = document.getElementById('dinero').value = '';
+          const telefono = document.getElementById('telefono').value = '';
+          const rol = document.getElementById('rol').value = '';
+      }
+
+      function volver() {
+          window.history.back();
+      }
+  </script>
 </body>
-</html>

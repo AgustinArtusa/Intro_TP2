@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
         .container {
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .product-card {
             background: #1c1c1c;
@@ -29,6 +29,7 @@
             color: #ffffff;
             font-weight: bold;
             text-align: center;
+            margin: 8px;
         }
         .button {
             border-radius: 8px;
@@ -86,80 +87,80 @@
 
         <div id="products-grid" class="product-grid"></div>
     </div>
-</body>
-<script>
-    fetch('http://localhost:3000/api/v1/articulos')
-        .then(response => response.json())
-        .then(articulos => {
-            const grid = document.getElementById('products-grid');
-            articulos.forEach(articulo => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <h2 class="title is-4">${articulo.nombre}</h2>
-                    <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
-                    <p><strong>Precio:</strong> $${articulo.precio}</p>
-                    <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
-                    <p><strong>Origen:</strong> ${articulo.origen}</p>
-                    <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                    <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta} años</p>
-                    <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
-                    <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
-                    <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
-                `;
-                grid.appendChild(card);
-            });
-        });
-
-    function deleteProduct(id) {
-        if (confirm('¿Estás seguro de que quieres borrar este artículo?')) {
-            fetch(`http://localhost:3000/api/v1/articulos/${id}`, {
-                method: 'DELETE'
-            })
+    <script>
+        fetch('http://localhost:3000/api/v1/articulos')
             .then(response => response.json())
-            .then(response => {
-                alert('Artículo eliminado');
-                location.reload();
+            .then(articulos => {
+                const grid = document.getElementById('products-grid');
+                articulos.forEach(articulo => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <h2 class="title is-4">${articulo.nombre}</h2>
+                        <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
+                        <p><strong>Precio:</strong> $${articulo.precio}</p>
+                        <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
+                        <p><strong>Origen:</strong> ${articulo.origen}</p>
+                        <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                        <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
+                        <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
+                        <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
+                        <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+                    `;
+                    grid.appendChild(card);
+                });
             });
+    
+        function deleteProduct(id) {
+            if (confirm('¿Estás seguro de que quieres borrar este artículo?')) {
+                fetch(`http://localhost:3000/api/v1/articulos/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(response => {
+                    alert('Artículo eliminado');
+                    location.reload();
+                });
+            }
         }
-    }
-
-    async function obtenerUsuario() {
-    const response = await fetch('http://localhost:3000/api/v1/usuarios/info', {
-        method: 'GET',
-        credentials: 'include'
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        if (data && data.user) {
-            document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
-            const separador = document.createElement('br')
-            const numero_vendedorText = document.createTextNode(`Número de comprador/vendedor: ${data.user.id}`);
-            const usernameDisplay = document.getElementById('username-display');
-            usernameDisplay.appendChild(separador);
-            usernameDisplay.appendChild(numero_vendedorText);
-            document.getElementById('user-info').style.display = 'block';
-            document.getElementById('login-btn').style.display = 'none';
-        } else {
-            document.getElementById('user-info').style.display = 'none';
-        document.getElementById('login-btn').style.display = 'block';
-        }
-    }
-    }
-
-    function logout() {
-    fetch('http://localhost:3000/api/v1/usuarios/logout', {
-        method: 'POST',
-        credentials: 'include'
-    })
-    .then(response => {
+    
+        async function obtenerUsuario() {
+        const response = await fetch('http://localhost:3000/api/v1/usuarios/info', {
+            method: 'GET',
+            credentials: 'include'
+        });
+    
         if (response.ok) {
-            window.location.href = 'iniciar-sesion.html';
+            const data = await response.json();
+            if (data && data.user) {
+                document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
+                const separador = document.createElement('br')
+                const numero_vendedorText = document.createTextNode(`Número de comprador/vendedor: ${data.user.id}`);
+                const usernameDisplay = document.getElementById('username-display');
+                usernameDisplay.appendChild(separador);
+                usernameDisplay.appendChild(numero_vendedorText);
+                document.getElementById('user-info').style.display = 'block';
+                document.getElementById('login-btn').style.display = 'none';
+            } else {
+                document.getElementById('user-info').style.display = 'none';
+            document.getElementById('login-btn').style.display = 'block';
+            }
         }
-    });
-}
+        }
+    
+        function logout() {
+        fetch('http://localhost:3000/api/v1/usuarios/logout', {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = 'iniciar-sesion.html';
+            }
+        });
+    }
+    
+    obtenerUsuario()
+    </script>
+</body>
 
-obtenerUsuario()
-</script>
-</html>

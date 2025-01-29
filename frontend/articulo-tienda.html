@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
     <title>Disponibilidad</title>
     <meta charset="UTF-8">
@@ -20,7 +19,7 @@
             text-align: center;
             font-weight: bold;
             font-size: 2rem;
-        }
+        }articulos
         .label {
             color: #ffffff;
             font-weight: bold;
@@ -91,41 +90,39 @@
         </form>
     </div>
 
-        <script>
-            function TiendaDisponible() {
-                event.preventDefault();
-                const tiendaId = document.getElementById("tiendaId");
-                const articuloId = document.getElementById("articuloId");
-    
-                fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId.value}/articulos`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        articuloId: articuloId.value
-                    })
+    <script>
+        function TiendaDisponible() {
+            event.preventDefault();
+            const tiendaId = document.getElementById("tiendaId");
+            const articuloId = document.getElementById("articuloId");
+
+            fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId.value}/articulos`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    articuloId: articuloId.value
                 })
-                .then(response => {
-                    if(response.status === 201) {
-                        alert('Disponibilidad indicada correctamente');
-                        clearForm();
-                        window.history.back();
-                    } else {
-                        alert('Error al indicar disponibilidad');
-                    }
-                });
-            }
+            })
+            .then(response => {
+                if(response.status === 201) {
+                    alert('Disponibilidad indicada correctamente');
+                    clearForm();
+                    window.history.back();
+                } else {
+                    alert('Error al indicar disponibilidad');
+                }
+            });
+        }
 
-            function clearForm() {
-                document.getElementById("tiendaId").value = '';
-                document.getElementById("articuloId").value = '';
-            }
+        function clearForm() {
+            document.getElementById("tiendaId").value = '';
+            document.getElementById("articuloId").value = '';
+        }
 
-            function volver() {
-                window.history.back();
-            }
-        </script>
-    </body>
-    
-</html>
+        function volver() {
+            window.history.back();
+        }
+    </script>
+</body>
