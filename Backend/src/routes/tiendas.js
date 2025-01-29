@@ -52,6 +52,12 @@ router.delete('/:id', async (req, res) => {
         return
     }
 
+    await prisma.disponibilidad.deleteMany({
+        where: {
+            tiendaId: tiendas.id
+        }
+    })
+
     await prisma.tienda.delete({
         where: {
             id: parseInt(req.params.id)
