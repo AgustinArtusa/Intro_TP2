@@ -110,12 +110,11 @@
             if (response.ok) {
                 response.json().then(data => {
                     const rol = data.user.rol;
-                    console.log(rol);
                     if (rol === 'admin') {
                         window.location.href = 'articulos.html';
                     }
                     else if (rol === 'comprador') {
-                        window.location.href = 'Usuarios/lista-articulo.html';
+                        window.location.href = 'Compradores/lista-articulo.html';
                     }
                     else if (rol === 'vendedor') {
                         window.location.href = 'Vendedores/muestra-articulos.html';
@@ -123,9 +122,7 @@
                     else {
                         alert("Rol no válido");
                     }
-                    //window.location.href = 'Usuarios/perfil.html';
                 });
-                //window.location.href = 'Usuarios/lista-articulo.html';
             } else {
                 alert("Usuario o Contraseña incorrectos")
             }

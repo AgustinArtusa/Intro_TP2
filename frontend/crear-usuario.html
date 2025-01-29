@@ -91,7 +91,7 @@
       <div class="field">
             <label class="label">Dinero:</label>
             <div class="control">
-                <input id="dinero" class="input" type="text" placeholder="Ingrese el dinero del usuario" required>
+                <input id="dinero" class="input" type="number" step="0.01" placeholder="Ingrese el dinero del usuario" required>
             </div>
       </div>
 
@@ -99,7 +99,7 @@
         <div class="field">
             <label class="label">Telefono:</label>
             <div class="control">
-                <input id="telefono" class="input" type="text" placeholder="Ingrese el número de teléfono del usuario" required>
+                <input id="telefono" class="input" type="number" placeholder="Ingrese el número de teléfono del usuario" required>
             </div>
         </div>
 
@@ -128,31 +128,26 @@
   </div>          
 
 <script>
-  function createUser(){
-      event.preventDefault();
-      const nombre = document.getElementById('nombre').value;
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const dinero = document.getElementById('dinero').value;
-      const telefono = document.getElementById('telefono').value;
-      const rol = document.getElementById('rol').value;
+    function createUser(){
+        event.preventDefault();
+        const nombre = document.getElementById('nombre').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const dinero = document.getElementById('dinero').value;
+        const telefono = document.getElementById('telefono').value;
+        const rol = document.getElementById('rol').value;
+        
+        let body = {
+            nombre: nombre,
+            username: username,
+            contraseña: password,
+            telefono: parseInt(telefono),
+            rol: rol
+        };
 
-      console.log('Rol seleccionado:', rol);
-
-      if(!rol){
-        alert('Seleccione un rol');
-            return;
-      }
-
-      let body = {
-          nombre: nombre,
-          username: username,
-          contraseña: password,
-          dinero: dinero,
-          telefono: parseInt(telefono),
-          rol: rol
-      };
-
+        if (dinero !== "") {
+            body.dinero = parseFloat(dinero);
+        }
 
       fetch("http://localhost:3000/api/v1/usuarios", {
           method: 'POST',
