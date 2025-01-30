@@ -96,7 +96,7 @@
         <div class="field">
             <label class="label">Email de contacto:</label>
             <div class="control">
-                <input id="email_contacto" class="input" type="text" placeholder="Ingrese el email de contacto de la tienda" required>
+                <input id="email_contacto" class="input" type="email" placeholder="Ingrese el email de contacto de la tienda" required>
             </div>
         </div>
 
@@ -110,7 +110,17 @@
     </form>
   </div>          
 
-  <script>
+    <script>
+        const validar = document.getElementById('telefono');
+        function validacion(event){
+            if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10)
+            {
+              event.preventDefault();
+            }  
+        }
+        validar.addEventListener('keypress', validacion);
+
+
         function createTienda(){
             event.preventDefault();
             const ubicacion = document.getElementById('ubicacion').value;
@@ -118,6 +128,17 @@
             const estado = document.getElementById('estado').value;
             const telefono = document.getElementById('telefono').value;
             const email_contacto = document.getElementById('email_contacto').value;
+
+            if (ubicacion === "" || horario === "" || estado === "" || telefono === "" || email_contacto === ""){
+                alert("Complete los campos que esten vacios");
+                return;
+            }
+            const email_valido = /^[a-zA-Z]+@empresa\.com$/;
+            const verificacion = email_valido.test(email_contacto);
+            if (verificacion == false){
+                alert("Correo no valido para la tienda")
+                return;
+            }
             let body = {
                 ubicacion: ubicacion,
                 horario: horario,

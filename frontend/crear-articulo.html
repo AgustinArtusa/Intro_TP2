@@ -62,7 +62,7 @@
             </div>
           </nav>
         <h1 class="title">Crear Artículo</h1>
-
+        <form>
             <div class="field">
                 <label class="label" for="nombre">Nombre del Artículo:</label>
                 <div class="control">
@@ -111,8 +111,18 @@
                     <button class="button is-medium" type="submit" onclick="createArticulo()">Crear</button>
                 </div>
             </div>
+        </form>    
     </div>
     <script>
+        const validar = document.getElementById('antiguedad');
+        const validad_id_vendedor = document.getElementById('numero_vendedor');
+        function validacion(event){
+            if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10){
+              event.preventDefault();
+            }  
+        }
+        validar.addEventListener('keypress', validacion);
+        validad_id_vendedor.addEventListener('keypress', validacion);
         function createArticulo() {
             event.preventDefault();
     
@@ -122,6 +132,11 @@
             const origen = document.getElementById('origen').value;
             const antiguedad = document.getElementById('antiguedad').value;
             const numero_vendedor = document.getElementById('numero_vendedor').value;
+
+            if (nombre === "" || precio === "" || descripcion === "" || origen === "" || antiguedad === ""){
+                alert("Complete los campos que esten vacios");
+                return;
+            }
     
             let body = {
                 nombre: nombre,
