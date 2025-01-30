@@ -158,9 +158,6 @@ router.get('/:id/articulos', async (req, res) => {
             id: { in: tienda.articulosDisponibles.filter(disponibilidad => disponibilidad.disponible).map(disponibilidad => disponibilidad.articuloId) }
         }
     });    
-    //filter(disponibilidad => disponibilidad.disponible)
-    // Extraer solo la información de los artículos
-    //const articulos = tienda.articulosDisponibles.map(disponibilidad => disponibilidad.articulo);
 
     res.json(articulos);
 });
