@@ -107,6 +107,15 @@
         </form>
     </div>
     <script>
+
+        const validar = document.getElementById('telefono');
+        function validacion(event){
+            if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10){
+              event.preventDefault();
+            }  
+        }
+        validar.addEventListener('keypress', validacion);
+        
         const params = new URLSearchParams(window.location.search);
         const articuloId = params.get('id');
 
