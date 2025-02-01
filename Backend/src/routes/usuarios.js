@@ -112,14 +112,25 @@ router.delete('/:id', async (req, res) => {
     }
 
     if (usuario.rol === 'vendedor'){
+
         const articulos = await prisma.articulo.findMany({
             where: {
-                numero_vendedor: usuario.id
+                numero_vendedor: usuario.id,
+                EnVenta: true
             }
 
         })
 
-        if(articulos){
+        if(articulos.length > 0){
+
+            await prisma.compra.deleteMany({
+                where:{
+                    articuloId: {
+                        in: articulos.map(articulo => articulo.id)
+                    }
+                }
+            })
+
             await prisma.articulo.deleteMany({
                 where: {
                     numero_vendedor: usuario.id,
@@ -127,9 +138,37 @@ router.delete('/:id', async (req, res) => {
                 }
             })
         }
+        
+        
     }
 
     if (usuario.rol === 'admin'){
+        await prisma.compra.deleteMany({
+            where:{
+                usuarioId: usuario.id
+            }
+        })
+
+        const articulos = await prisma.articulo.findMany({
+            where:{
+                numero_vendedor: usuario.id,
+                EnVenta: true
+            }
+        })
+
+        if(articulos.length > 0){
+            await prisma.compra.deleteMany({
+                articuloId: {
+                    in: articulos.map(articulo => articulo.id)
+                }
+            })
+
+            await prisma.articulo.deleteMany({
+                numero_vendedor: usuario.id,
+                EnVenta: true
+            })
+        }
+        /*
         const compraExistente = await prisma.compra.findFirst({
             where:{
                 usuarioId: usuario.id
@@ -146,12 +185,22 @@ router.delete('/:id', async (req, res) => {
 
         const articulos = await prisma.articulo.findMany({
             where: {
-                numero_vendedor: usuario.id
+                numero_vendedor: usuario.id,
+                EnVenta: true
             }
 
         })
 
         if(articulos){
+            
+            await prisma.compra.deleteMany({
+                where:{
+                    articuloId: {
+                        in: articulos.map(articulo => articulo.id)
+                    }
+                }
+            })
+
             await prisma.articulo.deleteMany({
                 where: {
                     numero_vendedor: usuario.id,
@@ -159,6 +208,7 @@ router.delete('/:id', async (req, res) => {
                 }
             })
         }
+        */
     }
 
     await prisma.usuario.delete({
@@ -243,24 +293,7 @@ router.post('/:id/articulos', async (req,res) => {
         res.sendStatus(404).send("Articulo no encontrado")
         return;
     }
-
-    const compraExistente = await prisma.compra.findFirst({
-        where:{
-            articuloId: articulo.id,
-        }
-    })
-
-    if (compraExistente) {
-        return res.status(400).send("El articulo ya fue comprado");
-    }
-    
-    
-    const disponibilidad = await prisma.disponibilidad.findFirst({
-        where:{
-            articuloId: articulo.id,
-            disponible: true
-        }
-    });
+   
     
     const vendedor = await prisma.usuario.findUnique({
         where:{
@@ -278,31 +311,36 @@ router.post('/:id/articulos', async (req,res) => {
         return res.status(400).send("No hay suficiente dinero para comprar el artículo");
     }
 
-    await prisma.$transaction([
-        prisma.compra.create({
-            data: {
-                usuarioId: usuario.id,
-                articuloId: articulo.id
-            }
-        }),
-        prisma.usuario.update({
-            where: {
-                id: usuario.id
-            },
-            data: {
-                dinero: usuario.dinero - articulo.precio
-            }
-        }),
-    ]);
+    const nueva_cantidad = parseInt(articulo.cantidad) - 1;
+
+    
+    await  prisma.compra.create({
+        data: {
+            usuarioId: usuario.id,
+            articuloId: articulo.id
+        }
+    })
 
     await prisma.articulo.update({
         where:{
             id: articulo.id
         },
-        data:{
-            EnVenta:false
+        data: {
+            cantidad: nueva_cantidad
         }
     })
+
+    await prisma.usuario.update({
+        where: {
+            id: usuario.id
+        },
+        data: {
+            dinero: usuario.dinero - articulo.precio
+        }
+    })
+
+
+
     
     await prisma.usuario.update({
         where:{
@@ -312,8 +350,16 @@ router.post('/:id/articulos', async (req,res) => {
             dinero: parseFloat(vendedor.dinero) + parseFloat(articulo.precio)
         }
     })
+
+    const disponibilidad = await prisma.disponibilidad.findFirst({
+        where:{
+            articuloId: articulo.id,
+            disponible: true
+        }
+    });
     
-    if (disponibilidad) {
+    if (nueva_cantidad === 0) {
+
         await prisma.disponibilidad.update({
             where: {
                 id: disponibilidad.id
@@ -322,7 +368,17 @@ router.post('/:id/articulos', async (req,res) => {
                 disponible: false
             }
         });
+
+        await prisma.articulo.update({
+            where:{
+                id: articulo.id
+            },
+            data:{
+                EnVenta:false
+            }
+        })
     }
+
 
     res.sendStatus(201)
 });

@@ -37,7 +37,8 @@ router.post('/', async (req, res) => {
             descripcion: req.body.descripcion,
             origen: req.body.origen,
             antiguedad: req.body.antiguedad,
-            numero_vendedor: req.body.numero_vendedor
+            numero_vendedor: req.body.numero_vendedor,
+            cantidad: req.body.cantidad
         }
     })
     res.status(201).send(articulo)
@@ -95,7 +96,8 @@ router.put('/:id', async (req, res) =>{
             origen: req.body.origen,
             antiguedad: req.body.antiguedad,
             numero_vendedor: req.body.numero_vendedor,
-            EnVenta: req.body.EnVenta
+            EnVenta: req.body.EnVenta,
+            cantidad: req.body.cantidad
         }
     })
     res.send(articulo)

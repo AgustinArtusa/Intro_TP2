@@ -109,21 +109,25 @@ router.post('/:id/articulos', async (req, res) => {
             id: parseInt(req.body.articuloId) 
         }
     });
-
     if (articulo === null) {
         res.status(404).send("Artículo no encontrado");
         return;
     }
 
+
+    
     const disponibilidadExistente = await prisma.disponibilidad.findFirst({
         where: {
-            articuloId: articulo.id
+            articuloId: articulo.id,
+            tiendaId: tienda.id
         },
     });
 
     if (disponibilidadExistente) {
-        return res.status(400).send("El artículo ya está registrado en una tienda");
+        return res.status(400).send("El articulo ya está registrado en esta tienda");
     }
+    
+    
 
     await prisma.disponibilidad.create({
         data: {
