@@ -27,6 +27,7 @@ model Articulo {
   antiguedad     String
   numero_vendedor Int   @default(0)
   EnVenta        Boolean @default(true)
+  cantidad       Int   @default(1)
   compras        Compra[]
   disponibilidad Disponibilidad[]
 }
