@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<head>
+    <title>Crear Artículo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+        }
+        .title {
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .label {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .input, .button {
+            border-radius: 8px;
+        }
+        .input, .textarea {
+            background-color: #2e2e2e;
+            color: white;
+            border: 1px solid #a200ff;
+        }
+        .input::placeholder {
+            color: #888;
+        }
+        .button {
+            background-color: #a200ff;
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #7a00c4;
+        }
+        .cancel-button {
+            background-color: #ffffff;
+            color: #000;
+        }
+        .cancel-button:hover {
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="level">
+            <div class="level-left">
+              <p class="level-item">
+                  <a class="button is-link is-info" onclick="volver()">Volver</a>
+              </p>
+            </div>
+          </nav>
+        <h1 class="title">Crear Artículo</h1>
+        <form>
+            <div class="field">
+                <label class="label" for="nombre">Nombre del Artículo:</label>
+                <div class="control">
+                    <input class="input" type="text" id="nombre" placeholder="Ingrese el nombre del artículo" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="precio">Precio:</label>
+                <div class="control">
+                    <input class="input" type="number" id="precio" step="0.01" placeholder="Ingrese el precio del artículo" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="descripcion">Descripción:</label>
+                <div class="control">
+                    <textarea class="textarea" id="descripcion" placeholder="Ingrese la descripcion del artículo" required></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="origen">Origen:</label>
+                <div class="control">
+                    </html>          <input class="input" type="text" id="origen" placeholder="Ingrese el origen del artículo" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="antiguedad">Antigüedad (en años):</label>
+                <div class="control">
+                    <input class="input" type="number" id="antiguedad" placeholder="Ingrese los años de antiguedad del artículo" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="nuemero_vendedor">Numero de Vendedor</label>
+                <div  class="control">
+                    <input class="input" type="number" id="numero_vendedor" placeholder="Ingrese el numero de vendedor" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="nuemero_vendedor">Cantidad de articulos que vendera</label>
+                <div  class="control">
+                    <input class="input" type="number" id="cantidad_articulo" placeholder="Ingrese el numero de vendedor" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <a class="button is-medium cancel-button" onclick="clearForm()">Cancelar</a>
+                    <button class="button is-medium" type="submit" onclick="createArticulo()">Crear</button>
+                </div>
+            </div>
+        </form>    
+    </div>
+    <script>
+        const validar = document.getElementById('antiguedad');
+        const validad_id_vendedor = document.getElementById('numero_vendedor');
+        const validad_cantidad = document.getElementById('cantidad_articulo');
+        function validacion(event){
+            if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10){
+              event.preventDefault();
+            }  
+        }
+        validar.addEventListener('keypress', validacion);
+        validad_id_vendedor.addEventListener('keypress', validacion);
+        validad_cantidad.addEventListener('keypress', validacion);
+        function createArticulo() {
+            event.preventDefault();
+    
+            const nombre = document.getElementById('nombre').value;
+            const precio = document.getElementById('precio').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const origen = document.getElementById('origen').value;
+            const antiguedad = document.getElementById('antiguedad').value;
+            const numero_vendedor = document.getElementById('numero_vendedor').value;
+            const cantidad = document.getElementById('cantidad_articulo').value;
+
+            if (nombre === "" || precio === "" || descripcion === "" || origen === "" || antiguedad === "" || cantidad === ""){
+                alert("Complete los campos que esten vacios");
+                return;
+            }
+    
+            let body = {
+                nombre: nombre,
+                precio: precio,
+                descripcion: descripcion,
+                origen: origen,
+                antiguedad: antiguedad
+            };
+            
+            if (numero_vendedor !== ""){
+                body.numero_vendedor = parseInt(numero_vendedor);
+            }
+
+            if (cantidad !== ""){
+                body.cantidad = parseInt(cantidad)
+            }
+    
+            fetch("http://localhost:3000/api/v1/articulos", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            })
+            .then(response => {
+                if (response.status === 201) {
+                    alert('Artículo creado con éxito.');
+                    clearForm();
+                    window.history.back();
+                } else {
+                    alert('Error al crear el artículo.');
+                }
+            })
+        }
+
+        function clearForm() {
+            document.getElementById('nombre').value = '';
+            document.getElementById('precio').value = '';
+            document.getElementById('descripcion').value = '';
+            document.getElementById('origen').value = '';
+            document.getElementById('antiguedad').value = '';
+            document.getElementById('numero_vendedor').value = '';
+        }
+
+        function volver() {
+            window.history.back();
+        }
+    </script>
+</body>

@@ -68,7 +68,8 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <button class="button is-primary" onclick="window.location.href='tiendas.html'">Tiendas</button>
             <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
-            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Crear Artículo</button>
+            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Vender Artículo Completo</button>
+            <button class="button is-primary" onclick="window.location.href='crear-articulo-unidad.html'">Vender Artículo por Unidad</button>
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
                     <a class="navbar-link" id="username-display"></a>
@@ -95,7 +96,21 @@
                 articulos.forEach(articulo => {
                     const card = document.createElement('div');
                     card.className = 'product-card';
-                    card.innerHTML = `
+                    if(articulo.cantidad === 0){
+                            card.innerHTML = `
+                            <h2 class="title is-4">${articulo.nombre}</h2>
+                            <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
+                            <p><strong>Precio:</strong> $${articulo.precio}</p>
+                            <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
+                            <p><strong>Origen:</strong> ${articulo.origen}</p>
+                            <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                            <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
+                            <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
+                            <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+                        `;
+                    }
+                    else {
+                        card.innerHTML = `
                         <h2 class="title is-4">${articulo.nombre}</h2>
                         <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
                         <p><strong>Precio:</strong> $${articulo.precio}</p>
@@ -106,7 +121,8 @@
                         <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
                         <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
                         <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
-                    `;
+                        `;
+                    }
                     grid.appendChild(card);
                 });
             });

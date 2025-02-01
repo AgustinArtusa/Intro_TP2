@@ -68,7 +68,8 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <button class="button is-primary" onclick="window.location.href='listado-tiendas.html'">Tiendas</button>
             <button class="button is-primary" id="perfil-button">Mi Perfil</button>
-            <button class="button is-primary" id="vendedor-button">Vender</button>
+            <button class="button is-primary" id="vendedor-button">Vender Coleccion</button>
+            <button class="button is-primary" id="vendedor-unidad-button">Vender por Unidad</button>
             <button class="button is-primary" onclick="window.location.href='../articulo-tienda.html'">Agregar un articulo una tienda</button>
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
@@ -115,6 +116,11 @@
                 const vendedorButton = document.getElementById('vendedor-button');
                 vendedorButton.onclick = () => {
                     window.location.href = `../crear-articulo.html`;
+                }
+
+                const vendedorUnidad = document.getElementById('vendedor-unidad-button');
+                vendedorUnidad.onclick = () => {
+                    window.location.href = `../crear-articulo-unidad.html`
                 }
     
             } else {
