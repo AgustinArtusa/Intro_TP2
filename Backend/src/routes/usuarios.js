@@ -102,13 +102,14 @@ router.delete('/:id', async (req, res) => {
             }
         })
 
-        if (compraExistente){
+        if (compraExistente !== null){
             await prisma.compra.deleteMany({
                 where: {
                     usuarioId: usuario.id
                 }
             })
         }
+        
     }
 
     if (usuario.rol === 'vendedor'){
@@ -168,47 +169,6 @@ router.delete('/:id', async (req, res) => {
                 EnVenta: true
             })
         }
-        /*
-        const compraExistente = await prisma.compra.findFirst({
-            where:{
-                usuarioId: usuario.id
-            }
-        })
-
-        if (compraExistente){
-            await prisma.compra.deleteMany({
-                where: {
-                    usuarioId: usuario.id
-                }
-            })
-        }
-
-        const articulos = await prisma.articulo.findMany({
-            where: {
-                numero_vendedor: usuario.id,
-                EnVenta: true
-            }
-
-        })
-
-        if(articulos){
-            
-            await prisma.compra.deleteMany({
-                where:{
-                    articuloId: {
-                        in: articulos.map(articulo => articulo.id)
-                    }
-                }
-            })
-
-            await prisma.articulo.deleteMany({
-                where: {
-                    numero_vendedor: usuario.id,
-                    EnVenta: true
-                }
-            })
-        }
-        */
     }
 
     await prisma.usuario.delete({
@@ -294,7 +254,6 @@ router.post('/:id/articulos', async (req,res) => {
         return;
     }
    
-    
     const vendedor = await prisma.usuario.findUnique({
         where:{
             id: articulo.numero_vendedor
@@ -339,9 +298,6 @@ router.post('/:id/articulos', async (req,res) => {
         }
     })
 
-
-
-    
     await prisma.usuario.update({
         where:{
             id: vendedor.id
