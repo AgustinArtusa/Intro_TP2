@@ -91,7 +91,7 @@
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
                 articulos.forEach(articulo => {
-                    if(articulo.EnVenta == true){
+                    if(articulo.EnVenta == true && articulo.numero_vendedor !== 0){
                         const card = document.createElement('div');
                         card.className = 'product-card';
                         card.innerHTML = `
@@ -125,11 +125,12 @@
                 usernameDisplay.appendChild(numero_vendedorText);
                 document.getElementById('user-info').style.display = 'block';
                 document.getElementById('login-btn').style.display = 'none';
-    
+
                 const profileButton = document.getElementById('perfil-button');
                 profileButton.onclick = () => {
-                    window.location.href = `perfil.html?id=${data.user.id}`;
+                    window.location.href = `perfil?id=${data.user.id}`;
                 }
+
             } else {
                 document.getElementById('user-info').style.display = 'none';
             document.getElementById('login-btn').style.display = 'block';

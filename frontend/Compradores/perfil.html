@@ -87,7 +87,6 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
             <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
-            <button class="button is-primary" onclick="window.location.href='lista-articulo.html'">Artículos</button>
             <button class="button is-primary" id="modificar-button">Actualizar Perfil</button>
             </div>
         </nav>
@@ -99,9 +98,10 @@
         const urlParams = new URLSearchParams (window.location.search);
         const usuarioId = urlParams.get('id');
         document.getElementById('title').textContent += " " + usuarioId;
+
         document.getElementById("modificar-button").addEventListener("click", () => {
             if (usuarioId) {
-                window.location.href = `../modificar-usuario.html?id=${usuarioId}`;
+                window.location.href = `/modificar-usuario?id=${usuarioId}`;
             } else {
                 alert("No se encontró el ID del usuario");
             }

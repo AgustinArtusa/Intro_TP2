@@ -105,7 +105,7 @@
                             <p><strong>Origen:</strong> ${articulo.origen}</p>
                             <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
                             <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
-                            <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
+                            <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
                             <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
                         `;
                     }
@@ -118,7 +118,7 @@
                         <p><strong>Origen:</strong> ${articulo.origen}</p>
                         <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
                         <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
-                        <button class="button is-primary is-small" onclick="window.location.href='modificar-articulos.html?id=${articulo.id}'">Actualizar</button>
+                        <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
                         <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
                         <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
                         `;

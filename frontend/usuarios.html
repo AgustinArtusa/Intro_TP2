@@ -94,10 +94,9 @@
         let table = document.getElementById('users-data');
         usuarios.forEach(usuario => {
             let tr = document.createElement('tr');
-            tr.id = 'usuario-' + usuario.id;
             let id = document.createElement('th');
-            const link = document.createElement('a')
-            link.href = `usuario.html?id=${usuario.id}`;
+            const link = document.createElement('a');
+            link.href = `/usuario?id=${usuario.id}`;
             link.textContent = usuario.id
             id.appendChild(link);
   
@@ -120,7 +119,7 @@
             button.className = 'button has-text-info is-small';
             
             button.addEventListener("click", function() {
-            window.location.href = `modificar-usuario.html?id=${usuario.id}`; 
+            window.location.href = `modificar-usuario?id=${usuario.id}`; 
             });
             
             let borrar = document.createElement('td');

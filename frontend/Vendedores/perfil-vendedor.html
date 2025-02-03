@@ -84,7 +84,7 @@
         document.getElementById('title').textContent += " " + usuarioId;
         document.getElementById("modificar-button").addEventListener("click", () => {
             if (usuarioId) {
-                window.location.href = `../modificar-usuario.html?id=${usuarioId}`;
+                window.location.href = `/modificar-usuario?id=${usuarioId}`;
             } else {
                 alert("No se encontró el ID del usuario");
             }

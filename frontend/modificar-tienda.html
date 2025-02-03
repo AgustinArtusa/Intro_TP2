@@ -162,6 +162,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Datos actualizados correctamente');
+                    window.history.back();
                 } 
                 else {
                     alert('Error al actualizar los datos');
