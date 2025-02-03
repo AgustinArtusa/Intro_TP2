@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-
     <style>
         .container {
             max-width: 450px;
@@ -86,33 +84,46 @@
             </div>
         </form>
     </div>
+    <script>
+
+        const form = document.getElementById('loginForm');
+    
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+    
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+    
+            fetch('http://localhost:3000/api/v1/usuarios/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        const rol = data.user.rol;
+                        if (rol === 'admin') {
+                            window.location.href = 'articulos.html';
+                        }
+                        else if (rol === 'comprador') {
+                            window.location.href = 'Compradores/lista-articulo.html';
+                        }
+                        else if (rol === 'vendedor') {
+                            window.location.href = 'Vendedores/mis-articulos.html';
+                        }
+                        else {
+                            alert("Rol no válido");
+                        }
+                    });
+                } else {
+                    alert("Usuario o Contraseña incorrectos")
+                }
+            })
+        });
+    
+    </script>
 </body>
-
-<script>
-
-    const form = document.getElementById('loginForm');
-
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        fetch('http://localhost:3000/api/v1/usuarios/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = 'tienda.html';
-            } else {
-                alert("Usuario o Contraseña incorrectos")
-            }
-        })
-    });
-
-</script>
-</html>

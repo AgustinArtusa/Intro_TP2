@@ -14,6 +14,7 @@ model Usuario {
   contraseña  String
   dinero      Decimal @default(0)
   telefono    Int
+  rol         String @default("comprador")
   compras     Compra[]
 }
 
@@ -24,6 +25,9 @@ model Articulo {
   descripcion    String
   origen         String
   antiguedad     String
+  numero_vendedor Int   @default(0)
+  EnVenta        Boolean @default(true)
+  cantidad       Int   @default(1)
   compras        Compra[]
   disponibilidad Disponibilidad[]
 }

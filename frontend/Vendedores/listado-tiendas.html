@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
   <style>
-    body {
-        background-color: #121212;
-        color: #ffffff;
-    }
     .navbar {
-        background-color: #121212;
         position: fixed;
         display: flex;
         flex-wrap: wrap;
@@ -53,16 +48,7 @@
   <div class="container is-fluid">
       <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="navbar-brand">
-              <button class="button is-primary" onclick="window.location.href='articulos.html'">Artículos</button>
-              <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
-              <button class="button is-primary" onclick="window.location.href='crear-tienda.html'">Crear tienda</button>
-          
-              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-              </a>
+              <button class="button is-primary" onclick="window.location.href='mis-articulos.html'">Artículos</button>
           </div>
       </nav>
       <h1 id="title">TIENDAS</h1>
@@ -83,7 +69,6 @@
         
       </table>
   </div>
-
   <script>
     fetch('http://localhost:3000/api/v1/tiendas')
     .then(response => response.json())
@@ -96,7 +81,7 @@
       tr.id = 'tienda-' + tienda.id;
       let id = document.createElement('th');
       const link = document.createElement('a')
-      link.href = `tienda.html?id=${tienda.id}`;
+      link.href = `../tienda.html?id=${tienda.id}`;
       link.textContent = tienda.id
       id.appendChild(link);
 
@@ -111,21 +96,6 @@
       let email_contacto = document.createElement('td');
       email_contacto.textContent = tienda.email_contacto;
 
-      let actualizar = document.createElement('td');
-      let button = document.createElement('button');
-      button.textContent = 'Actualizar';
-      button.className = 'button has-text-info is-small';
-          
-      button.addEventListener("click", function() {
-        window.location.href = `modificar-tienda?id=${tienda.id}`; 
-      });
-          
-      let borrar = document.createElement('td');
-      let boton = document.createElement('button');
-      boton.textContent = 'Borrar';
-      boton.className = 'button is-danger is-small';
-      boton.onclick = function() { deleteCharacter(tienda.id);};
-      borrar.appendChild(boton);
           
       tr.appendChild(id);
       tr.appendChild(ubicacion);
@@ -134,26 +104,8 @@
       tr.appendChild(telefono);
       tr.appendChild(email_contacto);
       table.appendChild(tr);
-          
-      actualizar.appendChild(button);
-      tr.appendChild(borrar);
-      tr.appendChild(actualizar);
+
       });
     });
-
-    deleteCharacter = function(id){
-    alert('Borrando Usuario' + id);
-    fetch('http://localhost:3000/api/v1/usuarios/' + id, {
-      method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-      let tr = document.getElementById('usuario-' + response.id);   
-      tr.remove();
-    })
-  }
   </script>
-
 </body>
-

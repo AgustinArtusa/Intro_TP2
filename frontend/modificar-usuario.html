@@ -1,172 +1,177 @@
 <!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Actualizar Usuario</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-        <style>
-            .container {
-                max-width: 450px;
-                margin: 50px auto;
-                padding: 40px;
-                background: #1c1c1c;
-                border-radius: 12px;
-                box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
-            }
-            .title {
-                color: #ffffff;
-                text-align: center;
-                font-weight: bold;
-                font-size: 2rem;
-            }
-            .label {
-                color: #ffffff;
-                font-weight: bold;
-            }
-            .input, .button {
-                border-radius: 8px;
-            }
-            .input, .textarea {
-                background-color: #2e2e2e;
-                color: white;
-                border: 1px solid #a200ff;
-            }
-            .input::placeholder {
-                color: #888;
-            }
-            .button {
-                background-color: #a200ff;
-                border: none;
-                color: white;
-                transition: 0.3s;
-            }
-            .button:hover {
-                background-color: #7a00c4;
-            }
-            .cancel-button {
-                background-color: #ffffff;
-                color: #000;
-            }
-            .cancel-button:hover {
-                background-color: #cccccc;
-            }
-        </style>
-    </head>
-    <body>
-        <section class="section" id="actualizar-datos">
-            <div class="container">
-                <nav class="level">
-                  <div class="level-left">
-                    <p class="level-item">
-                        <a class="button is-link is-info" onclick="volverAUsuarios()">Volver a Usuarios</a>
-                    </p>
-                  </div>
-                </nav>
-                <h1 class="title">Modificar usuario</h1>
-            
-                <div class="box">
-                    <form id="formulario">
-                        <div class="field">
-                            <label class="label">Nombre:</label>
-                            <div class="control">
-                            <input class="input" id="nombre" type="text" placeholder="Ingrese un nuevo nombre">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Username:</label>
-                            <div class="control">
-                            <input class="input" id="username" type="text" placeholder="Ingrese un nuevo nombre de usuario">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Dinero:</label>
-                            <div class="control">
-                            <input class="input" id="dinero" type="text" placeholder="Ingrese un nuevo monto">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Teléfono:</label>
-                            <div class="control">
-                            <input class="input" id="telefono"type="text" placeholder="Ingrese un nuevo numero">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Contraseña:</label>
-                            <div class="control">
-                            <input class="input" id="contraseña" type="text" placeholder="Ingrese una nueva contraseña">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button type="submit" class="button is-info">Actualizar</button>
-                            </div>
-                        </div>
-                    </form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Usuario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(206, 206, 206, 0.5);
+        }
+        .title {
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .label {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .input, .button {
+            border-radius: 8px;
+        }
+        .input, .textarea {
+            background-color: #2e2e2e;
+            color: white;
+            border: 1px solid #a200ff;
+        }
+        .input::placeholder {
+            color: #888;
+        }
+        .button {
+            background-color: #a200ff;
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background-color: #7a00c4;
+        }
+        .cancel-button {
+            background-color: #ffffff;
+            color: #000;
+        }
+        .cancel-button:hover {
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <section class="section" id="actualizar-datos">
+        <div class="container">
+            <nav class="level">
+                <div class="level-left">
+                <p class="level-item">
+                    <a class="button is-link is-info" onclick="volverAUsuarios()">Volver</a>
+                </p>
                 </div>
-        </section>
-        <script>
-            let userId;
-            window.onload = () => {
-                const urlParams = new URLSearchParams(window.location.search);
-                userId = urlParams.get('id');
+            </nav>
+            <h1 class="title">Modificar usuario</h1>
+        
+            <div class="box">
+                <form id="formulario">
+                    <div class="field">
+                        <label class="label">Nombre:</label>
+                        <div class="control">
+                        <input class="input" id="nombre" type="text" placeholder="Ingrese un nuevo nombre">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Username:</label>
+                        <div class="control">
+                        <input class="input" id="username" type="text" placeholder="Ingrese un nuevo nombre de usuario">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Dinero:</label>
+                        <div class="control">
+                        <input class="input" id="dinero" type="number" step="0.01" placeholder="Ingrese un nuevo monto">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Teléfono:</label>
+                        <div class="control">
+                        <input class="input" id="telefono"type="number" placeholder="Ingrese un nuevo numero">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Contraseña:</label>
+                        <div class="control">
+                        <input class="input" id="contraseña" type="text" placeholder="Ingrese una nueva contraseña">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button type="submit" class="button is-info">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </section>
+    <script>
+        const validar = document.getElementById('telefono');
+        function validacion(event){
+            if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10){
+              event.preventDefault();
+            }  
+          }
+        validar.addEventListener('keypress', validacion);
+        let userId;
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            userId = urlParams.get('id');
 
-                if (!userId){
-                    alert('Id de usuario no valido');
-                    return;
-                }
-
-                fetch(`http://localhost:3000/api/v1/usuarios/${userId}`)
-                    .then(response => response.json())
-                    .then(usuario => {
-                        document.getElementById('nombre').value = usuario.nombre;
-                        document.getElementById('username').value = usuario.username;
-                        document.getElementById('contraseña').value = usuario.contraseña;
-                        document.getElementById('dinero').value = usuario.dinero;
-                        document.getElementById('telefono').value = usuario.telefono;
-                    })
-                    .catch(() => {
-                        alert('No se pudo cargar el usuario');
-                    });
-                }
-            document.getElementById('formulario').onsubmit = (event) => {
-                event.preventDefault(); 
-
-                const nombre = document.getElementById('nombre').value;
-                const username = document.getElementById('username').value;
-                const contraseña = document.getElementById('contraseña').value;
-                const dinero = document.getElementById('dinero').value;
-                const telefono = parseInt(document.getElementById('telefono').value);
-
-                const datos = {
-                    nombre,
-                    username,
-                    contraseña,
-                    dinero,
-                    telefono
-                };
-
-                fetch(`http://localhost:3000/api/v1/usuarios/${userId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(datos)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Datos actualizados correctamente');
-                    } 
-                    else {
-                        alert('Error al actualizar los datos');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+            if (!userId){
+                alert('Id de usuario no valido');
+                return;
             }
-            function volverAUsuarios() {
-                window.history.back();
-            }
-        </script>
-    </body>
-</html>
 
+            fetch(`http://localhost:3000/api/v1/usuarios/${userId}`)
+                .then(response => response.json())
+                .then(usuario => {
+                    document.getElementById('nombre').value = usuario.nombre;
+                    document.getElementById('username').value = usuario.username;
+                    document.getElementById('contraseña').value = usuario.contraseña;
+                    document.getElementById('dinero').value = usuario.dinero;
+                    document.getElementById('telefono').value = usuario.telefono;
+                })
+                .catch(() => {
+                    alert('No se pudo cargar el usuario');
+                });
+            }
+        document.getElementById('formulario').onsubmit = (event) => {
+            event.preventDefault(); 
+
+            const nombre = document.getElementById('nombre').value;
+            const username = document.getElementById('username').value;
+            const contraseña = document.getElementById('contraseña').value;
+            const dinero = document.getElementById('dinero').value;
+            const telefono = parseInt(document.getElementById('telefono').value);
+
+            const datos = {
+                nombre,
+                username,
+                contraseña,
+                dinero,
+                telefono
+            };
+
+            fetch(`http://localhost:3000/api/v1/usuarios/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Datos actualizados correctamente');
+                    window.history.back();
+                } 
+                else {
+                    alert('Error al actualizar los datos');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        function volverAUsuarios() {
+            window.history.back();
+        }
+    </script>
+</body>

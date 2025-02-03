@@ -29,11 +29,10 @@
             color: #ffffff;
             font-weight: bold;
             text-align: center;
-            margin: 8px;
         }
         .button {
             border-radius: 8px;
-            margin: 5px;
+            margin: 6px;
             color: white;
         }
         .button.is-primary {
@@ -66,10 +65,8 @@
 <body>
     <div class="container is-fluid">
         <nav class="navbar" role="navigation" aria-label="main navigation">
-            <button class="button is-primary" onclick="window.location.href='tiendas.html'">Tiendas</button>
-            <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
-            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Vender Artículo Completo</button>
-            <button class="button is-primary" onclick="window.location.href='crear-articulo-unidad.html'">Vender Artículo por Unidad</button>
+            <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
+            <button class="button is-primary" id="perfil-button">Mi Perfil</button>
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
                     <a class="navbar-link" id="username-display"></a>
@@ -79,7 +76,7 @@
                 </div>
         
                 <div class="navbar-item" id="login-btn">
-                    <a class="button is-primary" href="iniciar-sesion.html">Iniciar sesión</a>
+                    <a class="button is-primary" href="../iniciar-sesion.html">Iniciar sesión</a>
                 </div>
             </div>
         </nav>
@@ -94,51 +91,22 @@
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
                 articulos.forEach(articulo => {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    if(articulo.cantidad === 0){
-                            card.innerHTML = `
+                    if(articulo.EnVenta == true && articulo.numero_vendedor !== 0){
+                        const card = document.createElement('div');
+                        card.className = 'product-card';
+                        card.innerHTML = `
                             <h2 class="title is-4">${articulo.nombre}</h2>
                             <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
                             <p><strong>Precio:</strong> $${articulo.precio}</p>
                             <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
                             <p><strong>Origen:</strong> ${articulo.origen}</p>
                             <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                            <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
-                            <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
-                            <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+                            <button class="button is-primary is-small" onclick="window.location.href='../comprar-articulo.html'">Comprar</button>
                         `;
+                        grid.appendChild(card);
                     }
-                    else {
-                        card.innerHTML = `
-                        <h2 class="title is-4">${articulo.nombre}</h2>
-                        <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
-                        <p><strong>Precio:</strong> $${articulo.precio}</p>
-                        <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
-                        <p><strong>Origen:</strong> ${articulo.origen}</p>
-                        <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                        <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
-                        <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
-                        <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
-                        <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
-                        `;
-                    }
-                    grid.appendChild(card);
                 });
             });
-    
-        function deleteProduct(id) {
-            if (confirm('¿Estás seguro de que quieres borrar este artículo?')) {
-                fetch(`http://localhost:3000/api/v1/articulos/${id}`, {
-                    method: 'DELETE'
-                })
-                .then(response => response.json())
-                .then(response => {
-                    alert('Artículo eliminado');
-                    location.reload();
-                });
-            }
-        }
     
         async function obtenerUsuario() {
         const response = await fetch('http://localhost:3000/api/v1/usuarios/info', {
@@ -151,12 +119,18 @@
             if (data && data.user) {
                 document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
                 const separador = document.createElement('br')
-                const numero_vendedorText = document.createTextNode(`Número de comprador/vendedor: ${data.user.id}`);
+                const numero_vendedorText = document.createTextNode(`Número de comprador: ${data.user.id}`);
                 const usernameDisplay = document.getElementById('username-display');
                 usernameDisplay.appendChild(separador);
                 usernameDisplay.appendChild(numero_vendedorText);
                 document.getElementById('user-info').style.display = 'block';
                 document.getElementById('login-btn').style.display = 'none';
+
+                const profileButton = document.getElementById('perfil-button');
+                profileButton.onclick = () => {
+                    window.location.href = `perfil?id=${data.user.id}`;
+                }
+
             } else {
                 document.getElementById('user-info').style.display = 'none';
             document.getElementById('login-btn').style.display = 'block';
@@ -171,7 +145,7 @@
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = 'iniciar-sesion.html';
+                window.location.href = '../iniciar-sesion.html';
             }
         });
     }
@@ -179,4 +153,3 @@
     obtenerUsuario()
     </script>
 </body>
-

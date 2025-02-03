@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>Modificar Artículo</title>
+    <title>Crear Artículo</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
@@ -61,116 +61,136 @@
               </p>
             </div>
           </nav>
-        <h1 class="title">Modificar artículo</h1>
-
-        <form id="form-modificar" onsubmit="updateArticulo(event)">
+        <h1 class="title">Crear Artículo</h1>
+        <form>
             <div class="field">
                 <label class="label" for="nombre">Nombre del Artículo:</label>
                 <div class="control">
-                    <input class="input" type="text" id="nombre" required>
+                    <input class="input" type="text" id="nombre" placeholder="Ingrese el nombre del artículo" required>
                 </div>
             </div>
 
             <div class="field">
                 <label class="label" for="precio">Precio:</label>
                 <div class="control">
-                    <input class="input" type="number" id="precio" step="0.01" required>
+                    <input class="input" type="number" id="precio" step="0.01" placeholder="Ingrese el precio del artículo" required>
                 </div>
             </div>
 
             <div class="field">
                 <label class="label" for="descripcion">Descripción:</label>
                 <div class="control">
-                    <textarea class="textarea" id="descripcion" required></textarea>
+                    <textarea class="textarea" id="descripcion" placeholder="Ingrese la descripcion del artículo" required></textarea>
                 </div>
             </div>
 
             <div class="field">
                 <label class="label" for="origen">Origen:</label>
                 <div class="control">
-                    <input class="input" type="text" id="origen" required>
+                    </html>          <input class="input" type="text" id="origen" placeholder="Ingrese el origen del artículo" required>
                 </div>
             </div>
 
             <div class="field">
                 <label class="label" for="antiguedad">Antigüedad (en años):</label>
                 <div class="control">
-                    <input class="input" type="number" id="antiguedad" required>
+                    <input class="input" type="number" id="antiguedad" placeholder="Ingrese los años de antiguedad del artículo" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="nuemero_vendedor">Numero de Vendedor</label>
+                <div  class="control">
+                    <input class="input" type="number" id="numero_vendedor" placeholder="Ingrese el numero de vendedor" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="nuemero_vendedor">Cantidad de articulos que vendera</label>
+                <div  class="control">
+                    <input class="input" type="number" id="cantidad_articulo" placeholder="Ingrese el numero de vendedor" required>
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <button class="button is-primary" type="submit">Actualizar</button>
+                    <a class="button is-medium cancel-button" onclick="clearForm()">Cancelar</a>
+                    <button class="button is-medium" type="submit" onclick="createArticulo()">Crear</button>
                 </div>
             </div>
-        </form>
+        </form>    
     </div>
     <script>
-
         const validar = document.getElementById('antiguedad');
+        const validad_id_vendedor = document.getElementById('numero_vendedor');
+        const validad_cantidad = document.getElementById('cantidad_articulo');
         function validacion(event){
             if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10){
               event.preventDefault();
             }  
         }
         validar.addEventListener('keypress', validacion);
-
-        const params = new URLSearchParams(window.location.search);
-        const articuloId = params.get('id');
-
-        function loadArticulo() {
-            fetch(`http://localhost:3000/api/v1/articulos/${articuloId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al cargar los datos del artículo');
-                    }
-                    return response.json();
-                })
-                .then(articulo => {
-                    document.getElementById('nombre').value = articulo.nombre;
-                    document.getElementById('precio').value = articulo.precio;
-                    document.getElementById('descripcion').value = articulo.descripcion;
-                    document.getElementById('origen').value = articulo.origen;
-                    document.getElementById('antiguedad').value = articulo.antiguedad;
-                })
-        }
-
-        function updateArticulo(event) {
+        validad_id_vendedor.addEventListener('keypress', validacion);
+        validad_cantidad.addEventListener('keypress', validacion);
+        function createArticulo() {
             event.preventDefault();
-
+    
             const nombre = document.getElementById('nombre').value;
             const precio = document.getElementById('precio').value;
             const descripcion = document.getElementById('descripcion').value;
             const origen = document.getElementById('origen').value;
             const antiguedad = document.getElementById('antiguedad').value;
+            const numero_vendedor = document.getElementById('numero_vendedor').value;
+            const cantidad = document.getElementById('cantidad_articulo').value;
 
-            const body = {
-                nombre,
-                precio,
-                descripcion,
-                origen,
-                antiguedad,
+            if (nombre === "" || precio === "" || descripcion === "" || origen === "" || antiguedad === "" || cantidad === ""){
+                alert("Complete los campos que esten vacios");
+                return;
+            }
+    
+            let body = {
+                nombre: nombre,
+                precio: precio,
+                descripcion: descripcion,
+                origen: origen,
+                antiguedad: antiguedad
             };
+            
+            if (numero_vendedor !== ""){
+                body.numero_vendedor = parseInt(numero_vendedor);
+            }
 
-            fetch(`http://localhost:3000/api/v1/articulos/${articuloId}`, {
-                method: 'PUT',
+            if (cantidad !== ""){
+                body.cantidad = parseInt(cantidad)
+            }
+    
+            fetch("http://localhost:3000/api/v1/articulos", {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body),
             })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Artículo actualizado con éxito.');
-                        window.history.back();
-                    } else {
-                        alert('Error al actualizar el artículo.');
-                    }
-                })
+            .then(response => {
+                if (response.status === 201) {
+                    alert('Artículo creado con éxito.');
+                    clearForm();
+                    window.history.back();
+                } else {
+                    alert('Error al crear el artículo.');
+                }
+            })
         }
 
-        document.addEventListener('DOMContentLoaded', loadArticulo);
+        function clearForm() {
+            document.getElementById('nombre').value = '';
+            document.getElementById('precio').value = '';
+            document.getElementById('descripcion').value = '';
+            document.getElementById('origen').value = '';
+            document.getElementById('antiguedad').value = '';
+            document.getElementById('numero_vendedor').value = '';
+        }
+
         function volver() {
             window.history.back();
         }
