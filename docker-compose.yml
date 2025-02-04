@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:17
+    container_name: database
+    environment:
+      - POSTGRES_USER=intro
+      - POSTGRES_PASSWORD=user123
+      - POSTGRES_DB=tienda
+    ports:
+      - 5432:5432
+    volumes:
+      - ./psql_data:/var/lib/postgresql/data
+  
+  back:
+    build: ./Backend
+    environment:
+      - DATABASE_URL=postgresql://intro:user123@db:5432/tienda 
+      - PRISMA_BINARY_TARGETS=linux-musl-openssl-3.0.x
+    ports:
+      - 3000:3000
+  
+  front:
+    build: ./frontend
+    ports:
+      - 8000:8000
