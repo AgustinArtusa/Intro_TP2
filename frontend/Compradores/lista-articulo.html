@@ -117,6 +117,7 @@
         if (response.ok) {
             const data = await response.json();
             if (data && data.user) {
+                localStorage.setItem("usuarioId", data.user.id);
                 document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
                 const separador = document.createElement('br')
                 const numero_vendedorText = document.createTextNode(`Número de comprador: ${data.user.id}`);
