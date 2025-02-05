@@ -134,8 +134,14 @@
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
                 const MisArticulos = articulos.filter(articulo => articulo.numero_vendedor == data.user.id);
-                MisArticulos.forEach(articulo => {
-                    if (articulo.EnVenta == true){
+                if (MisArticulos.length === 0) {
+                    const mensaje = document.createElement('p');
+                    mensaje.textContent = 'No tienes artículos publicados.';
+                    mensaje.className = 'has-text-centered has-text-white is-size-4';
+                    grid.appendChild(mensaje);
+                    } else {
+                    MisArticulos.forEach(articulo => {
+                        if (articulo.EnVenta == true) {
                         const card = document.createElement('div');
                         card.className = 'product-card';
                         card.innerHTML = `
@@ -150,10 +156,11 @@
                             <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
                         `;
                         grid.appendChild(card);
-                    }
+                        }
+                    });
+                   }
                 });
-            });
-        }
+            }
         }
     
         function deleteProduct(id) {
