@@ -90,8 +90,15 @@
             .then(response => response.json())
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
-                articulos.forEach(articulo => {
-                    if(articulo.EnVenta == true && articulo.numero_vendedor !== 0){
+                const articulosConStock = articulos.filter(articulo => articulo.cantidad > 0);
+            
+                if (articulosConStock.length === 0) {
+                    const mensaje = document.createElement('p');
+                    mensaje.textContent = 'Aún no hay artículos para comprar';
+                    mensaje.className = 'has-text-centered has-text-white is-size-4';
+                    grid.appendChild(mensaje);
+                } else {
+                    articulosConStock.forEach(articulo => {
                         const card = document.createElement('div');
                         card.className = 'product-card';
                         card.innerHTML = `
@@ -105,8 +112,8 @@
                             <button class="button is-primary is-small" onclick="window.location.href='../comprar-articulo.html'">Comprar</button>
                         `;
                         grid.appendChild(card);
-                    }
-                });
+                    });
+                }
             });
     
         async function obtenerUsuario() {

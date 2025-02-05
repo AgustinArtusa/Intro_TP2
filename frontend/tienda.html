@@ -89,6 +89,14 @@
             .then((response) => response.json())
             .then((data) => {
                 const mainContent = document.getElementById("main-content");
+
+                if (data.length === 0) {
+                    const noItemsMessage = document.createElement("p");
+                    noItemsMessage.textContent = "Aún no hay artículos disponibles en esta tienda.";
+                    noItemsMessage.classList.add("has-text-centered", "has-text-white", "is-size-4", "mt-5");
+                    mainContent.appendChild(noItemsMessage);
+                return;
+                }
                 
                 const columnsContainer = document.createElement("div");
                 columnsContainer.classList.add("columns", "is-multiline", "is-centered");
