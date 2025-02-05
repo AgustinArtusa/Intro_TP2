@@ -133,7 +133,7 @@
             .then(response => response.json())
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
-                const MisArticulos = articulos.filter(articulo => articulo.numero_vendedor == data.user.id);
+                const MisArticulos = articulos.filter(articulo => articulo.numero_vendedor == data.user.id && articulo.cantidad > 0);
                 if (MisArticulos.length === 0) {
                     const mensaje = document.createElement('p');
                     mensaje.textContent = 'No tienes artículos publicados.';
