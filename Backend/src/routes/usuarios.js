@@ -235,18 +235,27 @@ router.get('/:id/articulos', async (req, res) => {
         }
     });
 
+    const compras = await prisma.compra.groupBy({
+        by: ['articuloId'],
+        where: { usuarioId: usuario.id },
+        _count: { articuloId: true },
+    });
+
     if (usuario === null){
         res.sendStatus(404)
         return;
     }
 
-    const articulo = await prisma.articulo.findMany({
-        where:{
-            id: { in: usuario.compras.map(compra => compra.articuloId) }
-        }
-    });
+    const articulos = await Promise.all(
+        compras.map(async (compra) => {
+            const articulo = await prisma.articulo.findUnique({
+                where: { id: compra.articuloId },
+            });
+            return { ...articulo, cantidad: compra._count.articuloId };
+        })
+    );
 
-    res.json(articulo);
+    res.json(articulos);
 })
 
 router.post('/:id/articulos', async (req,res) => {

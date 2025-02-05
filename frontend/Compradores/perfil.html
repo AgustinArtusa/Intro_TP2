@@ -87,6 +87,7 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
             <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
+            <button class="button is-primary" onclick="window.location.href='lista-articulo.html'">Artículos</button>
             <button class="button is-primary" id="modificar-button">Actualizar Perfil</button>
             </div>
         </nav>
@@ -167,6 +168,7 @@
                     <strong>Descripción:</strong> ${articulo.descripcion} <br>
                     <strong>Origen:</strong> ${articulo.origen} <br>
                     <strong>Antigüedad:</strong> ${articulo.antiguedad} <br>
+                    <strong>Cantidad Comprada:</strong> ${articulo.cantidad} <br>
                     `;
                     cardContent.appendChild(content);
                     card.appendChild(cardContent);
