@@ -294,7 +294,7 @@ router.post('/:id/articulos', async (req,res) => {
 
 
     if (parseFloat(usuario.dinero) < parseFloat(articulo.precio)) {
-        return res.status(400).send("No hay suficiente dinero para comprar el artículo");
+        return res.status(400).send("No tienes suficiente dinero para comprar este artículo");
     }
 
     const nueva_cantidad = parseInt(articulo.cantidad) - 1;

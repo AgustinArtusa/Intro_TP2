@@ -114,15 +114,15 @@
                     articuloId: articuloId.value
                 })
             })
-            .then(response => {
+            .then(response => response.text().then(errorMessage => {
                 if (response.ok) {
                     alert('Compra realizada con éxito.');
                     clearForm();
                     window.history.back();
                 } else {
-                    alert('Error al realizar la compra.');
+                    alert(errorMessage || 'Error al realizar la compra.');
                 }
-            })
+            }))
         }
         function clearForm() {
             document.getElementById("articuloId").value = '';
