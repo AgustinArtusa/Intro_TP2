@@ -140,17 +140,18 @@
     });
 
     deleteShop = function(id){
-    alert('Borrando tienda' + id);
-    fetch('http://localhost:3000/api/v1/tiendas/' + id, {
-      method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-      let tr = document.getElementById('tienda-' + response.id);   
-      tr.remove();
-    })
-  }
+      alert('Borrando tienda' + id);
+      fetch('http://localhost:3000/api/v1/tiendas/' + id, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        let tr = document.getElementById('tienda-' + response.id);   
+        tr.remove();
+        location.reload();
+      })
+    }
   </script>
 
 </body>
