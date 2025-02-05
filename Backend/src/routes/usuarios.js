@@ -341,16 +341,18 @@ router.post('/:id/articulos', async (req,res) => {
         }
     });
     
-    if (nueva_cantidad === 0 && disponibilidad) {
+    if (nueva_cantidad === 0) {
 
-        await prisma.disponibilidad.update({
-            where: {
-                id: disponibilidad.id
-            },
-            data: {
-                disponible: false
-            }
-        });
+        if(disponibilidad){
+            await prisma.disponibilidad.update({
+                where: {
+                    id: disponibilidad.id
+                },
+                data: {
+                    disponible: false
+                }
+            });
+        }
 
         await prisma.articulo.update({
             where:{
