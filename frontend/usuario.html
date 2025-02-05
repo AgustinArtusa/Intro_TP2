@@ -127,32 +127,39 @@
                 const columnsContainer = document.createElement("div");
                 columnsContainer.classList.add("columns", "is-multiline", "is-centered");
     
-                data.forEach(articulo => {
-                    const column = document.createElement("div");
-                    column.classList.add("column", "is-one-quarter");
-    
-                    const card = document.createElement("div");
-                    card.classList.add("card");
-    
-                    const cardContent = document.createElement("div");
-                    cardContent.classList.add("card-content");
-    
-                    const content = document.createElement("div");
-                    content.classList.add("content");
-    
-                    content.innerHTML = `
-                    <strong>Nombre:</strong> ${articulo.nombre} <br>
-                    <strong>Precio:</strong> $${articulo.precio} <br>
-                    <strong>Descripción:</strong> ${articulo.descripcion} <br>
-                    <strong>Origen:</strong> ${articulo.origen} <br>
-                    <strong>Antigüedad:</strong> ${articulo.antiguedad} <br>
-                    `;
-                    cardContent.appendChild(content);
-                    card.appendChild(cardContent);
-                    column.appendChild(card);
-                    columnsContainer.appendChild(column);
-                });
-                mainContent.appendChild(columnsContainer);
+                if (data.length === 0) {
+                    const mensaje = document.createElement("p");
+                    mensaje.classList.add("has-text-centered", "has-text-white", "mt-4");
+                    mensaje.textContent = "Este usuario aún no tiene artículos";
+                    mainContent.appendChild(mensaje);
+                } else {
+                    data.forEach(articulo => {
+                        const column = document.createElement("div");
+                        column.classList.add("column", "is-one-quarter");
+
+                        const card = document.createElement("div");
+                        card.classList.add("card");
+
+                        const cardContent = document.createElement("div");
+                        cardContent.classList.add("card-content");
+
+                        const content = document.createElement("div");
+                        content.classList.add("content");
+
+                        content.innerHTML = `
+                        <strong>Nombre:</strong> ${articulo.nombre} <br>
+                        <strong>Precio:</strong> $${articulo.precio} <br>
+                        <strong>Descripción:</strong> ${articulo.descripcion} <br>
+                        <strong>Origen:</strong> ${articulo.origen} <br>
+                        <strong>Antigüedad:</strong> ${articulo.antiguedad} <br>
+                        `;
+                        cardContent.appendChild(content);
+                        card.appendChild(cardContent);
+                        column.appendChild(card);
+                        columnsContainer.appendChild(column);
+                    });
+                    mainContent.appendChild(columnsContainer);
+                }
             });
     </script>
 </body>

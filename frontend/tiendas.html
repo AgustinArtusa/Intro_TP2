@@ -79,65 +79,75 @@
       console.log(tiendas);
 
       let table = document.getElementById('users-data');
-      tiendas.forEach(tienda => {
-      let tr = document.createElement('tr');
-      tr.id = 'tienda-' + tienda.id;
-      let id = document.createElement('th');
-      const link = document.createElement('a')
-      link.href = `/tienda?id=${tienda.id}`;
-      link.textContent = tienda.id
-      id.appendChild(link);
+      if (tiendas.length === 0) {
+        let tr = document.createElement('tr');
+        let td = document.createElement('td');
+        td.colSpan = 6;
+        td.textContent = 'No hay tiendas disponibles';
+        td.style.textAlign = 'center';
+        tr.appendChild(td);
+        table.appendChild(tr);
+      } else {
+        tiendas.forEach(tienda => {
+          let tr = document.createElement('tr');
+          tr.id = 'tienda-' + tienda.id;
+          let id = document.createElement('th');
+          const link = document.createElement('a');
+          link.href = `/tienda?id=${tienda.id}`;
+          link.textContent = tienda.id;
+          id.appendChild(link);
 
-      let ubicacion = document.createElement('td');
-      ubicacion.textContent = tienda.ubicacion;
-      let horario = document.createElement('td');
-      horario.textContent = tienda.horario;
-      let estado = document.createElement('td');
-      estado.textContent = tienda.estado;
-      let telefono = document.createElement('td');
-      telefono.textContent = tienda.telefono;
-      let email_contacto = document.createElement('td');
-      email_contacto.textContent = tienda.email_contacto;
+          let ubicacion = document.createElement('td');
+          ubicacion.textContent = tienda.ubicacion;
+          let horario = document.createElement('td');
+          horario.textContent = tienda.horario;
+          let estado = document.createElement('td');
+          estado.textContent = tienda.estado;
+          let telefono = document.createElement('td');
+          telefono.textContent = tienda.telefono;
+          let email_contacto = document.createElement('td');
+          email_contacto.textContent = tienda.email_contacto;
 
-      let actualizar = document.createElement('td');
-      let button = document.createElement('button');
-      button.textContent = 'Actualizar';
-      button.className = 'button has-text-info is-small';
+          let actualizar = document.createElement('td');
+          let button = document.createElement('button');
+          button.textContent = 'Actualizar';
+          button.className = 'button has-text-info is-small';
           
-      button.addEventListener("click", function() {
-        window.location.href = `modificar-tienda?id=${tienda.id}`; 
-      });
+          button.addEventListener("click", function() {
+            window.location.href = `modificar-tienda?id=${tienda.id}`; 
+          });
           
-      let borrar = document.createElement('td');
-      let boton = document.createElement('button');
-      boton.textContent = 'Borrar';
-      boton.className = 'button is-danger is-small';
-      boton.onclick = function() { deleteCharacter(tienda.id);};
-      borrar.appendChild(boton);
+          let borrar = document.createElement('td');
+          let boton = document.createElement('button');
+          boton.textContent = 'Borrar';
+          boton.className = 'button is-danger is-small';
+          boton.onclick = function() { deleteShop(tienda.id); };
+          borrar.appendChild(boton);
           
-      tr.appendChild(id);
-      tr.appendChild(ubicacion);
-      tr.appendChild(horario);
-      tr.appendChild(estado);
-      tr.appendChild(telefono);
-      tr.appendChild(email_contacto);
-      table.appendChild(tr);
+          tr.appendChild(id);
+          tr.appendChild(ubicacion);
+          tr.appendChild(horario);
+          tr.appendChild(estado);
+          tr.appendChild(telefono);
+          tr.appendChild(email_contacto);
+          table.appendChild(tr);
           
-      actualizar.appendChild(button);
-      tr.appendChild(borrar);
-      tr.appendChild(actualizar);
-      });
+          actualizar.appendChild(button);
+          tr.appendChild(borrar);
+          tr.appendChild(actualizar);
+        });
+      }
     });
 
-    deleteCharacter = function(id){
-    alert('Borrando Usuario' + id);
-    fetch('http://localhost:3000/api/v1/usuarios/' + id, {
+    deleteShop = function(id){
+    alert('Borrando tienda' + id);
+    fetch('http://localhost:3000/api/v1/tiendas/' + id, {
       method: 'DELETE'
     })
     .then(response => response.json())
     .then(response => {
       console.log(response);
-      let tr = document.getElementById('usuario-' + response.id);   
+      let tr = document.getElementById('tienda-' + response.id);   
       tr.remove();
     })
   }

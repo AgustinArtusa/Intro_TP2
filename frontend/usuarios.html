@@ -80,56 +80,65 @@
         console.log(usuarios);
   
         let table = document.getElementById('users-data');
+        if (usuarios.length === 0) {
+        let tr = document.createElement('tr');
+        let td = document.createElement('td');
+        td.colSpan = 7;
+        td.textContent = 'No hay usuarios disponibles';
+        td.style.textAlign = 'center';
+        tr.appendChild(td);
+        table.appendChild(tr);
+      } else {
         usuarios.forEach(usuario => {
-            let tr = document.createElement('tr');
-            let id = document.createElement('th');
-            const link = document.createElement('a');
-            link.href = `/usuario?id=${usuario.id}`;
-            link.textContent = usuario.id
-            id.appendChild(link);
+          let tr = document.createElement('tr');
+          let id = document.createElement('th');
+          const link = document.createElement('a');
+          link.href = `/usuario?id=${usuario.id}`;
+          link.textContent = usuario.id;
+          id.appendChild(link);
   
-            let nombre = document.createElement('td');
-            nombre.textContent = usuario.nombre;
-            let user_name = document.createElement('td');
-            user_name.textContent = usuario.username;
-            let password = document.createElement('td');
-            password.textContent = usuario.contraseña;
-            let plata = document.createElement('td');
-            plata.textContent = usuario.dinero;
-            let telefono = document.createElement('td');
-            telefono.textContent = usuario.telefono;
-            let rol = document.createElement('td');
-            rol.textContent = usuario.rol;
+          let nombre = document.createElement('td');
+          nombre.textContent = usuario.nombre;
+          let user_name = document.createElement('td');
+          user_name.textContent = usuario.username;
+          let password = document.createElement('td');
+          password.textContent = usuario.contraseña;
+          let plata = document.createElement('td');
+          plata.textContent = usuario.dinero;
+          let telefono = document.createElement('td');
+          telefono.textContent = usuario.telefono;
+          let rol = document.createElement('td');
+          rol.textContent = usuario.rol;
   
-            let actualizar = document.createElement('td');
-            let button = document.createElement('button');
-            button.textContent = 'Actualizar';
-            button.className = 'button has-text-info is-small';
-            
-            button.addEventListener("click", function() {
+          let actualizar = document.createElement('td');
+          let button = document.createElement('button');
+          button.textContent = 'Actualizar';
+          button.className = 'button has-text-info is-small';
+          button.addEventListener("click", function() {
             window.location.href = `modificar-usuario?id=${usuario.id}`; 
-            });
-            
-            let borrar = document.createElement('td');
-            let boton = document.createElement('button');
-            boton.textContent = 'Borrar';
-            boton.className = 'button is-danger is-small';
-            boton.onclick = function() { deleteCharacter(usuario.id);};
-            borrar.appendChild(boton);
-            
-            tr.appendChild(id);
-            tr.appendChild(nombre);
-            tr.appendChild(user_name);
-            tr.appendChild(password);
-            tr.appendChild(plata);
-            tr.appendChild(telefono);
-            tr.appendChild(rol);
-            table.appendChild(tr);
-            
-            actualizar.appendChild(button);
-            tr.appendChild(borrar);
-            tr.appendChild(actualizar);
+          });
+  
+          let borrar = document.createElement('td');
+          let boton = document.createElement('button');
+          boton.textContent = 'Borrar';
+          boton.className = 'button is-danger is-small';
+          boton.onclick = function() { deleteCharacter(usuario.id); };
+          borrar.appendChild(boton);
+  
+          tr.appendChild(id);
+          tr.appendChild(nombre);
+          tr.appendChild(user_name);
+          tr.appendChild(password);
+          tr.appendChild(plata);
+          tr.appendChild(telefono);
+          tr.appendChild(rol);
+          table.appendChild(tr);
+  
+          actualizar.appendChild(button);
+          tr.appendChild(borrar);
+          tr.appendChild(actualizar);
         });
+      }
     });
   
     deleteCharacter = function(id){

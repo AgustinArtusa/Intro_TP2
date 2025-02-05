@@ -93,39 +93,46 @@
             .then(response => response.json())
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
-                articulos.forEach(articulo => {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    if(articulo.cantidad === 0){
+                if (articulos.length === 0) {
+                    const mensaje = document.createElement('p');
+                    mensaje.textContent = 'No hay artículos publicados.';
+                    mensaje.className = 'has-text-centered has-text-white is-size-4';
+                    grid.appendChild(mensaje);
+                } else {
+                    articulos.forEach(articulo => {
+                        const card = document.createElement('div');
+                        card.className = 'product-card';
+                        
+                        if (articulo.cantidad === 0) {
                             card.innerHTML = `
-                            <h2 class="title is-4">${articulo.nombre}</h2>
-                            <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
-                            <p><strong>Precio:</strong> $${articulo.precio}</p>
-                            <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
-                            <p><strong>Origen:</strong> ${articulo.origen}</p>
-                            <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                            <p><strong>Cantidad:</strong> ${articulo.cantidad}</p>
-                            <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
-                            <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
-                            <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
-                        `;
-                    }
-                    else {
-                        card.innerHTML = `
-                        <h2 class="title is-4">${articulo.nombre}</h2>
-                        <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
-                        <p><strong>Precio:</strong> $${articulo.precio}</p>
-                        <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
-                        <p><strong>Origen:</strong> ${articulo.origen}</p>
-                        <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
-                        <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
-                        <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
-                        <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
-                        <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
-                        `;
-                    }
-                    grid.appendChild(card);
-                });
+                                <h2 class="title is-4">${articulo.nombre}</h2>
+                                <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
+                                <p><strong>Precio:</strong> $${articulo.precio}</p>
+                                <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
+                                <p><strong>Origen:</strong> ${articulo.origen}</p>
+                                <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                                <p><strong>Cantidad:</strong> ${articulo.cantidad}</p>
+                                <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
+                                <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
+                                <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+                            `;
+                        } else {
+                            card.innerHTML = `
+                                <h2 class="title is-4">${articulo.nombre}</h2>
+                                <p><strong>Numero de articulo:</strong> ${articulo.id}</p>
+                                <p><strong>Precio:</strong> $${articulo.precio}</p>
+                                <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
+                                <p><strong>Origen:</strong> ${articulo.origen}</p>
+                                <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                                <p><strong>Articulo En Venta:</strong> ${articulo.EnVenta}</p>
+                                <button class="button is-primary is-small" onclick="window.location.href='/modificar-articulos?id=${articulo.id}'">Actualizar</button>
+                                <button class="button is-primary is-small" onclick="comprar(${articulo.id})">Comprar</button>
+                                <button class="button is-danger is-small" onclick="deleteProduct(${articulo.id})">Borrar</button>
+                            `;
+                        }
+                        grid.appendChild(card);
+                    });
+                }
             });
     
         function deleteProduct(id) {
