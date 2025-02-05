@@ -341,7 +341,7 @@ router.post('/:id/articulos', async (req,res) => {
         }
     });
     
-    if (nueva_cantidad === 0) {
+    if (nueva_cantidad === 0 && disponibilidad) {
 
         await prisma.disponibilidad.update({
             where: {
