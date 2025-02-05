@@ -4,6 +4,24 @@ const router = express.Router()
 
 const prisma = new PrismaClient()
 
+router.get('/buscar', async (req, res) => {
+    const { username } = req.query;
+
+    if (!username) {
+        return res.status(400).json({ message: "Falta el username" });
+    }
+
+    const usuario = await prisma.usuario.findFirst({
+        where: { username }
+    });
+
+    if (usuario) {
+        return res.json({ exists: true });
+    } else {
+        return res.json({ exists: false });
+    }
+});
+
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
