@@ -105,7 +105,7 @@
             const usuarioId = localStorage.getItem("usuarioId");
             const articuloId = document.getElementById("articuloId");
 
-            fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}/articulos`, {
+            fetch(`https://intro-tp2.onrender.com/api/v1/usuarios/${usuarioId}/articulos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

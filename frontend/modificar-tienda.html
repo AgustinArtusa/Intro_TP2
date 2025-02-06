@@ -122,7 +122,7 @@
                 return;
             }
 
-            fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId}`)
+            fetch(`https://intro-tp2.onrender.com/api/v1/tiendas/${tiendaId}`)
                 .then(response => response.json())
                 .then(tienda => {
                     document.getElementById('ubicacion').value = tienda.ubicacion;
@@ -152,7 +152,7 @@
                 email_contacto
             };
 
-            fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId}`, {
+            fetch(`https://intro-tp2.onrender.com/api/v1/tiendas/${tiendaId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

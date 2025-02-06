@@ -85,7 +85,7 @@
         const usuarioId = urlParams.get('id');
         document.getElementById('title').textContent += " " + usuarioId;
     
-        fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}`)
+        fetch(`https://intro-tp2.onrender.com/api/v1/usuarios/${usuarioId}`)
             .then((response) => response.json())
             .then((data) => {
                 const mainContent = document.getElementById("main-content");
@@ -117,7 +117,7 @@
                 mainContent.appendChild(pillContainer);
             });
 
-        fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}/articulos`)
+        fetch(`https://intro-tp2.onrender.com/api/v1/usuarios/${usuarioId}/articulos`)
             .then((response) => response.json())
             .then((data) => {
                 const mainContent = document.getElementById("main-content");

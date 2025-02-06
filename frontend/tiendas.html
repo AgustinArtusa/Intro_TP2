@@ -73,7 +73,7 @@
   </div>
 
   <script>
-    fetch('http://localhost:3000/api/v1/tiendas')
+    fetch('https://intro-tp2.onrender.com/api/v1/tiendas')
     .then(response => response.json())
     .then(tiendas => {
       console.log(tiendas);
@@ -141,7 +141,7 @@
 
     deleteShop = function(id){
     alert('Borrando tienda' + id);
-    fetch('http://localhost:3000/api/v1/tiendas/' + id, {
+    fetch('https://intro-tp2.onrender.com/api/v1/tiendas/' + id, {
       method: 'DELETE'
     })
     .then(response => response.json())

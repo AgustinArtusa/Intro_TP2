@@ -148,7 +148,7 @@
         return;
       }
 
-      fetch(`http://localhost:3000/api/v1/usuarios/buscar?username=${username}`)
+      fetch(`https://intro-tp2.onrender.com/api/v1/usuarios/buscar?username=${username}`)
         .then(response => response.json())
         .then(data => {
           if (data.exists) {  
@@ -168,7 +168,7 @@
               body.rol = rol;
             }
 
-            fetch("http://localhost:3000/api/v1/usuarios", {
+            fetch("https://intro-tp2.onrender.com/api/v1/usuarios", {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

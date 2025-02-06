@@ -85,7 +85,7 @@
         const tiendaId = urlParams.get('id');
         document.getElementById('title').textContent += " " + tiendaId;
 
-        fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId}/articulos`)
+        fetch(`https://intro-tp2.onrender.com/api/v1/tiendas/${tiendaId}/articulos`)
             .then((response) => response.json())
             .then((data) => {
                 const mainContent = document.getElementById("main-content");

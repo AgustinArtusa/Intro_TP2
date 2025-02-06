@@ -9,7 +9,7 @@ const port = 3000
 
 app.use(express.json())
 app.use(cors({
-  origin: 'http://localhost:8000',
+  origin: 'https://articulos-coleccionables.onrender.com/',
   credentials: true
 }));
 
@@ -19,7 +19,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: { 
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: 'lax',
     maxAge: 1800000
    }

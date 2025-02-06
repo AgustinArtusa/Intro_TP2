@@ -120,7 +120,7 @@
         const articuloId = params.get('id');
 
         function loadArticulo() {
-            fetch(`http://localhost:3000/api/v1/articulos/${articuloId}`)
+            fetch(`https://intro-tp2.onrender.com/api/v1/articulos/${articuloId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error al cargar los datos del artículo');
@@ -153,7 +153,7 @@
                 antiguedad,
             };
 
-            fetch(`http://localhost:3000/api/v1/articulos/${articuloId}`, {
+            fetch(`https://intro-tp2.onrender.com/api/v1/articulos/${articuloId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

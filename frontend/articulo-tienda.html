@@ -96,7 +96,7 @@
             const tiendaId = document.getElementById("tiendaId");
             const articuloId = document.getElementById("articuloId");
 
-            fetch(`http://localhost:3000/api/v1/tiendas/${tiendaId.value}/articulos`, {
+            fetch(`https://intro-tp2.onrender.com/api/v1/tiendas/${tiendaId.value}/articulos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -122,7 +122,7 @@
                 return;
             }
 
-            fetch(`http://localhost:3000/api/v1/usuarios/${userId}`)
+            fetch(`https://intro-tp2.onrender.com/api/v1/usuarios/${userId}`)
                 .then(response => response.json())
                 .then(usuario => {
                     document.getElementById('nombre').value = usuario.nombre;
@@ -152,7 +152,7 @@
                 telefono
             };
 
-            fetch(`http://localhost:3000/api/v1/usuarios/${userId}`, {
+            fetch(`https://intro-tp2.onrender.com/api/v1/usuarios/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
