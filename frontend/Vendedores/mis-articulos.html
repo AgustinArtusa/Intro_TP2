@@ -98,7 +98,7 @@
     </div>
     <script>
         async function obtenerUsuario() {
-        const response = await fetch('http://localhost:3000/api/v1/usuarios/info', {
+        const response = await fetch('https://intro-tp2.onrender.com/api/v1/usuarios/info', {
             method: 'GET',
             credentials: 'include'
         });
@@ -136,7 +136,7 @@
             document.getElementById('login-btn').style.display = 'block';
             }
     
-            fetch('http://localhost:3000/api/v1/articulos')
+            fetch('https://intro-tp2.onrender.com/api/v1/articulos')
             .then(response => response.json())
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
@@ -172,7 +172,7 @@
     
         function deleteProduct(id) {
             if (confirm('¿Estás seguro de que quieres borrar este artículo?')) {
-                fetch(`http://localhost:3000/api/v1/articulos/${id}`, {
+                fetch(`https://intro-tp2.onrender.com/api/v1/articulos/${id}`, {
                     method: 'DELETE'
                 })
                 .then(response => response.json())
@@ -184,7 +184,7 @@
         }
     
         function logout() {
-        fetch('http://localhost:3000/api/v1/usuarios/logout', {
+        fetch('https://intro-tp2.onrender.com/api/v1/usuarios/logout', {
             method: 'POST',
             credentials: 'include'
         })

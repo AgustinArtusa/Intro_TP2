@@ -93,7 +93,7 @@
             }
         });
 
-        fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}`)
+        fetch(`https://intro-tp2.onrender.com/api/v1/usuarios/${usuarioId}`)
             .then((response) => response.json())
             .then((data) => {
                 const mainContent = document.getElementById("main-content");
@@ -101,7 +101,7 @@
                 const pillContainer = document.createElement("div");
                 pillContainer.classList.add("pill-container");
 
-                const nombrePill = document.createElement("div");
+                const nombrePihttp://localhost:3000ll = document.createElement("div");
                 nombrePill.classList.add("pill");
                 nombrePill.innerHTML = `<span>Nombre:</span> ${data.nombre}`;
 
