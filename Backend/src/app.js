@@ -9,7 +9,7 @@ const port = 3000
 
 app.use(express.json())
 app.use(cors({
-  origin: 'https://articulos-coleccionables.onrender.com/',
+  origin: 'https://articulos-coleccionables.onrender.com',
   credentials: true
 }));
 
