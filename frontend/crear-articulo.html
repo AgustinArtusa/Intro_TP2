@@ -114,15 +114,25 @@
         </form>    
     </div>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const numero_vendedor = localStorage.getItem("usuarioId");
+
+        if (numero_vendedor) {
+            document.getElementById("numero_vendedor").value = numero_vendedor;
+            document.getElementById("numero_vendedor").readOnly = true;
+        } else {
+            alert("No has iniciado sesión. Por favor, inicia sesión primero.");
+            window.location.href = "iniciar-sesion.html";
+        }
+        });
+
         const validar = document.getElementById('antiguedad');
-        const validad_id_vendedor = document.getElementById('numero_vendedor');
         function validacion(event){
             if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10){
               event.preventDefault();
             }  
         }
         validar.addEventListener('keypress', validacion);
-        validad_id_vendedor.addEventListener('keypress', validacion);
         function createArticulo() {
             event.preventDefault();
     
@@ -131,7 +141,7 @@
             const descripcion = document.getElementById('descripcion').value;
             const origen = document.getElementById('origen').value;
             const antiguedad = document.getElementById('antiguedad').value;
-            const numero_vendedor = document.getElementById('numero_vendedor').value;
+            const numero_vendedor = localStorage.getItem("usuarioId");
 
             if (nombre === "" || precio === "" || descripcion === "" || origen === "" || antiguedad === ""){
                 alert("Complete los campos que esten vacios");
@@ -175,7 +185,6 @@
             document.getElementById('descripcion').value = '';
             document.getElementById('origen').value = '';
             document.getElementById('antiguedad').value = '';
-            document.getElementById('numero_vendedor').value = '';
         }
 
         function volver() {

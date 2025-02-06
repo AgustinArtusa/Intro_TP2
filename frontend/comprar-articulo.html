@@ -66,7 +66,7 @@
                 <div class="field">
                     <label class="label">ID del Usuario:</label>
                     <div class="control">
-                        <input class="input" type="number" id="usuarioId" placeholder="Ingrese el ID del usuario" required>
+                        <input class="input" type="number" id="usuarioIdInput" placeholder="Ingrese el ID del usuario" readonly>
                     </div>
                 </div>
     
@@ -79,7 +79,7 @@
     
                 <div class="field is-grouped">
                     <div class="control">
-                        <a class="button is-medium cancel-button" href="articulos.html">Cancelar</a>
+                        <a class="button is-medium cancel-button" onclick="volver()">Cancelar</a>
                         <button class="button is-medium" onclick="CompraUsuario()">
                             Comprar
                         </button>
@@ -88,12 +88,24 @@
             </form>
     </div>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const usuarioId = localStorage.getItem("usuarioId");
+
+        if (usuarioId) {
+            document.getElementById("usuarioIdInput").value = usuarioId;
+            document.getElementById("usuarioIdInput").readOnly = true;
+        } else {
+            alert("No has iniciado sesión. Por favor, inicia sesión primero.");
+            window.location.href = "iniciar-sesion.html";
+        }
+        });
+
         function CompraUsuario() {
             event.preventDefault();
-            const usuarioId = document.getElementById("usuarioId");
+            const usuarioId = localStorage.getItem("usuarioId");
             const articuloId = document.getElementById("articuloId");
 
-            fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId.value}/articulos`, {
+            fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}/articulos`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -102,18 +114,17 @@
                     articuloId: articuloId.value
                 })
             })
-            .then(response => {
+            .then(response => response.text().then(errorMessage => {
                 if (response.ok) {
                     alert('Compra realizada con éxito.');
                     clearForm();
                     window.history.back();
                 } else {
-                    alert('Error al realizar la compra.');
+                    alert(errorMessage || 'Error al realizar la compra.');
                 }
-            })
+            }))
         }
         function clearForm() {
-            document.getElementById("usuarioId").value = '';
             document.getElementById("articuloId").value = '';
         }
 

@@ -4,6 +4,24 @@ const router = express.Router()
 
 const prisma = new PrismaClient()
 
+router.get('/buscar', async (req, res) => {
+    const { username } = req.query;
+
+    if (!username) {
+        return res.status(400).json({ message: "Falta el username" });
+    }
+
+    const usuario = await prisma.usuario.findFirst({
+        where: { username }
+    });
+
+    if (usuario) {
+        return res.json({ exists: true });
+    } else {
+        return res.json({ exists: false });
+    }
+});
+
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
@@ -217,18 +235,27 @@ router.get('/:id/articulos', async (req, res) => {
         }
     });
 
+    const compras = await prisma.compra.groupBy({
+        by: ['articuloId'],
+        where: { usuarioId: usuario.id },
+        _count: { articuloId: true },
+    });
+
     if (usuario === null){
         res.sendStatus(404)
         return;
     }
 
-    const articulo = await prisma.articulo.findMany({
-        where:{
-            id: { in: usuario.compras.map(compra => compra.articuloId) }
-        }
-    });
+    const articulos = await Promise.all(
+        compras.map(async (compra) => {
+            const articulo = await prisma.articulo.findUnique({
+                where: { id: compra.articuloId },
+            });
+            return { ...articulo, cantidad: compra._count.articuloId };
+        })
+    );
 
-    res.json(articulo);
+    res.json(articulos);
 })
 
 router.post('/:id/articulos', async (req,res) => {
@@ -267,7 +294,7 @@ router.post('/:id/articulos', async (req,res) => {
 
 
     if (parseFloat(usuario.dinero) < parseFloat(articulo.precio)) {
-        return res.status(400).send("No hay suficiente dinero para comprar el artículo");
+        return res.status(400).send("No tienes suficiente dinero para comprar este artículo");
     }
 
     const nueva_cantidad = parseInt(articulo.cantidad) - 1;
@@ -316,14 +343,16 @@ router.post('/:id/articulos', async (req,res) => {
     
     if (nueva_cantidad === 0) {
 
-        await prisma.disponibilidad.update({
-            where: {
-                id: disponibilidad.id
-            },
-            data: {
-                disponible: false
-            }
-        });
+        if(disponibilidad){
+            await prisma.disponibilidad.update({
+                where: {
+                    id: disponibilidad.id
+                },
+                data: {
+                    disponible: false
+                }
+            });
+        }
 
         await prisma.articulo.update({
             where:{

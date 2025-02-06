@@ -8,6 +8,9 @@
         .container {
             margin-top: 10px;
         }
+        .navbar-start .button {
+            margin-right: -20px; 
+        }
         .product-card {
             background: #1c1c1c;
             border-radius: 12px;
@@ -65,8 +68,20 @@
 <body>
     <div class="container is-fluid">
         <nav class="navbar" role="navigation" aria-label="main navigation">
-            <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
-            <button class="button is-primary" id="perfil-button">Mi Perfil</button>
+            <div class="navbar-brand">
+                <div class="navbar-start">
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='lista-articulo.html'">Artículos</button>
+                    </div>
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
+                    </div>
+                    <div class="navbar-item">
+                        <button class="button is-primary" id="perfil-button">Mi Perfil</button>
+                    </div>
+                </div>
+            </div>
+        
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
                     <a class="navbar-link" id="username-display"></a>
@@ -81,7 +96,7 @@
             </div>
         </nav>
 
-        <h1 class="title is-2">Artículos</h1>
+        <h1 class="title is-2">Artículos en venta</h1>
 
         <div id="products-grid" class="product-grid"></div>
     </div>
@@ -90,8 +105,15 @@
             .then(response => response.json())
             .then(articulos => {
                 const grid = document.getElementById('products-grid');
-                articulos.forEach(articulo => {
-                    if(articulo.EnVenta == true && articulo.numero_vendedor !== 0){
+                const articulosConStock = articulos.filter(articulo => articulo.cantidad > 0);
+            
+                if (articulosConStock.length === 0) {
+                    const mensaje = document.createElement('p');
+                    mensaje.textContent = 'Aún no hay artículos a la venta';
+                    mensaje.className = 'has-text-centered has-text-white is-size-4';
+                    grid.appendChild(mensaje);
+                } else {
+                    articulosConStock.forEach(articulo => {
                         const card = document.createElement('div');
                         card.className = 'product-card';
                         card.innerHTML = `
@@ -101,11 +123,12 @@
                             <p><strong>Descripción:</strong> ${articulo.descripcion}</p>
                             <p><strong>Origen:</strong> ${articulo.origen}</p>
                             <p><strong>Antigüedad:</strong> ${articulo.antiguedad} años</p>
+                            <p><strong>Cantidad:</strong> ${articulo.cantidad}</p>
                             <button class="button is-primary is-small" onclick="window.location.href='../comprar-articulo.html'">Comprar</button>
                         `;
                         grid.appendChild(card);
-                    }
-                });
+                    });
+                }
             });
     
         async function obtenerUsuario() {
@@ -117,6 +140,7 @@
         if (response.ok) {
             const data = await response.json();
             if (data && data.user) {
+                localStorage.setItem("usuarioId", data.user.id);
                 document.getElementById('username-display').textContent = `Bienvenido, ${data.user.username}`;
                 const separador = document.createElement('br')
                 const numero_vendedorText = document.createTextNode(`Número de comprador: ${data.user.id}`);

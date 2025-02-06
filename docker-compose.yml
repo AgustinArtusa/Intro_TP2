@@ -13,13 +13,16 @@ services:
   
   back:
     build: ./Backend
+    depends_on:
+    - db
     environment:
       - DATABASE_URL=postgresql://intro:user123@db:5432/tienda 
-      - PRISMA_BINARY_TARGETS=linux-musl-openssl-3.0.x
     ports:
       - 3000:3000
   
   front:
     build: ./frontend
+    depends_on:
+    - back
     ports:
       - 8000:8000

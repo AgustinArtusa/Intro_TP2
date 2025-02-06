@@ -134,7 +134,7 @@
     }
     validar.addEventListener('keypress', validacion);
 
-    function createUser(){
+    function createUser() {
       event.preventDefault();
       const nombre = document.getElementById('nombre').value;
       const username = document.getElementById('username').value;
@@ -144,41 +144,51 @@
       const rol = document.getElementById('rol').value;
 
       if (nombre === "" || username === "" || password === "" || telefono === ""){
-        alert("Complete los campos que esten vacios");
+        alert("Complete los campos que estén vacíos");
         return;
       }
-          
-      let body = {
-        nombre: nombre,
-        username: username,
-        contraseña: password,
-        telefono: parseInt(telefono)
-      };
 
-      if (dinero !== "") {
-        body.dinero = parseFloat(dinero);
-      }
-      if (rol !== ""){
-        body.rol = rol;
-      }
+      fetch(`http://localhost:3000/api/v1/usuarios/buscar?username=${username}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.exists) {  
+            alert("El nombre de usuario ya está en uso. Por favor, elige otro.");
+          } else {
+            let body = {
+              nombre: nombre,
+              username: username,
+              contraseña: password,
+              telefono: parseInt(telefono)
+            };
 
-      fetch("http://localhost:3000/api/v1/usuarios", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      }).then(response => {
-        if (response.status === 201) {
-          alert('Usuario creado con exito');
-          clearForm();
-          window.history.back();
-        }
-        else
-        {
-          alert('Error al crear el Usuario');
-        }
-      });
+            if (dinero !== "") {
+              body.dinero = parseFloat(dinero);
+            }
+            if (rol !== "") {
+              body.rol = rol;
+            }
+
+            fetch("http://localhost:3000/api/v1/usuarios", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(body)
+            }).then(response => {
+              if (response.status === 201) {
+                alert('Usuario creado con éxito');
+                clearForm();
+                window.history.back();
+              } else {
+                alert('Error al crear el usuario');
+              }
+            });
+          }
+        })
+        .catch(error => {
+          console.error("Error verificando el usuario:", error);
+          alert("Hubo un problema al verificar el usuario. Inténtalo de nuevo.");
+        });
     }
 
     function clearForm() {

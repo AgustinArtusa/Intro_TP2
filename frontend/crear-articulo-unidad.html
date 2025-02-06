@@ -101,7 +101,7 @@
             <div class="field">
                 <label class="label" for="nuemero_vendedor">Numero de Vendedor</label>
                 <div  class="control">
-                    <input class="input" type="number" id="numero_vendedor" placeholder="Ingrese el numero de vendedor" required>
+                    <input class="input" type="number" id="numero_vendedor" placeholder="Ingrese el numero de vendedor" readonly>
                 </div>
             </div>
 
@@ -121,8 +121,19 @@
         </form>    
     </div>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const numero_vendedor = localStorage.getItem("usuarioId");
+
+        if (numero_vendedor) {
+            document.getElementById("numero_vendedor").value = numero_vendedor;
+            document.getElementById("numero_vendedor").readOnly = true;
+        } else {
+            alert("No has iniciado sesión. Por favor, inicia sesión primero.");
+            window.location.href = "iniciar-sesion.html";
+        }
+        });
+
         const validar = document.getElementById('antiguedad');
-        const validad_id_vendedor = document.getElementById('numero_vendedor');
         const validad_cantidad = document.getElementById('cantidad_articulo');
         function validacion(event){
             if(event.keyCode < 48 || event.keyCode > 57 || validar.value.length >= 10){
@@ -130,7 +141,6 @@
             }  
         }
         validar.addEventListener('keypress', validacion);
-        validad_id_vendedor.addEventListener('keypress', validacion);
         validad_cantidad.addEventListener('keypress', validacion);
         function createArticulo() {
             event.preventDefault();
@@ -140,7 +150,7 @@
             const descripcion = document.getElementById('descripcion').value;
             const origen = document.getElementById('origen').value;
             const antiguedad = document.getElementById('antiguedad').value;
-            const numero_vendedor = document.getElementById('numero_vendedor').value;
+            const numero_vendedor = localStorage.getItem("usuarioId");
             const cantidad = document.getElementById('cantidad_articulo').value;
 
             if (nombre === "" || precio === "" || descripcion === "" || origen === "" || antiguedad === "" || cantidad === ""){
@@ -188,7 +198,6 @@
             document.getElementById('descripcion').value = '';
             document.getElementById('origen').value = '';
             document.getElementById('antiguedad').value = '';
-            document.getElementById('numero_vendedor').value = '';
         }
 
         function volver() {

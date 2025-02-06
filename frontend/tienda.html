@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-        }
         .navbar {
-            background-color: #121212;
             position: fixed;
             display: flex;
             flex-wrap: wrap;
@@ -77,12 +72,6 @@
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
             <button class="button is-primary" onclick="volver()">Volver</button>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                </a>
             </div>
         </nav>
         <main id="main-content">
@@ -100,6 +89,14 @@
             .then((response) => response.json())
             .then((data) => {
                 const mainContent = document.getElementById("main-content");
+
+                if (data.length === 0) {
+                    const noItemsMessage = document.createElement("p");
+                    noItemsMessage.textContent = "Aún no hay artículos disponibles en esta tienda.";
+                    noItemsMessage.classList.add("has-text-centered", "has-text-white", "is-size-4", "mt-5");
+                    mainContent.appendChild(noItemsMessage);
+                return;
+                }
                 
                 const columnsContainer = document.createElement("div");
                 columnsContainer.classList.add("columns", "is-multiline", "is-centered");
@@ -123,7 +120,8 @@
                     <strong>Precio:</strong> $${articulo.precio} <br>
                     <strong>Descripción:</strong> ${articulo.descripcion} <br>
                     <strong>Origen:</strong> ${articulo.origen} <br>
-                    <strong>Antigüedad:</strong> ${articulo.antiguedad} <br>
+                    <strong>Antigüedad:</strong> ${articulo.antiguedad} años<br>
+                    <p><strong>Cantidad:</strong> ${articulo.cantidad}</p>
                     `;
                     cardContent.appendChild(content);
                     card.appendChild(cardContent);
