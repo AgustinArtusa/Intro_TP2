@@ -8,6 +8,9 @@
         .container {
             margin-top: 10px;
         }
+        .navbar-start .button {
+            margin-right: -20px; 
+        }
         .product-card {
             background: #1c1c1c;
             border-radius: 12px;
@@ -65,8 +68,20 @@
 <body>
     <div class="container is-fluid">
         <nav class="navbar" role="navigation" aria-label="main navigation">
-            <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
-            <button class="button is-primary" id="perfil-button">Mi Perfil</button>
+            <div class="navbar-brand">
+                <div class="navbar-start">
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='lista-articulo.html'">Artículos</button>
+                    </div>
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='lista-tienda.html'">Tiendas</button>
+                    </div>
+                    <div class="navbar-item">
+                        <button class="button is-primary" id="perfil-button">Mi Perfil</button>
+                    </div>
+                </div>
+            </div>
+        
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
                     <a class="navbar-link" id="username-display"></a>
@@ -81,7 +96,7 @@
             </div>
         </nav>
 
-        <h1 class="title is-2">Artículos</h1>
+        <h1 class="title is-2">Artículos en venta</h1>
 
         <div id="products-grid" class="product-grid"></div>
     </div>
@@ -94,7 +109,7 @@
             
                 if (articulosConStock.length === 0) {
                     const mensaje = document.createElement('p');
-                    mensaje.textContent = 'Aún no hay artículos para comprar';
+                    mensaje.textContent = 'Aún no hay artículos a la venta';
                     mensaje.className = 'has-text-centered has-text-white is-size-4';
                     grid.appendChild(mensaje);
                 } else {
