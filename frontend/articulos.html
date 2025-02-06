@@ -8,6 +8,9 @@
         .container {
             margin-top: 10px;
         }
+        .navbar-start .button {
+            margin-right: -20px; 
+        }
         .product-card {
             background: #1c1c1c;
             border-radius: 12px;
@@ -29,11 +32,10 @@
             color: #ffffff;
             font-weight: bold;
             text-align: center;
-            margin: 8px;
         }
         .button {
             border-radius: 8px;
-            margin: 5px;
+            margin: 6px;
             color: white;
         }
         .button.is-primary {
@@ -66,10 +68,22 @@
 <body>
     <div class="container is-fluid">
         <nav class="navbar" role="navigation" aria-label="main navigation">
-            <button class="button is-primary" onclick="window.location.href='tiendas.html'">Tiendas</button>
-            <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
-            <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Vender Artículo Completo</button>
-            <button class="button is-primary" onclick="window.location.href='crear-articulo-unidad.html'">Vender Artículo por Unidad</button>
+            <div class="navbar-brand">
+                <div class="navbar-start">
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='tiendas.html'">Tiendas</button>
+                    </div>
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='usuarios.html'">Usuarios</button>
+                    </div>
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='crear-articulo.html'">Crear Artículo Completo</button>
+                    </div>
+                    <div class="navbar-item">
+                        <button class="button is-primary" onclick="window.location.href='crear-articulo-unidad.html'">Crear Artículo por Unidad</button>
+                    </div>
+                </div>
+            </div>
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable" id="user-info" style="display: none;">
                     <a class="navbar-link" id="username-display"></a>
